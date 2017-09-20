@@ -7,17 +7,7 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Clientes</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
+
                     </div>
                         <div class="ibox-content">
                             <a data-toggle="modal" class="btn btn-success" href="#modal-form"><i class="fa fa-plus"></i>&nbsp;Nuevo</a>
@@ -48,7 +38,7 @@
                                         <td><?php echo $cliente->Nombres;?></td>
                                         <td><?php echo $cliente->Dni;?></td>
                                         <td><?php
-                                                if ($cliente->Sexo == "M") {
+                                                if ($cliente->Sexo == "Masculino") {
                                                      echo "Masculino";
                                                  } else {
                                                      echo "Femenino";
@@ -62,10 +52,20 @@
                                         <td><?php echo $cliente->Celular;?></td>
                                         <td><?php echo $cliente->Referencia;?></td>
                                         <td>
-                                            <center>
-                                                <a href="<?php echo base_url('cliente/eliminar')."/".$cliente->idCliente; ?>"><span class="fa fa-trash"></span></a>
-                                                <a href="<?php echo base_url('EditarCliente'). "/".$cliente->idCliente; ?>"><span class="fa fa-pencil"></span></a>
-                                            </center>
+                                        <center>
+                                            <div class="col-md-1">
+                                                <form method="post" action="<?php echo base_url('cliente/eliminar'); ?>">
+                                                    <button type="submit" class="btn btn-success btn-xs"><span class="fa fa-trash"></span></button>
+                                                    <input type="hidden" name="idcliente" value="<? echo $cliente->idCliente; ?>">
+                                                </form>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <form method="post" action="<?php echo base_url('EditarCliente'); ?>">
+                                                     <button type="submit" class="btn btn-success btn-xs"><span class="fa fa-pencil"></span></button>
+                                                     <input type="hidden" name="idcliente" value="<? echo $cliente->idCliente; ?>">
+                                                </form>
+                                            </div>
+                                        </center>
                                         </td>
                                     </tr>
                                     <?php 
@@ -109,16 +109,17 @@
                             <div class="ibox-content">                    
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Nombre</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese nombre" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="nombre"  placeholder="Ingrese nombre" ></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">DNI</label>
-                                    <div class="col-sm-10"><input type="number" class="form-control" name="dni" id="dni" placeholder="Ingrese DNI" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="dni" placeholder="Ingrese DNI" ></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Sexo</label>
                                     <div class="col-sm-10">
                                     <select class="form-control" name="sexo">
+                                        <option value="">-- Seleccionar --</option>
                                         <option value="Masculino">Masculino</option>
                                         <option value="Femenino">Femenino</option>
                                     </select>
@@ -126,28 +127,29 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Dirección</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="direccion" id="direccion" placeholder="Ingrese Dirección" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="direccion"  placeholder="Ingrese Dirección" ></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Celular</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="celular" id="celular" placeholder="Ingrese celular" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="celular" placeholder="Ingrese celular"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Teléfono</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="telefono" id="telefono" placeholder="Ingrese telefono" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="telefono" placeholder="Ingrese telefono"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Correo</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="correo" id="email" placeholder="Ingrese Correo" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="correo" placeholder="Ingrese Correo"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Contraseña</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" id="contrasena" name="contrasena" placeholder="Ingrese Contraseña" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="contrasena" placeholder="Ingrese Contraseña" required></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Distrito</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" name="distrito">
+                                        <option value=""> -- Seleccionar --</option>
                                     <?php foreach ($distritos as $distrito) {
                                     ?>
                                             <option value="<?php echo $distrito->idDistritos; ?>"><?php echo $distrito->Distrito; ?></option>
@@ -179,9 +181,9 @@
         
         
 <?php include 'footer.php'; ?>
-        
+        <script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>
         <!-- Jquery Validate -->
-        <script src="<?php echo base_url(); ?>assets/js/plugins/validate/jquery.validate.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/bootstrapValidator.min.js"></script>
         <!-- Script Validación -->
         <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
         

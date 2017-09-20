@@ -11,7 +11,7 @@ foreach ($a as $key) {
 			                                Edite los datos de la moto.
 			                            </h2>
 			                           
-			                            <form id="formeditempleado" action="<?php echo base_url('moto/actualizar'); ?>" method="post">
+			                            <form id="formeditmoto" action="<?php echo base_url('moto/actualizar'); ?>" method="post">
 			                             <div class="right">
 			                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Actualizar Moto</button>
 			                                <a href="<?php echo base_url('motos'); ?>" class="btn btn-success" ><i class="fa fa-ban"></i>&nbsp;Cancelar</a>
@@ -23,20 +23,20 @@ foreach ($a as $key) {
 			                                        <div class="col-lg-12">
 			                                            <div class="form-group">
 			                                            	<input type="hidden" name="id" value="<?php echo $key->idPlaca; ?>">
-			                                                <label>Placa *</label>
-			                                                <input id="placa" name="placa" type="text" class="form-control" value="<?php echo $key->idPlaca;?>" required>
+			                                                <label class="control-label">Placa *</label>
+			                                                <input name="placa" type="text" class="form-control" value="<?php echo $key->idPlaca;?>" >
 			                                            </div>
 			                                            <div class="form-group">
-			                                                <label>Marca *</label>
-			                                                <input id="marca" name="marca" type="text" class="form-control" value="<?php echo $key->Marca_Moto;?>" required>
+			                                                <label class="control-label">Marca *</label>
+			                                                <input name="marca" type="text" class="form-control" value="<?php echo $key->Marca_Moto;?>" >
 			                                            </div>
 			                                            <div class="form-group">
-			                                                <label>SOAT *</label>
-			                                                <input id="soat" name="soat" type="number" minlength="8" maxlength="8" class="form-control" value="<?php echo $key->Soat;?>" required>
+			                                                <label class="control-label">SOAT *</label>
+			                                                <input name="soat" type="text" class="form-control" value="<?php echo $key->Soat;?>" >
 			                                            </div>
 			                                            <div class="form-group">
-				                                            <label>Estado *</label>
-				                                        	<select class="form-control m-b" name="estado" required>
+				                                            <label class="control-label">Estado *</label>
+				                                        	<select class="form-control" name="estado" >
 						                                        <?php 
 						                                        if ($key->Estado == "A") {
 						                                        ?>
@@ -49,7 +49,7 @@ foreach ($a as $key) {
 						                                    </select>
 			                                        	</div>
 			                                        	<div class="form-group">
-			                                                <label>Empleado *</label>
+			                                                <label class="control-label">Empleado *</label>
 			                                                <select class="form-control" name="empleado">
 			                                                <?php 
 						                                    foreach ($empleados as $empleado) {
@@ -84,8 +84,8 @@ foreach ($a as $key) {
 }  
 	include 'footer.php'; ?>
         <!-- Jquery Validate -->
-    	<script src="<?php echo base_url(); ?>assets/js/plugins/validate/jquery.validate.min.js"></script>
-    	<!-- Input Mask-->
-    	<script src="<?php echo base_url(); ?>assets/js/plugins/jasny/jasny-bootstrap.min.js"></script>   	
+    	<script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>
+        <!-- Jquery Validate -->
+      <script src="<?php echo base_url(); ?>assets/js/bootstrapValidator.min.js"></script>
         <!-- Script Validación -->
-        <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
+      <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>

@@ -36,7 +36,6 @@
                                     <th data-hide="phone">Cantidad</th>
                                     <th data-hide="phone">Fecha Pedido</th>
                                     <th data-hide="phone">Estado</th>
-                                    <th class="text-right">Acción</th>
 
                                 </tr>
                                 </thead>
@@ -59,11 +58,6 @@
                                     </td>
                                     <td>
                                         <span class="label label-danger">Cancelado</span>
-                                    </td>
-                                    <td class="text-right">
-                                        <div class="btn-group">
-                                            <button class="btn-white btn btn-xs">Ver</button>
-                                        </div>
                                     </td>
                                 </tr>
                                 <?php 

@@ -1,4 +1,7 @@
 <?php
+/**
+* 
+*/
 class Model_distrito extends CI_Model
 {
 	
@@ -8,15 +11,7 @@ class Model_distrito extends CI_Model
 		$this->load->database();
 	}
 
-	/**
-		* lista los datos de los distritos 
-		*
-		* @author Juan Jose Paz Chalco
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 	
-	*/
+
 	function getDistrito()
 	{
 		$query = $this->db->get('distritos');

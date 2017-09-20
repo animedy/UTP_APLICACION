@@ -12,12 +12,10 @@ class Cocina extends CI_Controller {
 		* Lista los platos listos para ser cocinados.
 		*
 		* @author Ricardo Palacios Arce
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 23/08/2017	
+		* 	
 	*/
-	function listar()
-	{
+
+	function listar(){
 		$data['progreso'] 		= $this->model_cocina->getPedido();
 		$data['vistaenprogreso'] = $this->model_cocina->getVistaPedido();
 		$this->load->view('cocina/cocina',$data);
@@ -33,9 +31,9 @@ class Cocina extends CI_Controller {
 		* @param enprogreso
 		* @param completado
 		* 	
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 23/08/2017	
+		* 	
 	*/
+
 	function actualizarestado()
 	{
 		$datos = $this->input->post();
@@ -61,5 +59,6 @@ class Cocina extends CI_Controller {
 			//echo "por hacer " . " " .$porhacer . "<br> en progreso " . " " .$enprogreso . "<br> Completado" . " " .$completado; 
 			redirect(base_url('cocina/listar'));
 		}
+		
 	}
 }

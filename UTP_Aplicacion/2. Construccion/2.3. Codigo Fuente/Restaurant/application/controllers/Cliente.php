@@ -6,35 +6,32 @@ class Cliente extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('model_cliente');
+		//$this->load->library('form_validation');
 	}
 
 	/**
-		* lista los datos de los distritos 
+		* registra los Clientes y los distritos.
 		*
 		* @author Juan Jose Paz Chalco
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
 		* 	
 	*/
-	function Registrar()
-	{
+
+	function Registrar(){
 		$this->load->model('model_distrito');
 		$data['distritos'] = $this->model_distrito->getDistrito();
-		$this->load->view('cliente/registrarse',$data);
+		
+		$this->load->view('cliente/Registrarse',$data);
 	}
+
 
 	/**
 		* Lista los Clientes y los distritos.
 		*
-		* @author Juan Jose Paz Chalco
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
+		* @author Ricardo Palacios Arce
 		* 	
 	*/
-	function listar()
-	{
+
+	function listar(){
 		$this->load->model('model_distrito');
 		$data['distritos'] = $this->model_distrito->getDistrito();
 		$data['clientes'] = $this->model_cliente->getCliente();
@@ -44,7 +41,7 @@ class Cliente extends CI_Controller {
 	/**
 		* Inserta un nuevo cliente.
 		* 
-		*  @author Juan Jose Paz Chalco
+		* @author Ricardo Palacios Arce
 		*
 		* @param nombre
 		* @param dni
@@ -59,16 +56,11 @@ class Cliente extends CI_Controller {
 		* @param distrito
 		* @param referencia
 		* @param id_cliente
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 
 	*/
-	function insertar()
-	{
+
+	function insertar(){
 		$datos = $this->input->post();
-		if (isset($datos))
-		{
+		if (isset($datos)) {
 			$nombre 			= $datos["nombre"];
 			$dni				= $datos["dni"];
 			$sexo				= $datos["sexo"];
@@ -88,34 +80,9 @@ class Cliente extends CI_Controller {
 		}
 	}
 
-	/**
-		* Inserta un nuevo cliente por el administrador
-		* 
-		* @author Ricardo Palacios Arce
-		*
-		* @param nombre
-		* @param dni
-		* @param sexo
-		* @param direccion
-		* @param celular
-		* @param telefono
-		* @param correo
-		* @param contrasena	
-		* @param estado
-		* @param fecha_registro
-		* @param distrito
-		* @param referencia
-		* @param id_cliente
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 
-	*/
-	function InsertarCliente()
-	{
+	function InsertarCliente(){
 		$datos = $this->input->post();
-		if (isset($datos)) 
-		{
+		if (isset($datos)) {
 			$nombre 			= $datos["nombre"];
 			$dni				= $datos["dni"];
 			$sexo				= $datos["sexo"];
@@ -136,25 +103,21 @@ class Cliente extends CI_Controller {
 	}
 
 	/**
-		* Muesra la informacion del cliente por su id para ser editado 
+		* Edita un cliente existente por su id.
 		* 
 		* @author Ricardo Palacios Arce
 		*
 		* @param id
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 
 	*/
-	function editar($id = NULL)
-	{
-		if ($id != NULL) 
-		{
+
+	function editar(){
+		$datos = $this->input->post();
+		if (isset($datos)) {
 			$this->load->model('model_usuario');
 			$this->load->model('model_distrito');
 			$edit_cli['distritos'] 		= $this->model_distrito->getDistrito();
-			$edit_cli['editar_usuario'] = $this->model_usuario->getUsuarioById($id);
-			$edit_cli['editar_cliente'] = $this->model_cliente->getClienteById($id);
+			$edit_cli['editar_usuario'] = $this->model_usuario->getUsuarioById($datos["idcliente"]);
+			$edit_cli['editar_cliente'] = $this->model_cliente->getClienteById($datos["idcliente"]);
 			$this->load->view('admin/editar_cliente', $edit_cli);
 		}
 	}
@@ -165,19 +128,16 @@ class Cliente extends CI_Controller {
 		* @author Ricardo Palacios Arce
 		*
 		* @param id
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 
+
 	*/
-	function eliminar($id = NULL)
-	{
-		if ($id != NULL) 
-		{
+
+	function eliminar(){
+		$datos = $this->input->post();
+		if (isset($datos)) {
 			$this->load->model('model_usuario');
-			$this->model_usuario->deleteUsuario($id);
-			$this->model_cliente->deleteCliente($id);
-			redirect(base_url('clientes'));
+			$this->model_usuario->deleteUsuario($datos["idcliente"]);
+			$this->model_cliente->deleteCliente($datos["idcliente"]);
+		redirect(base_url('clientes'));
 		}
 	}
 
@@ -200,16 +160,11 @@ class Cliente extends CI_Controller {
 		* @param distrito
 		* @param referencia
 		* @param id_cliente
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 
 	*/
-	function actualizar()
-	{
+
+	function actualizar(){
 		$datos = $this->input->post();
-		if (isset($datos)) 
-		{
+		if (isset($datos)) {
 			$id 				= $datos["id"];
 			$nombre				= $datos["nombre"];
 			$dni 				= $datos["dni"];

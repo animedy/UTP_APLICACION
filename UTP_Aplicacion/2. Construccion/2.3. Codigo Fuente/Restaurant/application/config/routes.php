@@ -65,7 +65,8 @@ $route['sucursal']= 'sucursal/listar';
 */
 $route['empleados']= 'login/listar';
 $route['salir']= 'login/salir';
-$route['EditarEmpleado/(:any)']= 'login/editar/$1';
+//$route['EditarEmpleado/(:any)']= 'login/editar/$1';
+$route['EditarEmpleado']= 'login/editar';
 /*
 | --------- FIN URL Empleados ---------
 */
@@ -73,7 +74,8 @@ $route['EditarEmpleado/(:any)']= 'login/editar/$1';
 | --------- URL Motos -------------
 */
 $route['motos']= 'moto/listar';
-$route['EditarMoto/(:any)']= 'moto/editar/$1';
+//$route['EditarMoto/(:any)']= 'moto/editar/$1';
+$route['EditarMoto']= 'moto/editar';
 /*
 | --------- FIN URL Motos ---------
 */
@@ -81,7 +83,8 @@ $route['EditarMoto/(:any)']= 'moto/editar/$1';
 | --------- URL Clientes -------------
 */
 $route['clientes']= 'cliente/listar';
-$route['EditarCliente/(:any)']= 'cliente/editar/$1';
+//$route['EditarCliente/(:any)']= 'cliente/editar/$1';
+$route['EditarCliente']= 'cliente/editar/';
 /*
 | --------- FIN URL Clientes ---------
 */
@@ -112,7 +115,8 @@ $route['cocina']= 'cocina/listar';
 $route['pedidosatendidos']= 'pedido/listarpedidosatendidos';
 $route['pedidosdevueltos']= 'pedido/listarpedidosdevueltos';
 $route['platosmasvendidos']= 'catalogo/platosmasvendidos';
-$route['ventasdelmes']= 'ventas/listar';
+$route['ventasdeldia']= 'ventas/listar';
+$route['ventasdelmes']= 'ventas/ListarVentasDelMes';
 $route['filtropedidos']= 'pedido/listarpedidos';
 /*
 | --------- FIN URL Reportes ---------
@@ -130,6 +134,7 @@ $route['registrarse']= 'login/registrarse';
  ---------- URL Carta -----------
 */
 $route['Carta']= 'Catalogo/ListarCarta';
+
 $route['Carta1']= 'index.php/Carta';
 /*
 | --------- FIN URL Carta ---------
@@ -138,10 +143,11 @@ $route['Carta1']= 'index.php/Carta';
 | ---------- URL Carrito -----------
 */
 $route['Carrito']= 'Catalogo/MostrarCarrito';
+$route['Mensaje']= 'Catalogo/MostrarSeguimiento';
+
 /*
 | --------- FIN URL Carrito ---------
 */
-
 /*
 | --------- URL Caja-------------
 */
@@ -150,15 +156,13 @@ $route['cajero']= 'Caja/ListarPedidos';
 $route['cajeroanu']= 'Caja/ListaPedidosAnulados';
 /*$route['VerDocumento']= 'Caja/VerDocumento';*/
 $route['VerDocumento/(:any)']= 'Caja/VerDocumento/$1';
-$route['Documento/(:any)']= 'Caja/Documento/$1';
 
+//$route['Documento/(:any)']= 'Caja/Documento/$1';
 
 $route['anular']= 'Caja/ListarDocuAnulados';
 /*
-| --------- FIN URL Reportes ---------
+| --------- FIN URL Cajero ---------
 */
-
-
 /*
 | -------------------------------------------------------------------------
 | Sample REST API Routes

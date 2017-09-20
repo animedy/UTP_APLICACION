@@ -5,8 +5,7 @@
                 <div class="col-lg-4">
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h3>Por Hacer</h3>
-                            <p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>
+                            <h3>Pedido de Cliente</h3>
                             <ul class="sortable-list connectList agile-list" id="todo">
                                 <?php
                                     foreach ($porhacer as $pedidoporhacer) {
@@ -61,8 +60,7 @@
                 <div class="col-lg-4">
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h3>En Progreso</h3>
-                            <p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>
+                            <h3>En Cocina</h3>
                             <ul class="sortable-list connectList agile-list" id="inprogress">
                                 <?php
                                     foreach ($progreso as $pedidoprogreso) {
@@ -118,8 +116,7 @@
                 <div class="col-lg-4">
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h3>Completado</h3>
-                            <p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>
+                            <h3>Emisión de Comprobante</h3>
                             <ul class="sortable-list connectList agile-list" id="completed">
                                 <?php
                                     foreach ($completado as $pedidocompletado) {
@@ -177,20 +174,20 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">
                                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                <h4 class="modal-title">Cambiar de Estado el Pedido</h4>
+                                <h4 class="modal-t<itle">Cambiar de Estado el Pedido</h4>
                             </div>
                             <form class="form-horizontal" action="<?php echo base_url('pedido/actualizarestado'); ?>" method="POST">
                                 <div class="modal-body">
                                     <div class="ibox-content">
                                         <div class="form-group">
                                         <input type="hidden" id="idporhacer" name="id">
-                                            <label class="col-md-6 control-label">Pedido Por Hacer</label>
+                                            <!--<label class="col-md-6 control-label">Pedido Por Hacer</label>-->
                                             <div>
-                                                <input type="checkbox" name="porhacer" class="js-switch_0" checked />
+                                                <input type="hidden" name="porhacer" value="on" />
                                             </div>
                                         </div>                    
                                         <div class="form-group">
-                                            <label class="col-md-6 control-label">Pedido en Progreso</label>
+                                            <label class="col-md-6 control-label">Enviar a Cocina</label>
                                             <div>
                                                 <input type="checkbox" name="enprogreso" class="js-switch_1" />
                                             </div>
@@ -221,19 +218,16 @@
                                     <div class="ibox-content">
                                         <div class="form-group">
                                             <input type="hidden" id="idprogreso" name="id">
-                                            <label class="col-md-6 control-label">Pedido en Progreso</label>
                                             <div>
                                                 <input type="hidden" name="porhacer" value="on" />
                                             </div>
                                             <div>
                                                 <input type="hidden" name="enprogreso" value="on" />
                                             </div>
-                                            <div>
-                                                <input type="checkbox" class="js-switch_2" checked disabled="" />
-                                            </div>
+                                            
                                         </div>                    
                                         <div class="form-group">
-                                            <label class="col-md-6 control-label">Pedido Completado</label>
+                                            <label class="col-md-6 control-label">Enviar a Caja</label>
                                             <div>
                                                 <input type="checkbox" name="completado" class="js-switch_3" />
                                             </div>
@@ -244,7 +238,7 @@
                                     <button type="button" class="btn btn-white" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Cerrar</button>
                                     <button type="submit" class="btn btn-primary" id="add"><i class="fa fa-save"></i>&nbsp;Guardar</button>
                                 </div>
-                            </form>|
+                            </form>
                         </div>
                     </div>
                 </div>

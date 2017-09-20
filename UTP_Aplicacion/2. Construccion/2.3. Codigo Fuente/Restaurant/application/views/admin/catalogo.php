@@ -38,36 +38,34 @@
                                 <?php echo $plato->Descripcion; ?>
                                 </div>
                                 <div class="m-t text-righ">
-                                    <a data-toggle="modal" href="#modal-form-edit" class="btn btn-xs btn-outline btn-success" onclick='Editar("<?php echo $plato->idPlatos?>","<?php echo $plato->Nombres?>", "<?php echo $plato->Imagen;?>", "<?php echo $enviar_plato;?>" ,"<?php echo $plato->Precio?>","<?php echo $plato->Estado?>", "<?php echo $plato->Cantidad?>", "<?php echo $plato->Descripcion?>");'>Editar <i class="fa fa-long-arrow-right"></i> </a>
-                                    <?php
+                                    <a data-toggle="modal" href="#modal-form-edit" class="btn btn-xs btn-outline btn-success" onclick='Editar("<?php echo $plato->idPlatos?>","<?php echo $plato->Nombres?>", "<?php echo $plato->Imagen;?>", "<?php echo $enviar_plato;?>" ,"<?php echo $plato->Precio?>","<?php echo $plato->Estado?>", "<?php echo $plato->Cantidad?>", "<?php echo $plato->Descripcion?>");' data-toggle="tooltip" data-placement="bottom" title="Editar Plato">Editar <i class="fa fa-long-arrow-right"></i> </a>
+                                    <?
                                         if($plato->Cantidad >= 4) {
                                     ?>
-                                        <div class="btn btn-xs btn-outline btn-success"><?php echo  $plato->Cantidad;?> </div>
-                                    <?php         
-                                        }
-                                        elseif ($plato->Cantidad == 0) {
+                                        <div class="btn btn-xs btn-outline btn-success"><?echo $plato->Cantidad;?> </div>
+                                    <?         
+                                        }elseif ($plato->Cantidad == 0) {
                                     ?>
-                                        <div class="btn btn-xs btn-outline btn-danger">Agotado <i class="fa fa-exclamation-triangle"></i></div>
-                                        <div class="btn btn-xs btn-outline btn-danger"> <?php echo  $plato->Cantidad;?></div>
+                                        <div class="btn btn-xs btn-outline btn-danger">Agotado <i class="fa fa-exclamation-triangle" data-toggle="tooltip" data-placement="bottom" title="Producto Agotado"></i></div>
+                                        <div class="btn btn-xs btn-outline btn-danger"> <?echo $plato->Cantidad;?></div>
                                     <?php 
-                                        }
-                                        elseif ($plato->Cantidad <= 3) {
+                                        }elseif ($plato->Cantidad <= 3) {
                                     ?>
-                                        <div class="btn btn-xs btn-outline btn-warning">Stock <i class="fa fa-sort-amount-desc"></i> 
+                                        <div class="btn btn-xs btn-outline btn-warning" data-toggle="tooltip" data-placement="bottom" title="Stock por Agotarse">Stock <i class="fa fa-sort-amount-desc"></i> 
                                         </div>
-                                        <div class="btn btn-xs btn-outline btn-warning"> <?php echo  $plato->Cantidad;?></div>
+                                        <div class="btn btn-xs btn-outline btn-warning"><?echo $plato->Cantidad;?></div>
                                     <?php
                                         }
                                     ?>
                                     <!--<div class="btn btn-xs btn-outline btn-primary eliminar"><i class="fa fa-times"></i></div>-->
-                                    <button type="submit" class="btn btn-xs btn-outline btn-primary eliminar" onclick='Eliminar("<?php echo $plato->idPlatos;?>");'><i class="fa fa-times"></i></button>
+                                    <button type="submit" class="btn btn-xs btn-outline btn-primary eliminar" onclick='Eliminar("<? echo $plato->idPlatos?>");' data-toggle="tooltip" data-placement="bottom" title="Eliminar Plato"><i class="fa fa-times"></i></button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-            <?php
+            <?
                     $contar=$contar+1;
                     if ($contar == 4) {
                         echo "</div>  <div class='row'>";
@@ -88,17 +86,18 @@
                         <h4 class="modal-title">Nuevo Plato</h4>
                         <small class="font-bold">Registre los datos del nuevo plato.</small>
                     </div>
-                    <form role="form" id="form" class="form-horizontal" action="<?php echo base_url('catalogo/insertar'); ?>"   method="POST" enctype="multipart/form-data">
+                    <form role="form" id="formnuevoplato" class="form-horizontal" action="<?php echo base_url('catalogo/insertar'); ?>"   method="POST" enctype="multipart/form-data">
                         <div class="modal-body">                   
                             <div class="ibox-content">                    
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Nombre</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese su nombre" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="nombre" placeholder="Ingrese el nombre del plato"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Categoria</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" name="categoria" id="categoria" required>
+                                        <select class="form-control" name="categoria">
+                                            <option value="">-- Seleccionar --</option>
                                             <?php
                                                 foreach ($tipo_platos as $key => $tipo_plato) {
                                             ?>
@@ -112,25 +111,33 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Precio</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="precio" id="precio" required></div>
+                                    <div class="col-sm-10"><input type="number" class="form-control" name="precio" placeholder="Ingrese el precio del plato"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Estado</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="estado" id="estado" required></div>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="estado">
+                                            <option value="">-- Seleccionar --</option>
+                                            <option value="A">Activado</option>
+                                            <option value="X">Desactivado</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                <label class="col-lg-2 control-label">Imagen</label>
+                                <label class="col-lg-2 control-label ">Imagen</label>
                                     <div class="col-sm-10">
-                                    <input type="file" class="form-control" name="imagen">
+                                    <label class="btn btn-block btn-success">
+                                        Examinar&hellip; <input type="file" accept="image/x-png,image/jpeg"  name="imagen" style="display: none;">
+                                    </label>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Cantidad</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="cantidad" id="Cantidad" placeholder="Ingrese su Observación"></div>
+                                    <div class="col-sm-10"><input type="number" class="form-control" name="cantidad" placeholder="Ingrese la cantidad de platos"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Descripción</label>
-                                    <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" id="descripcion" required></textarea></div>
+                                    <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" placeholder="Ingrese la descripción del plato"></textarea></div>
                                 </div>                                   
                             </div>
 
@@ -158,7 +165,7 @@
                         <h4 class="modal-title">Editar Plato</h4>
                         <small class="font-bold">Edite los datos del  plato.</small>
                     </div>
-                    <form role="form" id="form" class="form-horizontal"   action="<?php echo base_url('catalogo/actualizar'); ?>" method="POST">
+                    <form role="form" id="formeditplato" class="form-horizontal"   action="<?php echo base_url('catalogo/actualizar'); ?>" method="POST">
                         <div class="modal-body">                   
                             <div class="ibox-content">
                                 <div class="form-group">
@@ -169,12 +176,14 @@
                                 <input type="hidden" name="id" id="id_edit">                    
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Nombre</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="nombre" id="nombre_edit" placeholder="Ingrese su nombre" required ></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="nombre" id="nombre_edit"  placeholder="Ingrese su nombre" ></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Categoria</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" name="categoria" id="categoria_edit" required>
+                                        <select class="form-control" name="categoria" id="categoria_edit" >
+                                            <option value="">-- Seleccionar --</option>
+
                                             <?php
                                                 foreach ($tipo_platos as $key => $tipo_plato) {
                                             ?>
@@ -188,11 +197,17 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Precio</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="precio" id="precio_edit" required ></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="precio" id="precio_edit"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Estado</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="estado" id="estado_edit" required ></div>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="estado" id="estado_edit">
+                                            <option value="">-- Seleccione --</option>
+                                            <option value="A">Activado</option>
+                                            <option value="X">Desactivado</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <!--<div class="form-group">
                                 <label class="col-lg-2 control-label">Imagen</label>
@@ -228,10 +243,16 @@
         </div>
 <!-- Fin Editar -->
 <?php include 'footer.php'; ?>
+    <script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>
+    <!-- Jquery Validate -->
+    <script src="<?php echo base_url(); ?>assets/js/bootstrapValidator.min.js"></script>
+    <!-- Script Validación -->
+    <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
     <!-- Sweet alert -->
     <script src="<?php echo base_url(); ?>assets/js/plugins/sweetalert/sweetalert.min.js"></script>
 
     <script type="text/javascript">
+        $( document ).ready(function() {
         Editar = function (id,nombre,imagen,categoria,precio,estado,cantidad,descripcion) 
         {
             $("#imagen_edit").attr("src","./"+imagen);
@@ -239,7 +260,7 @@
             $('#nombre_edit').val(nombre);
             $("#categoria_edit").find('option:contains("'+categoria+'")').prop('selected', true);
             $('#precio_edit').val(precio);
-            $('#estado_edit').val(estado);
+            $("#estado_edit option[value="+ estado +"]").attr("selected",true);
             $('#cantidad_edit').val(cantidad);
             $('#descripcion_edit').val(descripcion);
         }
@@ -269,4 +290,5 @@
                             }
                         });
             }
+        });
     </script>

@@ -20,36 +20,35 @@
 			                                    <div class="row">
 			                                        <div class="form-group">
 			                                           	<input type="hidden" name="id" value="<?php echo $editar->idCliente; ?>">
-			                                            <label>Nombres *</label>
-			                                            <input id="nombre" name="nombre" type="text" class="form-control" value="<?php echo $editar->Nombres;?>" required>
+			                                            <label class="control-label">Nombres *</label>
+			                                            <input name="nombre" type="text" class="form-control" value="<?php echo $editar->Nombres;?>" >
 			                                        </div>
 			                                        <div class="form-group">
-				                                        <label>Sexo *</label>
-				                                        <select class="form-control m-b" name="sexo" required>
-						                                    <?php 
-						                                        if ($editar->Sexo == "M") {
+				                                        <label class="control-label">Sexo *</label>
+				                                        <select class="form-control m-b" name="sexo" >
+				                                        	<option value="">-- Seleccione --</option>
+				                                            <?php 
+						                                        if ($editar->Sexo == "Masculino") {
 						                                    ?>
-						                                <option value="M" selected>Masculino</option>
-						                                <option value="F">Femenino</option>
-						                                    <?php } else {?>
-						                                <option value="M" >Masculino</option>
-						                                <option value="F" selected>Femenino</option>
+								                                <option value="Masculino" selected>Masculino</option>
+								                                <option value="Femenino">Femenino</option>
+								                                    <?php } else {?>
+								                                <option value="Masculino" >Masculino</option>
+								                                <option value="Femenino" selected>Femenino</option>
 						                                    <?php } ?>
 						                                    </select>
 			                                        </div>
-			                                        
-
 			                                            <div class="form-group">
-			                                                <label>DNI *</label>
-			                                                <input id="dni" name="dni" type="number" minlength="8" maxlength="8" class="form-control" value="<?php echo $editar->Dni;?>" required>
+			                                                <label class="control-label">DNI *</label>
+			                                                <input id="dni" name="dni" type="number" minlength="8" maxlength="8" class="form-control" value="<?php echo $editar->Dni;?>" >
 			                                            </div>
 			                                <h1>Información Complementaria</h1>
 			                                            <div class="form-group">
-			                                                <label>Dirección *</label>
+			                                                <label class="control-label">Dirección *</label>
 			                                                <input id="direccion" name="direccion" type="text" class="form-control" value="<?php echo $editar->Direccion;?>">
 			                                            </div>
 			                                            <div class="form-group">
-			                                                <label>Distrito *</label>
+			                                                <label class="control-label">Distrito *</label>
 			                                                <select class="form-control" name="distrito">
 							                                    <?php foreach ($distritos as $distrito) {
 							                                    			if ($editar->Distritos_idDistritos == $distrito->idDistritos) {
@@ -68,31 +67,30 @@
 			                                            <div class="form-group">
 			                                                <label class="control-label">Teléfono *</label>
 			                                                <input type="text" name="telefono" class="form-control required" placeholder="" value="<?php echo $editar->Telefono;?>">
-                                        					<span class="help-block">(054) 123-456</span>
 			                                            </div>
 			                                            <div class="form-group">
 			                                                <label class="control-label">Celular *</label>
 			                                                <input type="text" name="celular" class="form-control required" placeholder="" value="<?php echo $editar->Celular;?>">
 			                                            </div>
 			                                            <div class="form-group">
-			                                                <label>Referencia </label>
+			                                                <label class="control-label">Referencia </label>
 			                                                <input id="referencia" name="referencia" type="text" class="form-control" value="<?php echo $editar->Referencia;?>">
 			                                            </div>
 			                                <h1>Cuenta</h1>
 			                                            <div class="form-group">
-			                                                <label>Correo *</label>
-			                                                <input id="correo" name="correo" type="text" class="form-control" value="<?php echo $e_u->CorreoElectronico;?>" required>
+			                                                <label class="control-label">Correo *</label>
+			                                                <input id="correo" name="correo" type="text" class="form-control" value="<?php echo $e_u->CorreoElectronico;?>" >
 			                                            </div>
 			                                            <div class="form-group">
-			                                                <label>Password *</label>
+			                                                <label class="control-label">Password *</label>
 			                                                <input id="contrasena" name="contrasena" type="text" class="form-control" value="<?php echo $e_u->Contrasena;?>">
 			                                            </div>
 			                                            <div class="form-group">
-			                                                <label>Confirmar Password *</label>
-			                                                <input id="confirm" name="confirm" type="text" class="form-control" value="<?php echo "$e_u->Contrasena";?>" required>
+			                                                <label class="control-label">Confirmar Password *</label>
+			                                                <input id="confirm" name="confirm" type="text" class="form-control" value="<?php echo "$e_u->Contrasena";?>" >
 			                                            </div>
 			                                            <div class="form-group">
-			                                                <label>Estado de Cuenta *</label>
+			                                                <label class="control-label">Estado de Cuenta *</label>
 			                                                <select name="estado" class="form-control">
 			                                                <?php if ($editar->Estado == "A") {
 			                                                ?>
@@ -118,7 +116,8 @@
 		}
 	}
 	include 'footer.php'; ?>
-		<!-- Jquery Validate -->
-    	<script src="<?php echo base_url(); ?>assets/js/plugins/validate/jquery.validate.min.js"></script>   	
+		<script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>
+        <!-- Jquery Validate -->
+        <script src="<?php echo base_url(); ?>assets/js/bootstrapValidator.min.js"></script> 	
         <!-- Script Validación -->
         <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>

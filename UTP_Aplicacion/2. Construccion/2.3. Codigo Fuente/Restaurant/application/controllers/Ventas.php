@@ -8,13 +8,12 @@ class Ventas extends CI_Controller {
 		$this->load->model('model_ventas');
 	}
 
+
 	/**
 		* Lista las ventas del Mes Actual.
 		*
 		* @author Ricardo Palacios Arce
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 23/08/2017	
+		* 	
 	*/
 
 	function listar(){

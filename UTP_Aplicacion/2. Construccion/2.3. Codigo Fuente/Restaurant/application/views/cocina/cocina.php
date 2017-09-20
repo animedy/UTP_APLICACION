@@ -54,7 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="ibox">
                         <div class="ibox-content">
                             <h3>En Progreso</h3>
-                            <p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>
+                            
                             <ul class="sortable-list connectList agile-list" id="inprogress">
                                 <?php
                                     foreach ($progreso as $pedidoprogreso) {
@@ -96,7 +96,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                     <div class="panel-footer">
                                         <a data-toggle="modal" href="#modal-form-progreso" class="pull-right btn btn-xs btn-warning" onclick='CambiarEstadoProgreso("<?php echo $pedidoprogreso->idPedidos; ?>");'>Ver</a>
-                                        <i class="fa fa-clock-o"></i> <?php echo date('d.m.Y', strtotime($pedidoprogreso->Fecha)); ?><?php echo $pedidoprogreso->Hora_Pedido; ?>Hrs.
+                                       <i class="fa fa-clock-o"></i> <?php echo date('d.m.Y', strtotime($pedidoprogreso->Fecha)) . " " .$pedidoprogreso->Hora_Pedido; ?>Hrs.
                                     </div>
                                 </div>
                                 <?php
@@ -123,16 +123,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="ibox-content">
                                         <div class="form-group">
                                             <input type="hidden" id="idprogreso" name="id">
-                                            <label class="col-md-6 control-label">Pedido en Progreso</label>
+                                            <!--<label class="col-md-6 control-label">Pedido en Progreso</label>-->
                                             <div>
                                                 <input type="hidden" name="porhacer" value="on" />
                                             </div>
-                                            <div>
-                                                <input type="checkbox" name="enprogreso" class="js-switch_2" checked />
-                                            </div>
+                                            <!--<div>
+                                                <input type="checkbox" name="enprogreso" class="js-switch_2" checked disabled />
+                                            </div>-->
                                         </div>                    
                                         <div class="form-group">
-                                            <label class="col-md-6 control-label">Pedido Completado</label>
+                                            <label class="col-md-6 control-label">Enviar a Caja</label>
                                             <div>
                                                 <input type="checkbox" name="completado" class="js-switch_3" />
                                             </div>
@@ -176,7 +176,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
     </script>
     <script type="text/javascript">
-    setTimeout('document.location.reload()',10000); 
+    setTimeout('document.location.reload()',60000); 
     </script>
 </body>
 </html>

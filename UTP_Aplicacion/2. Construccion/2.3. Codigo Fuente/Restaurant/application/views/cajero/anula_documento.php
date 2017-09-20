@@ -44,7 +44,7 @@
                                         <!--id pedido-->
                                         <td><?php echo $ListarAnulado->idDocumentoBoleta;?></td>
                                         <!--fecha pedido-->
-                                        <td><?php echo date("d-m-Y",strtotime($ListarAnulado->Fecha_Emision));?></td>
+                                        <td><?php echo $ListarAnulado->Fecha_Emision;?></td>
                                         <!--cliente pedido-->
                                         <td><?php echo $ListarAnulado->Nombre;?></td>
                                         <!--cliente dni pedido-->

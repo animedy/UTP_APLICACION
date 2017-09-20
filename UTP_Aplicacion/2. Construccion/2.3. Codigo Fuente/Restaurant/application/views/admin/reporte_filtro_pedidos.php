@@ -47,16 +47,16 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label class="control-label" for="date_added">Fecha Inicial</label>
-                            <div class="input-group date">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="date_added" type="text" class="form-control" value="<?php echo date('Y-m-d') ?>" name="fecha_inicio">
+                            <div class="input-group date" id="date_added">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input  type="text" class="form-control" value="<?php echo date('Y-m-d') ?>" name="fecha_inicio">
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label class="control-label" for="date_modified">Fecha Final</label>
-                            <div class="input-group date">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="date_modified" type="text" class="form-control" value="<?php echo date('Y-m-d') ?>" name="fecha_fin">
+                            <div class="input-group date" id="date_modified">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="<?php echo date('Y-m-d') ?>" name="fecha_fin">
                             </div>
                         </div>
                     </div>
@@ -94,35 +94,35 @@
                                      ?>
                                     <tr>
                                         <td>
-                                           <?php echo $pedido->Comanda; ?>
+                                           <? echo $pedido->Comanda; ?>
                                         </td>
                                         <td>
-                                             <?php echo $pedido->Nombre_Cliente; ?>
+                                             <? echo $pedido->Nombre_Cliente; ?>
                                         </td>
                                         <td>
-                                             <?php echo "S/. ".$pedido->Total; ?>
+                                             <? echo "S/. ".$pedido->Total; ?>
                                         </td>
                                         <td>
-                                             <?php echo  date("d/m/Y",strtotime($pedido->Fecha)); ?>
+                                             <? echo  date("d/m/Y",strtotime($pedido->Fecha)); ?>
                                         </td>
                                         <td>
-                                            <?php if ($pedido->Estado_Administrador == 0) {
+                                            <? if ($pedido->Estado_Administrador == 0) {
                                             ?>
                                             <span class="label label-danger">Cancelado</span>
 
-                                            <?php } elseif ($pedido->Estado_Administrador == 1 && $pedido->Estado_Cocinero == 0) {
+                                            <? } elseif ($pedido->Estado_Administrador == 1 && $pedido->Estado_Cocinero == 0) {
                                             ?>
                                             <span class="label label-success">Por hacer</span>
-                                            <?php } elseif ($pedido->Estado_Administrador == 1 && $pedido->Estado_Cocinero == 1 && $pedido->Estado_Cajero == 0){ 
+                                            <? } elseif ($pedido->Estado_Administrador == 1 && $pedido->Estado_Cocinero == 1 && $pedido->Estado_Cajero == 0){ 
                                             ?>
                                             <span class="label label-warning">En Progreso</span>
-                                            <?php } elseif ($pedido->Estado_Administrador == 1 && $pedido->Estado_Cocinero == 1 && $pedido->Estado_Cajero == 1){ 
+                                            <? } elseif ($pedido->Estado_Administrador == 1 && $pedido->Estado_Cocinero == 1 && $pedido->Estado_Cajero == 1){ 
                                             ?>
                                             <span class="label label-primary">Completado</span>
-                                            <?php }?>
+                                            <? }?>
                                         </td>
                                     </tr>
-                                    <?php  } ?>
+                                    <?  } ?>
 
                                 </tbody>
                             </table>

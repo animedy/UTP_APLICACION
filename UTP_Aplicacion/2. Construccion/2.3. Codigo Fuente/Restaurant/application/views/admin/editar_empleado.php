@@ -65,8 +65,8 @@ foreach ($a as $key) {
 				                                        </div>
 				                                        <div class="form-group">
 				                                            <label class="control-label">Fecha Nacimiento *</label>
-				                                            <div class="input-group date">
-								                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="fec_nac" type="text" class="form-control" value="<?php echo date("d-m-Y",strtotime($key->Fecha_Nacimiento)); ?>" name="fec_nac">
+				                                            <div class="input-group date" id="fec_nac">
+								                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="<?php echo date("d-m-Y",strtotime($key->Fecha_Nacimiento)); ?>" name="fec_nac">
 								                            </div>
 				                                            <!--<input id="fec_nac" name="fec_nac" type="text" class="form-control" data-mask="99/99/9999" value="<?php echo date("d-m-Y",strtotime($key->Fecha_Nacimiento));?>">-->
 				                                        </div>
@@ -163,8 +163,8 @@ foreach ($a as $key) {
 				                                    <div class="col-lg-6">
 				                                    	<div class="form-group">
 				                                            <label class="control-label">Fecha Registro *</label>
-				                                            <div class="input-group date">
-								                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="fec_in" type="text" class="form-control" value="<?php echo date("d-m-Y",strtotime($key->Fecha_Registro)); ?>" name="fec_in">
+				                                            <div class="input-group date" id="fec_in">
+								                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="<?php echo date("d-m-Y",strtotime($key->Fecha_Registro)); ?>" name="fec_in">
 								                            </div>
 				                                        	<!--<input id="fec_in" name="fec_in" type="text" data-mask="99/99/9999" class="form-control required" value="<?php echo date("d/m/Y",strtotime($key->Fecha_Registro));?>">-->
 				                                        </div>

@@ -11,18 +11,6 @@
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#">Config option 1</a>
-                                </li>
-                                <li><a href="#">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
                         </div>
                     </div>
                         <div class="ibox-content">
@@ -52,8 +40,18 @@
                                         <td><?php echo $moto->Nombres . " " . $moto->Apellidos;?></td>
                                         <td>
                                             <center>
-                                                <a href="<?php echo base_url('motos/eliminar')."/".$moto->Placa; ?>"><span class="fa fa-trash"></span></a>
-                                                <a href="<?php echo base_url('EditarMoto')."/".$moto->Placa; ?>"><span class="fa fa-pencil"></span></a>
+                                                <div class="col-md-1">
+                                                    <form  method="post" action="<?php echo base_url('moto/eliminar'); ?>">
+                                                        <button type="submit" class="btn btn-primary btn-xs"><span class="fa fa-trash"></span></button>
+                                                        <input type="hidden" name="idmoto" value="<? echo $moto->Placa; ?>">
+                                                    </form>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <form  method="post" action="<?php echo base_url('EditarMoto'); ?>">
+                                                        <button type="submit" class="btn btn-primary btn-xs"><span class="fa fa-pencil"></span></button>
+                                                        <input type="hidden" name="idmoto" value="<? echo $moto->Placa; ?>">
+                                                    </form>
+                                                </div>
                                             </center>
                                         </td>
                                     </tr>
@@ -94,15 +92,15 @@
                             <div class="ibox-content">                    
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Placa</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="placa" id="placa" placeholder="Ingrese placa" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="placa" placeholder="AB-1234"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Marca</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="marca" id="marca" placeholder="Ingrese Marca" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="marca" id="marca" placeholder="Ingrese Marca" ></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">SOAT</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="soat" id="soat" placeholder="Ingrese SOAT" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="soat" id="soat" placeholder="Ingrese SOAT" ></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Empleado Asignado</label>
@@ -139,9 +137,9 @@
         
         
 <?php include 'footer.php'; ?>
+      <script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>
         <!-- Jquery Validate -->
-        <script src="<?php echo base_url(); ?>assets/js/plugins/validate/jquery.validate.min.js"></script>
+      <script src="<?php echo base_url(); ?>assets/js/bootstrapValidator.min.js"></script>
         <!-- Script Validación -->
-        <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
-        <!-- Fin Script Validación -->
+      <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
         

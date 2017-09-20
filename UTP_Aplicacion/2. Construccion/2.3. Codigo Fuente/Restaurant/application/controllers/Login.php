@@ -12,7 +12,6 @@ class Login extends CI_Controller {
 		* Verifica si el usuario existe para darle el acceso segun el rol o de acuerdo a la session establecida.
 		*
 		* @author Ricardo Palacios Arce
-		*
 		* @param login
 		* @param password
 		* @param idEmpleados
@@ -23,34 +22,35 @@ class Login extends CI_Controller {
 		* @param Rol
 		* @param Sexo
 		* @param Estado
-		*
-		* fecha creacion: 16/08/2017
-		* fecha modificacion: 20/08/2017	
 	*/
+
 	function index()
 	{
-		if( $this->session->userdata('id') )
-		{
-			if($this->session->userdata('rol')=='ADMINISTRADOR')
-				$this->load->view('admin/admin');
+		$this->load->model('Model_caja');
+		if( $this->session->userdata('id') ){
+			if($this->session->userdata('rol')=='ADMINISTRADOR'){
+				$mes 		= date('m');
+				$fecha_dia 	= date('Y-m-d');
+				$data['cantidad'] = $this->Model_caja->getPedidoCompletadoMes($mes);
+				$data['cantidad_dia'] = $this->Model_caja->getPedidoCompletadoDia($fecha_dia);
+					$this->load->view('admin/admin',$data);
+				}
 			elseif($this->session->userdata('rol')=='CAJERO')
-				$this->load->view('cajero/admin');
+				$this->load->view('Cajero/admin');
 			elseif($this->session->userdata('rol')=='COCINA')
+				//$this->load->view('cocina/cocina');
 				redirect(base_url()."cocina");
 			return 0;
-		}
-		else
-		{
+		}else{
 			$login = $this->input->post('login');
 			$password = $this->input->post('password');
 		}
-		if($login!='' and $password!='')
-		{
+		if($login!='' and $password!=''){
 			$this->load->model('Model_empleado');
 			$password = md5($password);
 			$empleado = $this->Model_empleado->getEmpleadoLogin($login,$password);
-			if($empleado->num_rows() > 0)
-			{
+			
+			if($empleado->num_rows() > 0){
 				$empleado = $empleado->row();
 				$this->session->set_userdata('id',$empleado->idEmpleados);
 				$this->session->set_userdata('login',$login);
@@ -60,40 +60,41 @@ class Login extends CI_Controller {
 				$this->session->set_userdata('rol',$empleado->Rol);
 				$this->session->set_userdata('sexo',$empleado->Sexo);
 				$this->session->set_userdata('estado',$empleado->Estado);
-				if($this->session->userdata('rol')=='ADMINISTRADOR')
-					$this->load->view('admin/admin');
+				if($this->session->userdata('rol')=='ADMINISTRADOR'){
+					$mes 		= date('m');
+					$fecha_dia 	= date('Y-m-d');
+					$data['cantidad'] = $this->Model_caja->getPedidoCompletadoMes($mes);
+					$data['cantidad_dia'] = $this->Model_caja->getPedidoCompletadoDia($fecha_dia);
+					$this->load->view('admin/admin',$data);
+				}
 				elseif($this->session->userdata('rol')=='CAJERO')
-					$this->load->view('cajero/admin');
+					$this->load->view('Cajero/admin');
 				elseif($this->session->userdata('rol')=='COCINA')
 					//$this->load->view('cocina/cocina');
 					redirect(base_url()."cocina");
-			}
-			else
-			{
+			}else{
 				$data['error']="Error de contrase&ntilde;a";
 				$this->load->view('login',$data);
 			}
-		}
-		else
-		{
+		}else{
 			$data['error']="Ingrese sus datos";
 			$this->load->view('login',$data);
 		}
+		//$this->load->view('login');
 	}
 
 	/**
 		* Lista los empleados.
 		*
 		* @author Ricardo Palacios Arce
-		*
-		* fecha creacion: 16/08/2017
-		* fecha modificacion: 20/08/2017	
+		* 	
 	*/
-	function listar()
-	{
+
+	function listar(){
 		$data['empleados'] = $this->Model_empleado->getEmpleado();
 		$this->load->view('admin/empleados',$data);
 	}
+
 
 	/**
 		* Inserta un nuevo empleado.
@@ -113,15 +114,11 @@ class Login extends CI_Controller {
 		* @param login
 		* @param sexo
 		* @param password
-		*
-		* fecha creacion: 16/08/2017
-		* fecha modificacion: 20/08/2017	
 	*/
-	function insertar()
-	{
+
+	function insertar(){
 		$datos = $this->input->post();
-		if (isset($datos)) 
-		{
+		if (isset($datos)) {
 			$nombre				= $datos["nombre"];
 			$apellido			= $datos["apellido"];
 			$rol_idrol			= $datos["cargo"];
@@ -146,12 +143,9 @@ class Login extends CI_Controller {
 		* @author Ricardo Palacios Arce
 		* 	
 		* @param id	
-		*
-		* fecha creacion: 16/08/2017
-		* fecha modificacion: 20/08/2017	
 	*/
-	function salir()
-	{
+
+	function salir(){
 		$this->session->sess_destroy();
 		$this->load->view('login');
 	}
@@ -161,19 +155,13 @@ class Login extends CI_Controller {
 		*
 		* @author Ricardo Palacios Arce
 		* 	
-		* @param id
-		*
-		* fecha creacion: 16/08/2017
-		* fecha modificacion: 20/08/2017	
-		*
-		* fecha creacion: 16/08/2017
-		* fecha modificacion: 20/08/2017	
+		* @param id	
 	*/
-	function editar($id = NULL)
-	{
-		if ($id != NULL)
-		{
-			$edit_emp['a'] = $this->Model_empleado->getEmpleadoById($id);
+
+	function editar(){
+		$datos = $this->input->post();
+		if (isset($datos)) {
+			$edit_emp['a'] = $this->Model_empleado->getEmpleadoById($datos["idempleado"]);
 			$this->load->view('admin/editar_empleado', $edit_emp);
 		}
 	}
@@ -184,16 +172,13 @@ class Login extends CI_Controller {
 		* @author Ricardo Palacios Arce
 		* 	
 		* @param id	
-		*
-		* fecha creacion: 16/08/2017
-		* fecha modificacion: 20/08/2017	
 	*/
-	function eliminar($id = NULL)
-	{
-		if ($id != NULL) 
-		{
-			$this->Model_empleado->deleteEmpleado($id);
-			redirect(base_url('empleados'));
+
+	function eliminar(){
+		$datos = $this->input->post();
+		if (isset($datos)) {
+		$this->Model_empleado->deleteEmpleado($datos["idempleado"]);
+		redirect(base_url('empleados'));
 		}
 	}
 
@@ -217,15 +202,11 @@ class Login extends CI_Controller {
 		* @param login
 		* @param sexo
 		* @param password
-		*
-		* fecha creacion: 16/08/2017
-		* fecha modificacion: 20/08/2017	
 	*/
-	function actualizar()
-	{
+
+	function actualizar(){
 		$datos = $this->input->post();
-		if (isset($datos)) 
-		{
+		if (isset($datos)) {
 			$id 				= $datos["id"];
 			$nombre				= $datos["nombre"];
 			$apellido			= $datos["apellido"];
@@ -236,12 +217,10 @@ class Login extends CI_Controller {
 			$celular			= $datos["celular"];
 			$usuario			= $datos["usuario"];
 			$email 				= $datos["email"];
-			if ($datos["fec_in"]==null) 
-			{
+			if ($datos["fec_in"]==null) {
 				$fecha_ingreso = "0000-00-00";
 			}
-			else
-			{
+			else{
 				$fecha_ingreso		= date("Y-m-d",strtotime($datos["fec_in"]));
 			}
 			$estado				= $datos["estado"];

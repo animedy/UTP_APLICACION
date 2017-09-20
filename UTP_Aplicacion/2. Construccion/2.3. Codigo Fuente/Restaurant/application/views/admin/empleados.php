@@ -32,15 +32,25 @@
                                                    ?>
                                                   <tr class="gradeX">
                                                       <td><?php echo $empleado->idEmpleados;?></td>
-                                                      <td><?php echo $empleado->Dni;?></td>
-                                                      <td><?php echo $empleado->Nombres;?></td>
+                                                      <td><?php echo $empleado->dni;?></td>
+                                                      <td><?php echo $empleado->Nombres . ' ' . $empleado->Apellidos;?></td>
                                                       <td><?php echo $empleado->Rol;?></td>
                                                       <td><?php echo date("d-m-Y",strtotime($empleado->Fecha_Registro));?></td>
                                                       <td>
-                                                        <center>
-                                                          <a href="<?php echo base_url('login/eliminar')."/".$empleado->idEmpleados; ?>"><span class="fa fa-trash"></span></a>
-                                                          <a href="<?php echo base_url()."/EditarEmpleado/".$empleado->idEmpleados; ?>"><span class="fa fa-pencil"></span></a>
-                                                        </center>
+                                                      <center>
+                                                        <div class="col-md-1">
+                                                          <form method="post" action="<?php echo base_url('login/eliminar'); ?>">
+                                                            <button type="submit" class="btn btn-success btn-xs"><span class="fa fa-trash"></span></button>
+                                                            <input type="hidden" name="idempleado" value="<? echo $empleado->idEmpleados; ?>">
+                                                          </form>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                          <form method="post" action="<?php echo base_url('EditarEmpleado'); ?>">
+                                                            <button type="submit" class="btn btn-success btn-xs"><span class="fa fa-pencil"></span></button>
+                                                            <input type="hidden" name="idempleado" value="<? echo $empleado->idEmpleados; ?>">
+                                                          </form>
+                                                        </div>
+                                                      </center>
                                                       </td>
                                                   </tr>
                                                   <?php 
@@ -85,7 +95,7 @@
                                                                   <input id="nombre" name="nombre" type="text" class="form-control required">
                                                               </div>
                                                               <div class="form-group">
-                                                                  <label>Apellidos *</label>
+                                                                  <label class="control-label">Apellidos *</label>
                                                                   <input id="apellido" name="apellido" type="text" class="form-control required">
                                                               </div>
                                                           </div>
@@ -96,36 +106,38 @@
                                                               </div>
                                                               <div class="form-group">
                                                                 <label class="control-label">Sexo *</label>
-                                                              <select class="form-control m-b" name="account">
-                                                                <option value="M">Masculino</option>
-                                                                <option value="F">Femenino</option>
-                                                            </select>
+                                                                  <select class="form-control" name="account" required>
+                                                                    <option value="">-- Seleccione un Sexo --</option>
+                                                                    <option value="M">Masculino</option>
+                                                                    <option value="F">Femenino</option>
+                                                                  </select>
                                                           </div>
                                                       </div>
                                                   </fieldset>
 
                                                   <h1>Información Complementaria</h1>
                                                   <fieldset>
-                                                      <div class="col-lg-6">
-                                                              <div class="form-group">
-                                                                  <label class="control-label">Fecha Nacimiento *</label>
-                                                                  <div class="input-group date">
-                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="fec_nac" type="text" class="form-control" value="<?php echo date('d-m-Y') ?>" name="fec_nac">
-                                                                  </div>
-                                                                  <!--<input type="text" id="fec_nac" name="fec_nac" class="form-control" data-mask="99/99/9999" placeholder=""  required="">-->
-                                                                  <span class="help-block">dd/mm/yyyy</span>
-                                                              </div>
-                                                              <div class="form-group">
-                                                                  <label class="control-label">Dirección *</label>
-                                                                  <input id="direccion" name="direccion" type="text" class="form-control" required>
-                                                              </div>
+                                                      <div class="row">
+                                                        <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Fecha Nacimiento *</label>
+                                                                    <div class="input-group date" id="fec_nac">
+                                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input  type="text" class="form-control" value="<?php echo date('d-m-Y'); ?>" name="fec_nac" readonly >
+                                                                    </div>
+                                                                    <!--<input type="text" id="fec_nac" name="fec_nac" class="form-control" data-mask="99/99/9999" placeholder=""  required="">-->
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Dirección *</label>
+                                                                    <input id="direccion" name="direccion" type="text" class="form-control" required>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Celular *</label>
+                                                                    <input id="celular" name="celular" type="text" class="form-control" data-mask="999999999" required>
+                                                                </div>
+                                                        </div>
                                                       </div>
-                                                      <div class="col-lg-6">
-                                                              <div class="form-group">
-                                                                  <label class="control-label">Celular *</label>
-                                                                  <input id="celular" name="celular" type="text" class="form-control" data-mask="999999999" required>
-                                                              </div>
-                                                          </div>
                                                   </fieldset>
 
                                                   <h1>Cuenta</h1>
@@ -159,34 +171,36 @@
                                                   
                                                   <h1>Información Administrativa</h1>
                                                   <fieldset>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                              <label class="control-label">Cargo *</label>
-                                                            <select name="cargo" class="form-control">
-                                                              <option value="">-- Seleccionar --</option>
-                                                              <option value="1">Administrador</option>
-                                                              <option value="2">Cajero</option>
-                                                              <option value="3">Cocina</option>
-                                                              <option value="4">Moto</option>
-                                                            </select>
-                                                          </div>
-                                                      </div>
-                                                      <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="control-label">Estado *</label>
-                                                            <select name="estado" class="form-control">
-                                                              <option value="">-- Seleccionar --</option>
-                                                              <option value="A">Activado</option>
-                                                              <option value="X">Desactivado</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label">Fecha Ingreso *</label>
-                                                            <div class="input-group date">
-                                                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="fec_in" type="text" class="form-control" value="<?php echo date('d-m-Y') ?>" name="fec_nac">
+                                                      <div class="row">
+                                                        <div class="col-lg-6">
+                                                          <div class="form-group">
+                                                                <label class="control-label">Cargo *</label>
+                                                              <select name="cargo" class="form-control">
+                                                                <option value="">-- Seleccionar --</option>
+                                                                <option value="1">Administrador</option>
+                                                                <option value="2">Cajero</option>
+                                                                <option value="3">Cocina</option>
+                                                                <option value="4">Moto</option>
+                                                              </select>
                                                             </div>
-                                                            <!--<input type="text" id="fec_in" class="form-control" data-mask="99/99/9999" placeholder="" name="fec_in" required="">
-                                                            <span class="help-block">dd/mm/yyyy</span>-->
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                          <div class="form-group">
+                                                              <label class="control-label">Estado *</label>
+                                                              <select name="estado" class="form-control">
+                                                                <option value="">-- Seleccionar --</option>
+                                                                <option value="A">Activado</option>
+                                                                <option value="X">Desactivado</option>
+                                                              </select>
+                                                          </div>
+                                                          <div class="form-group">
+                                                              <label class="control-label">Fecha Ingreso *</label>
+                                                              <div class="input-group date" id="fec_in">
+                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="<?php echo date('d-m-Y') ?>" name="fec_nac" readonly>
+                                                              </div>
+                                                              <!--<input type="text" id="fec_in" class="form-control" data-mask="99/99/9999" placeholder="" name="fec_in" required="">
+                                                              <span class="help-block">dd/mm/yyyy</span>-->
+                                                          </div>
                                                         </div>
                                                       </div>
                                                   </fieldset>

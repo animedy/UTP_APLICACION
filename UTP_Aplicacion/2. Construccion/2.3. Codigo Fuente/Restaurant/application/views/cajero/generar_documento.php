@@ -1,119 +1,217 @@
 <?php 
 include 'menu.php'; 
 ?>
-    <div id="" class="wrapper wrapper-content">
-		<div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-8">
-                <h2>Documento de Pago</h2>
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="index.html">Cajero</a>
-                    </li>
-                    <li>
-                        Lista de Pedidos
-                    </li>
-                    <li class="active">
-                        <strong>Generar Documento</strong>
-                    </li>
-                 </ol>
-            </div>
-            <div class="col-lg-4">
-                <div class="title-action">
-                    <!--<a href="#" class="btn btn-white"><i class="fa fa-pencil"></i> Editar </a>-->
-                    <?php
-                    foreach ($docu as $documento) {
+<div>
+    <div class="row wrapper white-bg col-sm-7 page-heading">
+        <br>
+        <div>
+            <h2>Documento de Pago</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="<?php echo base_url("cajero"); ?>">Cajero</a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url("cajero"); ?>">Lista de Pedidos</a>  
+                </li>
+                <li class="active">
+                    <strong>Generar Documento</strong>
+                </li>
+            </ol>
+        </div>
+    </div>  
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div id="" class="row wrapper white-bg col-sm-7 page-heading">
+        <form action="<?php echo base_url('Caja/DocumentoPdf')?>" method="POST">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Seleccione un Repartidor: </label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="repartidor">
+                    <?php foreach ($repartidor as $repartidores) 
+                    {
                     ?>
-                    <a href="" class="btn btn-white"><i class="fa fa-check "></i> Guardar </a>
-                    
-                    <a href="<?php echo base_url('Documento')."/".$documento->idPedidos;?>" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Imprimir </a>
+                        <option value="<?php echo $repartidores->idEmpleados; ?>"><?php echo $repartidores->Nombres." ".$repartidores->Apellidos; ?></option>
+                    <?php 
+                    } 
+                    ?>
+                    </select>
                 </div>
             </div>
-        </div>
-        <div class="row">
+            <br>
+            <br>
+            <br>
+            <br>
             <div class="col-lg-12">
-                <div class="wrapper wrapper-content animated fadeInRight">
-                    <div class="ibox-content p-xl">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h5>De:</h5>
-                                <address>
-                                    <strong>Pepe Tiburon</strong><br>
-                                    Av. Sucre 672 La Tomilla<br>
-                                    Cayma<br>
-                                    <abbr title="Phone">Cel:</abbr> 921604860
-                                </address>
-                            </div>
-                            <div class="col-sm-6 text-right">
-                                <h4>No. Boleta</h4>
-                                <h4 class="text-navy"><?php echo $documento->idPedidos; ?></h4>
-                                <span>Cliente:</span>
-                                <address>
-                                    <strong><?php echo $documento->Nombres; ?></strong><br>
-                                    <?php echo $documento->Direccion; ?><br>
-                                    <abbr title="Phone">DNI:</abbr><?php echo $documento->Dni; ?>
-                                </address>
-                                <p>
-                                    <span><strong>Fecha:</strong><?php echo $documento->Fecha; ?></span><br/>
-                                    <!--<span><strong>Due Date:</strong> March 24, 2014</span>-->
-                                </p>
-                            </div>
-                        </div>
-                        <div class="table-responsive m-t">
-                            <table class="table invoice-table">
-                                <thead>
-                                    <tr>
-                                        <th>Descripcion</th>
-                                        <th>Cantidad</th>
-                                        <th>Precio Unitario</th>
-                                        <!--<th>IGV</th>-->
-                                        <th>TotaL</th>
-                                    </tr>
-                                </thead>
-                                <?php
-                                foreach ($deta as $detalle) {
-                                    if($documento->idPedidos == $detalle->Pedidos_idPedidos) {
-                                ?>
-                                
-                                <tbody>
-                                    <tr>
-                                        <td><div><strong><?php echo $detalle->Nombres; ?></strong></div>
-                                        <td><?php echo $detalle->Cantidad; ?></td>
-                                        <td><?php echo $detalle->Precio; ?></td>
-                                        <!--<td>$5.98</td>-->
-                                        <td><?php echo $detalle->Precio; ?></td>
-                                    </tr>
-                                </tbody>
-                                <?php
-                                    }
-                                }
-                                ?> 
-                            </table>
-                        </div><!-- /table-responsive -->
-                        <table class="table invoice-total">
-                            <tbody>
-                                <tr>
-                                    <td><strong>Sub Total :</strong></td>
-                                    <td>S/.45.34</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>IGV :</strong></td>
-                                    <td>S/.8.16</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>TOTAL :</strong></td>
-                                    <td>S/.53.50</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <?php
-                        }
-                        ?> 
+                <button class="btn btn-white"><i class="btn btn-primary fa fa-print"></i> Imprimir </button>
+                <br>
+                <br>
+            </div>
+            <br>
+            <div class="col-sm-12">
+                <div class="col-sm-8">
+                    <div class="col-sm-3" id="logo">
+                        <img src="<?php echo base_url(); ?>assets/img/pp.png" height="50px">
                     </div>
+                    <div class="col-sm-5 text-center">
+                        <h4><strong>PEPE TIBURÓN<strong></h4>
+                        <strong class="text-center">Av. SUCRE 672 LA TOMILLA - CAYMA</strong>
+                    </div>
+                </div>    
+                <div class="col-sm-4 text-center">
+                    <h3><strong>RUC : 96325874122</strong></h3> 
+                    <h3><strong>BOLETA DE VENTA</strong></h3>          
+                    <label class="text-center"><strong><?php echo "B001-".$boleta; ?></strong></label>
+                    <input type="hidden" name="boleta" value="<?php echo "B001-".$boleta; ?>">
+                    
+                    <input type="hidden" name="idboleta" value="<?php echo $idboleta; ?>">
+                    <input type="hidden" name="pedido" value="<?php echo $pedido; ?>">
                 </div>
             </div>
-        </div>
+            <div class="col-sm-12">  
+                <br>
+                <hr>
+                <div class="col-sm-6">
+                    <label class="text-right">Fecha:</label><label><?php echo $fecha." ".$hora; ?></label>
+                    <input type="hidden" name="fecha_hora" value="<?php echo $fecha." ".$hora; ?>">
+                    <br>
+                    <label>Cliente :</label><label><?php echo $nombre; ?></label>
+                    <input type="hidden" name="nombre" value="<?php echo $nombre; ?>">
+                    <br>
+                    <label>Direccion :</label><label><?php echo $direccion; ?></label>
+                    <input type="hidden" name="direccion" value="<?php echo $direccion; ?>">
+                    <br>
+                    <label>DNI :</label><label><?php echo $dni; ?></label>
+                    <input type="hidden" name="dni" value="<?php echo $dni; ?>">
+                </div>
+                <div class="col-sm-6">
+                    <br>
+                    <label>Comanda :</label><label><?php echo $comanda ?></label>
+                    <input type="hidden" name="comanda" value="<?php echo $comanda ?>">
+                    <br>
+                    <label>Cajero :</label><label><?php echo $cajero ?></label>
+                    <input type="hidden" name="cajero" value="<?php echo $cajero ?>">
+                    <br>
+                    <label>Repartidor :</label><label><?php echo $cajero ?></label>
+                    <input type="hidden" name="cajero" value="<?php echo $cajero ?>">
+                </div>
+            </div>
+            <div class="col-sm-12 table-responsive m-t">
+                <table class="table invoice-table">
+                    <thead>
+                    <tr>
+                        <th>DESCRIPCION</th>
+                        <th>CANTIDAD</th>
+                        <th>PRECIO UNIT.</th>
+                        <th>TOTAL</th>
+                    </tr>
+                    </thead>
+                    <?php
+                    foreach ($docu as $documento) 
+                    {
+                        foreach ($deta as $detalle) 
+                        {
+                            if($documento->idPedidos == $detalle->Pedidos_idPedidos) 
+                            {
+                    ?>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong><?php echo $detalle->Nombres; ?></strong>
+                                <input type="hidden" name="nombres[]" value="<? echo $detalle->Nombres; ?>">
+                            </td>
+                            <td>
+                                <strong><?php echo $detalle->Cantidad; ?></strong>
+                                <input type="hidden" name="cantidad[]" value="<? echo  $detalle->Cantidad; ?>">
+                            </td>
+                            <td>
+                                <strong><?php echo $detalle->Precio; ?></strong>
+                                <input type="hidden" name="precio[]" value="<? echo  $detalle->Precio; ?>">
+                            </td>
+                            <td>
+                                <strong><?php echo number_format($detalle->Total,2); ?></strong>
+                                <input type="hidden" name="total[]" value="<? echo  number_format($detalle->Total,2); ?>">
+                            </td>
+                        </tr>
+                    </tbody>
+                    <?php
+                            }
+                        }
+                    }
+                    ?>     
+                </table>
+                <table class="table invoice-total">                            
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>Sub Total :</strong>
+                            </td>
+                            <td>
+                                <strong><?php echo "S/. ".number_format($subtotal,2); ?><strong>
+                                <input type="hidden" name="subtotal" value="<?php echo "S/. ".number_format($subtotal,2); ?>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>IGV :</strong>
+                            </td>
+                            <td>
+                                <strong><?php echo "S/. ".number_format($igv,2); ?><strong>
+                                <input type="hidden" name="igv" value="<?php echo "S/. ".number_format($igv,2); ?>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>TOTAL :</strong>
+                            </td>
+                            <td>
+                                <strong><?php echo "S/. ".number_format($total,2); ?><strong>
+                                <input type="hidden" name="totaltotal" value="<?php echo "S/. ".number_format($total,2); ?>">        
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <label><?php echo "SON:"." ".$letras." "."/Nuevos Soles"; ?></label>
+                    <input type="hidden" name="letras" value="<?php echo "SON:"." ".$letras." "."/Nuevos Soles"; ?>">
+                </div>
+            </div>
+        </form>
     </div>
+</div>
+</div>
 
 <?php 
     include 'footer.php';
 ?>
+
+<script src="<?php echo base_url(); ?>assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript">
+    Revisar = function () {
+                swal({
+                            title: "ALERTA",
+                            text: "Revisar los item del pedido segun Comanda",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Si, Revise!",
+                            cancelButtonText: "No, cancelar!",
+                            closeOnConfirm: false,
+                            closeOnCancel: false },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                            <?php foreach ($listapedidos as $listapedido): ?>
+                            window.location='<?php echo base_url('Documento')."/".$listapedido->idPedidos;?>';
+                            <?php endforeach ?>
+                            } else {
+                                swal("Cancelado", "Usted no cerro sesion :)", "error");
+                            }
+                        });
+            }
+</script>
+
+
