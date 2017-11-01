@@ -1,10 +1,9 @@
-<?php include 'menu.php'; ?>
 		<!-- Contenido -->
 	<div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                        <div class="tabs-container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+          <div class="tabs-container">
                           <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1">Empleados</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2">Nuevo Empleado</a></li>
@@ -39,16 +38,14 @@
                                                       <td>
                                                       <center>
                                                         <div class="col-md-1">
-                                                          <form method="post" action="<?php echo base_url('login/eliminar'); ?>">
-                                                            <button type="submit" class="btn btn-success btn-xs"><span class="fa fa-trash"></span></button>
-                                                            <input type="hidden" name="idempleado" value="<? echo $empleado->idEmpleados; ?>">
-                                                          </form>
-                                                        </div>
-                                                        <div class="col-md-1">
                                                           <form method="post" action="<?php echo base_url('EditarEmpleado'); ?>">
                                                             <button type="submit" class="btn btn-success btn-xs"><span class="fa fa-pencil"></span></button>
                                                             <input type="hidden" name="idempleado" value="<? echo $empleado->idEmpleados; ?>">
+                                                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                                                           </form>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <button type="submit" class=" btn btn-success btn-xs" onclick='EliminarEmpleado("<? echo $empleado->idEmpleados?>");'><span class="fa fa-trash"></span></button>
                                                         </div>
                                                       </center>
                                                       </td>
@@ -122,9 +119,8 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">Fecha Nacimiento *</label>
                                                                     <div class="input-group date" id="fec_nac">
-                                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input  type="text" class="form-control" value="<?php echo date('d-m-Y'); ?>" name="fec_nac" readonly >
+                                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input  type="text" class="form-control" value="<?php echo date('d-m-Y'); ?>" name="fec_nac">
                                                                     </div>
-                                                                    <!--<input type="text" id="fec_nac" name="fec_nac" class="form-control" data-mask="99/99/9999" placeholder=""  required="">-->
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Dirección *</label>
@@ -158,11 +154,11 @@
                                                           <div class="col-lg-6">
                                                               <div class="form-group">
                                                                   <label class="control-label">Password *</label>
-                                                                  <input id="password" name="password" type="text" class="form-control required">
+                                                                  <input id="password" name="password" type="password" class="form-control required">
                                                               </div>
                                                               <div class="form-group">
                                                                   <label class="control-label">Confirmar Password *</label>
-                                                                  <input id="confirm" name="confirm" type="text" class="form-control required">
+                                                                  <input id="confirm" name="confirm" type="password" class="form-control required">
                                                               </div>
                                                           </div>
                                                       </div>
@@ -180,7 +176,7 @@
                                                                 <option value="1">Administrador</option>
                                                                 <option value="2">Cajero</option>
                                                                 <option value="3">Cocina</option>
-                                                                <option value="4">Moto</option>
+                                                                <option value="4">Repartidor</option>
                                                               </select>
                                                             </div>
                                                         </div>
@@ -196,65 +192,27 @@
                                                           <div class="form-group">
                                                               <label class="control-label">Fecha Ingreso *</label>
                                                               <div class="input-group date" id="fec_in">
-                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="<?php echo date('d-m-Y') ?>" name="fec_nac" readonly>
+                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="<?php echo date('d-m-Y') ?>" name="fec_in">
                                                               </div>
-                                                              <!--<input type="text" id="fec_in" class="form-control" data-mask="99/99/9999" placeholder="" name="fec_in" required="">
-                                                              <span class="help-block">dd/mm/yyyy</span>-->
                                                           </div>
                                                         </div>
                                                       </div>
                                                   </fieldset>
+                                                  <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                                               </form>
                                           </div>
                                       </div>
                                   </div>
                                 </div>
-                            </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                </div>
-            </div>
+                          
+          </div>
         </div>
+      </div>
     </div>
+  </div>
         <!-- Fin Contenido -->
-        <!-- Formulario Nuevo Contenido -->               
-		<!-- Fin Formulario Nuevo Contenido -->
-		<!-- Formulario Editar Empleado -->
-		<!-- Fin Formulario Editar Empleado -->
-        
-        
-      <?php include 'footer.php'; ?>
-      <script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>
-        <!-- Jquery Validate -->
-      <script src="<?php echo base_url(); ?>assets/js/bootstrapValidator.min.js"></script>
-        <!-- Script Validación -->
-      <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
-        <!-- Fin Script Validación -->
-        <!-- Data picker -->
-    <script src="<?php echo base_url(); ?>assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-    <script>
-        $(document).ready(function() {
-
-            $('#fec_nac').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true,
-                format: 'dd-mm-yyyy'
-            });
-
-            $('#fec_in').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true,
-                format: 'dd-mm-yyyy'
-            });
-
-        });
-
-    </script>
+    
+    

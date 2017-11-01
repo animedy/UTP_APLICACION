@@ -30,9 +30,6 @@
             float:right;    /*tambien puede poner float:right, para que se alineé a la derecha */
             text-align: right;
         }
-       
-
-
         #cuerpo1 {
             float: left;
             text-align: left;
@@ -41,8 +38,6 @@
             float: right;
             text-align: right;
         }
-       
-    }
     </style>
 </head>
 
@@ -79,8 +74,8 @@
                 <label>Comanda :</label><label><?php echo $comanda; ?></label>
                 <br>
                 <label>Cajero :</label><label><?php echo $cajero ?></label>
-                <br>
-                <label>Repartidor :</label><label><?php echo $cajero ?></label>
+                <!--<br>
+                <label>Repartidor :</label><label><?php echo $cajero ?></label>-->
             </div>
         </div>
 

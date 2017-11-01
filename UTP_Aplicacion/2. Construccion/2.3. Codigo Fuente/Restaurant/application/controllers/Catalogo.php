@@ -31,13 +31,31 @@ class Catalogo extends CI_Controller {
 		* 	fecha creacion: 20/08/2017
 		fecha modificacion: 23/08/2017
 	*/
+
+	function buscar(){
+		$this->load->model('model_tipo_plato');
+		$data['tipo_platos'] 	= $this->model_tipo_plato->get_tipoplato();
+		$datos 					= $this->input->post("categoria_buscar");
+		$data['platos']			= $this->model_catalogo->search_catalogo($datos);
+		$this->load->view('admin/catalogo',$data);
+	}
+
+	/**
+		* Lista los platos y tipos de platos.
+		*
+		* @author Juan Jose Paz Chalco
+		* @author Ricardo Palacios Arce
+		* @author Carlos Sanchez Aquino
+		* 	fecha creacion: 20/08/2017
+		fecha modificacion: 23/08/2017
+	*/
 	function ListarCarta(){
 		$this->load->model('model_tipo_plato');
 		$data['tipo_platos'] 	= $this->model_tipo_plato->get_tipoplato();
 		$data['platos']			= $this->model_catalogo->get_catalogo();
 		$this->load->view('cliente/Carta',$data);
 	}
-/**
+	/**
 		* Muestra el carrito 
 		*
 		* Verifica si el usuario existe para darle el acceso .
@@ -65,7 +83,7 @@ class Catalogo extends CI_Controller {
 
 
 
-function MostrarSeguimiento(){
+	function MostrarSeguimiento(){
 		
 			$this->load->view('cliente/Mensaje');
 	
@@ -246,11 +264,13 @@ function MostrarSeguimiento(){
 		fecha creacion: 20/08/2017
 		fecha modificacion: 23/08/2017			
 	*/
-	function eliminar($id=NULL)
+	function eliminar()
 	{
-		if ($id != NULL) {
+		if ($this->input->is_ajax_request()) {
+			$id = $this->input->post("idplato");
 			$this->model_catalogo->deletePlato($id);
-			redirect(base_url('catalogos'));
+			
+			//header("location:catalogos");
 		}
 		
 	}

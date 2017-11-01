@@ -1,7 +1,7 @@
 <?php include 'Menu.php'; ?>
         <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>SU PEDIDO ESTA SIENDO PROCESADO GRACIAS POR SU COMPRA</h2>
+        <h2>GRACIAS POR SU COMPRA</h2>
    </div>
     <div class="col-lg-2">
     </div>
@@ -21,70 +21,19 @@
 
                                 <div class="vertical-timeline-content">
                                     <h2>EN RECEPCIÓN</h2>
-                                    <p>Su pedido esta siendo recepcionado en la empresa Pepe Tiburon.
+                                    <p>Su pedido esta siendo recepcionado. El pago se realizara cuando el repartidor lleve el pedido a la dirección indicada
                                     </p>
-                                    <a href="#" class="btn btn-sm btn-primary"> En espera</a>
+                                    <a href="#" class="btn btn-sm btn-primary"> aceptado</a>
                                     <span class="vertical-date">
                                         HOY DIA <br/>
-                                        <small> <?php echo date('H:i:s'); ?></small>
+                                        <small> <?php date_default_timezone_set('America/Lima');  echo date('H:i:s'); ?></small>
                                     </span>
                                 </div>
                             </div>
 
-                            <div class="vertical-timeline-block">
-                                <div class="vertical-timeline-icon blue-bg">
-                                    <i class="fa fa-file-text"></i>
-                                </div>
+                            
 
-                                <div class="vertical-timeline-content">
-                                    <h2>EN PREPARACIÓN</h2>
-                                    <p>Su pedido ya esta siendo preparado.</p>
-                                    <a href="#" class="btn btn-sm btn-success"> En espera </a>
-                                    <span class="vertical-date">
-                                        Today <br/>
-                                        <small>Dec 24</small>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="vertical-timeline-block">
-                                <div class="vertical-timeline-icon lazur-bg">
-                                    <i class="fa fa-coffee"></i>
-                                </div>
-
-                                <div class="vertical-timeline-content">
-                                    <h2>SALIENDO PARA ENVIAR</h2>
-                                    <p>Su pedido esta siendo asignado a un repartidor para enviar su producto a su direccion. </p>
-                                    <a href="#" class="btn btn-sm btn-info">En espera</a>
-                                    <span class="vertical-date"> Yesterday <br/><small>Dec 23</small></span>
-                                </div>
-                            </div>
-
-                            <div class="vertical-timeline-block">
-                                <div class="vertical-timeline-icon yellow-bg">
-                                    <i class="fa fa-phone"></i>
-                                </div>
-
-                                <div class="vertical-timeline-content">
-                                    <h2>EN CAMINO PARA SU DOMICILIO</h2>
-                                    <p>El repartidor esta en camino por favor sea pasiente mientras llegue a su direcion. El tiempo de llegada dependerandel disttito en que vive.</p>
-                                            <a href="#" class="btn btn-sm btn-info">En espera</a>
-                                    <span class="vertical-date">Yesterday <br/><small>Dec 23</small></span>
-                                </div>
-                            </div>
-
-                            <div class="vertical-timeline-block">
-                                <div class="vertical-timeline-icon lazur-bg">
-                                    <i class="fa fa-user-md"></i>
-                                </div>
-
-                                <div class="vertical-timeline-content">
-                                    <h2>ACEPTADO</h2>
-                                    <p>Gracias por comprar de la cevicheria Pepe Tiburon </p>
-                                           <a href="#" class="btn btn-sm btn-info">En espera</a>
-                                    <span class="vertical-date">Yesterday <br/><small>Dec 23</small></span>
-                                </div>
-                            </div>
+                           
                         </div>
 <a class="btn btn-white" href="<?php echo base_url("Catalogo/ListarCarta"); ?>"><i class="fa fa-arrow-left"></i> Seguir Comprando</a>
                     </div>

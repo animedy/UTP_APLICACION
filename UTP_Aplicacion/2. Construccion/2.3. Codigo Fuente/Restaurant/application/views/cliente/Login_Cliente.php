@@ -45,6 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      
                 <a data-toggle="modal" class="btn btn-success block full-width m-b" href="<?php echo base_url("cliente/Registrar"); ?>"></i>&nbsp;Registrar</a>  
                  <? echo isset($error)?$error:''; ?>
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
             </form>
             <p class="m-t"> <small> &copy; <?php echo date("Y"); ?></small> </p>
         </div>

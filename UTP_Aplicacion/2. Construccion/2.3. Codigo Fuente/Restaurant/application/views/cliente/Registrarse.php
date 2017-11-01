@@ -7,7 +7,7 @@
     <div class="modal-body">                   
         <div class="ibox-content">                    
             <div class="form-group">
-                <label class="col-lg-2 control-label">Nombre</label>
+                <label class="col-lg-2 control-label">Nombre y Apellidos</label>
                 <div class="col-sm-10"><input   type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese nombre" required></div>
             </div>
             <div class="form-group">
@@ -29,11 +29,11 @@
             </div>
             <div class="form-group">
                 <label class="col-lg-2 control-label">Celular</label>
-                <div class="col-sm-10"><input type="text" class="form-control" name="celular" id="celular" placeholder="Ingrese celular" required></div>
+                <div class="col-sm-10"><input type="number" class="form-control" name="celular" id="celular" placeholder="Ingrese celular" required></div>
             </div>
             <div class="form-group">
                 <label class="col-lg-2 control-label">Teléfono</label>
-                <div class="col-sm-10"><input type="text" class="form-control" name="telefono" id="telefono" placeholder="Ingrese telefono" required></div>
+                <div class="col-sm-10"><input type="number" class="form-control" name="telefono" id="telefono" placeholder="Ingrese telefono" required></div>
             </div>
             <div class="form-group">
                 <label class="col-lg-2 control-label">Correo</label>
@@ -70,7 +70,7 @@
             <button type="submit" class="btn btn-success" id="Cerrar1"><i class="fa fa-save"></i>&nbsp;Guardar</button>
             
         </a>
-        
+         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
     </div>
 </form>                 
 
@@ -83,7 +83,23 @@
 <!-- Jquery Validate -->
 <script src="<?php echo base_url(); ?>assets/js/plugins/sweetalert/sweetalert2.min.js"></script>
 <script type="text/javascript">
-Cerrar1 = function () {
+Cerrar1 = function () 
+    {
+        expresion= /[a-z]/;
+      $('#nombre').val();
+      $('#dni').val(); 
+      $('#direccion').val();
+      $('#celular').val();
+      $('#telefono').val();
+      $('#correo').val();
+      $('#contrasena').val();
+      $('#referencia').val();
+
+      if( $('#nombre').val()==="" || !expresion.test(nombre) || $('#dni').val()==="" || $('#direccion').val()==="" || $('#celular').val()==="" || $('#telefono').val()==="" || $('#correo').val()==="" || $('#contrasena').val()==="" || $('#referencia').val()==="")
+      {
+        alert("El campo esta vacio");
+      }
+    else {
       swal({
             title: 'REGISTRADO EXITOSAMENTE',
             html: $('<div>')
@@ -91,7 +107,10 @@ Cerrar1 = function () {
             
             animation: false,
             customClass: 'animated tada'
-         } );}
+         } );
+            }
+       
+    }
 </script>
 <!-- Script Validación -->
  <script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>

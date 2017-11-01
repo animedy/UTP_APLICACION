@@ -16,19 +16,23 @@ class Pedido extends CI_Controller {
 	*/
 
 	function listar(){
-		$data['porhacer'] 	= $this->model_pedido->getPedidoPorHacer();
+		//$data['porhacer'] 	= $this->model_pedido->getPedidoPorHacer();
+		$data['porhacer'] 	= $this->model_pedido->getPedidosDelDia();
 		$data['vistaporhacer'] 	= $this->model_pedido->getVistaPedidoPorHacer();
 
-		$data['progreso'] 	= $this->model_pedido->getPedidoEnProgreso();
+		//$data['progreso'] 	= $this->model_pedido->getPedidoEnProgreso();
+		$data['progreso'] 	= $this->model_pedido->getPedidosDelDia();
 		$data['vistaenprogreso'] = $this->model_pedido->getVistaPedidoEnProgreso();
-		
 
-		$data['completado'] 	= $this->model_pedido->getPedidoCompletado();
+		//$data['completado'] 	= $this->model_pedido->getPedidoCompletado();
+		$data['completado'] 	= $this->model_pedido->getPedidosDelDia();
 		$data['vistacompletado'] = $this->model_pedido->getVistaPedidoCompletado();
 		$this->load->view('admin/pedidos',$data);
 	}
+
+
 	function Insertar(){
-		date_default_timezone_set('America/Lima');
+		
 		$datos = $this->input->post();
 		if (isset($datos)) {
 			$Fecha 						= date('Y-m-d');
@@ -43,7 +47,7 @@ class Pedido extends CI_Controller {
 			
 
 			$Comanda					= "0".$Clientes_idCliente.date('His').date('dmY');
-			$ObservacionAdministrador	= 'null';
+			$ObservacionAdministrador	= '';
 
 			$idPedidos 		= $this->model_pedido->insertPedido($Fecha,$Hora_Pedido,$Clientes_idCliente,$Total,$Estado_Administrador,$Estado_Cocinero,$Estado_Cajero,$Comanda,$ObservacionAdministrador);
 
@@ -71,6 +75,7 @@ class Pedido extends CI_Controller {
 		
 		}
 	}
+
 	/**
 		* Lista todos los pedidos (Reporte).
 		*
@@ -80,7 +85,7 @@ class Pedido extends CI_Controller {
 
 	function listarPedidos(){
 		try {
-			$data['pedidos'] 	= $this->model_pedido->getPedidos();
+			$data['pedidos'] 	= $this->model_pedido->getPedidosReporte();
 			$this->load->view('admin/reporte_filtro_pedidos',$data);
 			
 		}catch (ErrorException $e) {
@@ -226,5 +231,63 @@ class Pedido extends CI_Controller {
 		}
 			
 	}
+
+	function EntregaPedidos()
+	{
+		$this->load->model('model_tipo_empleado');
+		$this->load->model('model_empleado');
+		$this->load->model('model_asignacion');
+		$data['asignaciones'] = $this->model_asignacion->getAsignacion();
+		
+
+		$data['repartidores']	= $this->model_tipo_empleado->getTipoEmpleadoRepartidor();
+		$data['empleados']	= $this->model_empleado->getEmpleado();
+		$data['reportecompletados'] = $this->model_pedido->getVistaReporteCompletado();
+		$this->load->view('admin/entregar_pedido',$data);
+
+	}
+
+	function InsertarAsignacion()
+	{
+		$this->load->model('model_asignacion');
+		$datos = $this->input->post();
+		if (isset($datos)) {
+			$idpedidoasignado 	= 	$datos['idpedidoasignado'];
+			$repartidor 		= 	$datos['repartidor'];
+			$this->model_asignacion->insertAsignacion($idpedidoasignado,$repartidor);
+			redirect(base_url('Pedido/EntregaPedidos'));
+		}
+	}
+
+	function ActualizarAsignacion()
+	{
+		$this->load->model('model_asignacion');
+		$datos = $this->input->post();
+		if (isset($datos)) {
+			$repartidor 		= 	$datos['repartidor'];
+			$this->model_asignacion->updateAsignacion($repartidor,$datos['idasignacion']);
+			redirect(base_url('Pedido/EntregaPedidos'));
+		}
+	}
+
+	function ExportarPedidosAtendidos()
+	{
+		$datos = $this->input->post();
+		if (isset($datos)) {
+			$this->load->library('M_pdf');
+			$stylesheet = file_get_contents(base_url('assets/css/bootstrap.min.css'));
+			$nombre_pdf	= "Pedidos_Atendidos_". date("d_m_Y_H_m_s").".pdf";
+			$vista = $this->load->view('admin/reporte_pdf_pedidos',$datos,TRUE);
+			$this->m_pdf->pdf->setFooter('Página {PAGENO} de {nbpg}');
+			//$this->m_pdf->pdf->SetHeader('Fecha:'. date('d/m/Y') . ' Hora:' . date('H:m:s') );
+			$this->m_pdf->pdf->SetHeader('Fecha:'. date('d/m/Y').'|Pepe Tiburon - Cevicheria| Hora:' . date('H:m:s'));
+			$this->m_pdf->pdf->WriteHTML($stylesheet, 1);
+			$this->m_pdf->pdf->WriteHTML($vista);
+			$this->m_pdf->pdf->Output($nombre_pdf,"D");
+			//$this->load->view('admin/reporte_pdf_pedidos',$datos);
+		}
+	}
+
+
 
 }

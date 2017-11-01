@@ -152,16 +152,11 @@ $route['Mensaje']= 'Catalogo/MostrarSeguimiento';
 | --------- URL Caja-------------
 */
 $route['cajero']= 'Caja/ListarPedidos';
-
-$route['cajeroanu']= 'Caja/ListaPedidosAnulados';
-/*$route['VerDocumento']= 'Caja/VerDocumento';*/
+$route['docupagados']= 'Caja/ListaDcumentosPagados';
+$route['docuanulados']= 'Caja/ListaDocumentosAnulados';
 $route['VerDocumento/(:any)']= 'Caja/VerDocumento/$1';
-
-//$route['Documento/(:any)']= 'Caja/Documento/$1';
-
-$route['anular']= 'Caja/ListarDocuAnulados';
 /*
-| --------- FIN URL Cajero ---------
+| --------- FIN URL Caja ---------
 */
 /*
 | -------------------------------------------------------------------------

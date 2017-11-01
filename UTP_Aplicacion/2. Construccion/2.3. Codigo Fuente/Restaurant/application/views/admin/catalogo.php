@@ -9,6 +9,32 @@
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox-content m-b-sm border-bottom">
+            <form action="<?php echo base_url('catalogo/buscar'); ?>" method="post">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label class="control-label" for="status">Categoría de Plato</label>
+                            <select  name="categoria_buscar" class="form-control">
+                                <option value="">-- Seleccione --</option>
+                                <?php foreach ($tipo_platos as $categoria) { ?>
+                                    <option value="<? echo $categoria->idCategoriaPlato; ?>"><? echo $categoria->Categoria; ?></option>
+                                <? } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="date_modified">Buscar</label>
+                            <div class="input-group date">
+                                <button class="btn btn-success">Enviar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+            </form>
+        </div>
         <div class="row">
             <?php 
             $contar =0;
@@ -73,6 +99,7 @@
                     }
                 }
              ?>
+             
         </div>       
  
                                                             <!-- Nuevo -->
@@ -127,7 +154,7 @@
                                 <label class="col-lg-2 control-label ">Imagen</label>
                                     <div class="col-sm-10">
                                     <label class="btn btn-block btn-success">
-                                        Examinar&hellip; <input type="file" accept="image/x-png,image/jpeg"  name="imagen" style="display: none;">
+                                        Examinar&hellip; <input type="file" accept="image/x-png,image/jpg"  name="imagen" style="display: none;">
                                     </label>
                                     </div>
                                 </div>
@@ -138,7 +165,8 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Descripción</label>
                                     <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" placeholder="Ingrese la descripción del plato"></textarea></div>
-                                </div>                                   
+                                </div>
+                                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">                                   
                             </div>
 
                         </div>
@@ -227,7 +255,8 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Descripción</label>
                                     <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" id="descripcion_edit" required></textarea></div>
-                                </div>                                   
+                                </div>
+                                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">                                   
                             </div>
 
                         </div>
@@ -255,7 +284,7 @@
         $( document ).ready(function() {
         Editar = function (id,nombre,imagen,categoria,precio,estado,cantidad,descripcion) 
         {
-            $("#imagen_edit").attr("src","./"+imagen);
+            $("#imagen_edit").attr("src","<?php echo base_url(); ?>"+imagen);
             $('#id_edit').val(id);
             $('#nombre_edit').val(nombre);
             $("#categoria_edit").find('option:contains("'+categoria+'")').prop('selected', true);
@@ -266,28 +295,31 @@
         }
 
         Eliminar = function (id) {
-                swal({
-                            title: "¿Esta seguro que desea eliminar?",
-                            text: "Usted no podra recuperar esta información una vez eliminada",
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "Si, eliminar!",
-                            cancelButtonText: "No, cancelar!",
-                            closeOnConfirm: false,
-                            closeOnCancel: false },
-                        function (isConfirm) {
-                            if (isConfirm) {
-                                swal("Eliminado!", "El plato a sido eliminado.", "success");
-                                jQuery.ajax({
-                                    type: "POST",
-                                    url: "<?php echo base_url(); ?>" + "/catalogo/eliminar/"+id,
-                                    dataType: 'json'
-                                });
-                                location.reload();
-                            } else {
-                                swal("Cancelado", "El plato esta a salvo :)", "error");
-                            }
+                    var url = "<?php echo base_url('catalogo/eliminar'); ?>";
+                    var csrf_token = '<?php echo $this->security->get_csrf_hash(); ?>';
+                    swal({
+                                title: "¿Esta seguro que desea eliminar?",
+                                text: "Usted no podra recuperar esta información una vez eliminada",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "Si, eliminar!",
+                                cancelButtonText: "No, cancelar!",
+                                closeOnConfirm: false,
+                                closeOnCancel: false },
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    swal("Eliminado!", "El plato a sido eliminado.", "success");
+                                    jQuery.ajax({
+                                        type: "POST",
+                                        url: url,
+                                        data:{'csrf_test_name': csrf_token,"idplato":id},
+                                        dataType: 'json'
+                                    });
+                                    location.reload();
+                                } else {
+                                    swal("Cancelado", "El plato esta a salvo :)", "error");
+                                }
                         });
             }
         });

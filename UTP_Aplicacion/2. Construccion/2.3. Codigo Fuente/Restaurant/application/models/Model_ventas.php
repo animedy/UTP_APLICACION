@@ -11,9 +11,17 @@ class Model_ventas extends CI_Model {
     */
 
 
-    function GetVentasDelMes(){
-        $query = $this->db->get('vista_ventas_mes');
+    function GetVentasDelDia(){
+        $query = $this->db->get('vista_ventas_dia');
         $this->db->order_by('Fecha_Emision');
+        return $query->result();
+    }
+
+
+    function GetVentasDelMes($fecha){
+        $this->db->like('Fecha_Emision',$fecha);
+        $this->db->order_by('Fecha_Emision');
+        $query = $this->db->get('vista_ventas_mes');
         return $query->result();
     }
 

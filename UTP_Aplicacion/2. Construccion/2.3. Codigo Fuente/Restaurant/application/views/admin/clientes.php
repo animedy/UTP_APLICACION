@@ -10,7 +10,7 @@
 
                     </div>
                         <div class="ibox-content">
-                            <a data-toggle="modal" class="btn btn-success" href="#modal-form"><i class="fa fa-plus"></i>&nbsp;Nuevo</a>
+                            <!--<a data-toggle="modal" class="btn btn-success" href="#modal-form"><i class="fa fa-plus"></i>&nbsp;Nuevo</a>-->
                             </br>
                             </br>
                             <div class="table-responsive">
@@ -43,8 +43,6 @@
                                                  } else {
                                                      echo "Femenino";
                                                  }
-                                                  
-                                                
                                             ?>
                                         </td>
                                         <td><?php echo $cliente->Direccion;?></td>
@@ -53,17 +51,16 @@
                                         <td><?php echo $cliente->Referencia;?></td>
                                         <td>
                                         <center>
-                                            <div class="col-md-1">
-                                                <form method="post" action="<?php echo base_url('cliente/eliminar'); ?>">
-                                                    <button type="submit" class="btn btn-success btn-xs"><span class="fa fa-trash"></span></button>
-                                                    <input type="hidden" name="idcliente" value="<? echo $cliente->idCliente; ?>">
-                                                </form>
-                                            </div>
-                                            <div class="col-md-1">
+                                            <!--<div class="col-md-1">
                                                 <form method="post" action="<?php echo base_url('EditarCliente'); ?>">
                                                      <button type="submit" class="btn btn-success btn-xs"><span class="fa fa-pencil"></span></button>
                                                      <input type="hidden" name="idcliente" value="<? echo $cliente->idCliente; ?>">
+                                                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                                                 </form>
+                                            </div>-->
+                                            <div class="col-md-1">
+                                                    <button  type="submit" class="btn btn-success btn-xs" onclick='Eliminar("<? echo $cliente->idCliente?>");'><i class="fa fa-trash"></i></button>
+                                                    <!--<input type="submit" class="btn btn-success btn-xs"  ><span class="fa fa-trash"></span>-->
                                             </div>
                                         </center>
                                         </td>
@@ -94,7 +91,7 @@
     </div>
         <!-- Fin Contenido -->
         <!-- Formulario Nuevo Contenido -->
-        <div id="modal-form" class="modal inmodal fade" aria-hidden="true" tabindex="-1">
+        <!--<div id="modal-form" class="modal inmodal fade" aria-hidden="true" tabindex="-1">
         
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -143,7 +140,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Contraseña</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="contrasena" placeholder="Ingrese Contraseña" required></div>
+                                    <div class="col-sm-10"><input type="password" class="form-control" name="contrasena" placeholder="Ingrese Contraseña" required></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Distrito</label>
@@ -162,7 +159,8 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Referencia</label>
                                     <div class="col-sm-10"><input type="text" class="form-control" name="referencia" id="referencia" placeholder="Ingrese Referencia"></div>
-                                </div>                                 
+                                </div>
+                                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">                              
                             </div>
 
                         </div>
@@ -175,15 +173,56 @@
                 </div>                    
             </div>
                            
-        </div>
+        </div>-->
                                   
 		<!-- Fin Formulario Nuevo Contenido -->
         
         
 <?php include 'footer.php'; ?>
-        <script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>
-        <!-- Jquery Validate -->
-        <script src="<?php echo base_url(); ?>assets/js/bootstrapValidator.min.js"></script>
-        <!-- Script Validación -->
-        <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
         
+        
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                            Eliminar = function (id) {
+                                
+                                
+                                var url = "<?php echo base_url('cliente/eliminar'); ?>";
+                                var csrf_token = '<?php echo $this->security->get_csrf_hash(); ?>';
+
+                                swal({
+                                    title: "¿Esta seguro que desea eliminar?",
+                                    text: "Usted no podra recuperar esta información una vez eliminada",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "Si, eliminar!",
+                                    cancelButtonText: "No, cancelar!",
+                                    closeOnConfirm: false,
+                                    closeOnCancel: false },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        swal("Eliminado!", "El plato a sido eliminado.", "success");
+                                         $.ajax({
+                                            url: url,                        
+                                            type: "POST",                       
+                                            data:{'csrf_test_name': csrf_token,"idcliente":id},
+                                        success: function(data) {
+                                            
+                                        },
+                                        error: function(e) {
+                                            swal("No se Elimino", "Ocurrio un error", "error");
+                                        }
+                                       });
+                                        
+                                    } else {
+                                        swal("Cancelado", "El plato esta a salvo :)", "error");
+                                    }
+                                        
+                                });
+
+                            };
+                            
+             });  
+            
+        </script>

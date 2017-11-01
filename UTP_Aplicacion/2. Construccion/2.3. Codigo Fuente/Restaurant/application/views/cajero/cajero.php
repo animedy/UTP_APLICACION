@@ -1,6 +1,5 @@
 <?php include 'menu.php'; ?>
 
-        <!--<div class="wrapper wrapper-content animated fadeInRight ecommerce">-->
             <div class="wrapper wrapper-content  animated fadeInRight">
                 <div class="col-lg-3">
                     <div class="widget style1 navy-bg">
@@ -12,7 +11,6 @@
                                 <span><b> EMITIDOS</b></span>
                                 <h2 class="font-bold"><?php echo $numemitidos?></h2>
                             </div>
-                            <p class="font-bold">Mas Información <i class="fa fa-arrow-circle-right"></i></p>
                         </div>
                     </div>
                 </div>
@@ -26,94 +24,105 @@
                                 <span><b> ANULADOS </b></span>
                                 <h2 class="font-bold"><?php echo $numanulados?></h2>
                             </div>
-                            <p class="font-bold">Mas Información <i class="fa fa-arrow-circle-right"></i></p>
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="tabs-container">
                                 <h2>GENERAR COMPROBANTE DE PAGO</h2>                         
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-file-o"></i>GENERAR COMPROBANTE</a></li>
-                                    <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-file"></i>POR PAGAR</a></li>
-                                    <li class=""><a data-toggle="tab" href="#tab-3"><i class="fa fa-file-text"></i>PAGADOS</a></li>
+                                    <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-file-o"></i>LISTA PEDIDOS</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-file"></i>DOCUMENTOS GENERADOS</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div id="tab-1" class="tab-pane active">
-                                        <div class="panel-body">  
+                                        <div class="panel-body">
                                             <div class="ibox-content">
-                                                <!--<div class="full-height-scroll">-->
-                                                <div class="table-responsive">
-                                                    <!--<form id="formCAJERO" method="POST" href="<?php echo base_url('VerDocumento');?>">-->
-                                                    <!--<table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">-->
+                                                <div class="table-responsive">  
                                                     <table class="table table-striped table-bordered table-hover dataTables-example" id="table">
                                                         <thead>
                                                             <tr>
-                                                                <th>OBSERVACION</th>
                                                                 <th>PEDIDO</th>
-                                                                <th data-hide="phone">FECHA</th>
-                                                                <th data-hide="phone">CLIENTE</th>
-                                                                <th data-hide="phone">DNI</th>
-                                                                <th data-hide="phone,tablet" >DIRECCION</th>
-                                                                <!--<th data-hide="phone,tablet" >REPARTIDOR</th>-->
-                                                                <th data-hide="phone">TOTAL</th>
-                                                                <th class="text-right">ACCION</th>
-                                                                <th data-hide="phone">ESTADO</th>
+                                                                <th>FECHA</th>
+                                                                <th>CLIENTE</th>
+                                                                <th>DNI</th>
+                                                                <th>DIRECCION</th>
+                                                                <th>DETALLE PEDIDO</th>
+                                                                <th>TOTAL</th>
+                                                                <th>ESTADO</th>
+                                                                <th>CAMBIAR</th>
+                                                                <th>ACCION</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <?php 
-                                                                foreach($listapedidos as $listapedido) 
-                                                                {          
+                                                            foreach($listapedidos as $listapedido) 
+                                                            {  
+                                                                if ($listapedido->Estado_Administrador == 1 && $listapedido->Estado_Cocinero == 1 && $listapedido->Estado_Cajero==1 && $listapedido->emitido<>"emitido") 
+                                                                {    
                                                             ?>  
                                                             <tr>
-                                                                <td>
-                                                                    <a  data-toggle="modal" data-target="#modal-form-estado"  class="pull-center btn btn-xs btn-danger" onClick='CambiarEstado("<?php echo $listapedido->idPedidos; ?>");'>Ver</a>
-                                                                </td>
-
                                                                 <td><?php echo $listapedido->Comanda;?></td>
-                                                                <td><?php echo date("d-m-Y",strtotime($listapedido->Fecha_Pedido));?></td>
+                                                                <td><?php echo date("d-m-Y",strtotime($listapedido->Fecha));?></td>
                                                                 <td><?php echo $listapedido->Nombres;?></td>
                                                                 <td><?php echo $listapedido->Dni;?></td>
                                                                 <td><?php echo $listapedido->Direccion;?></td>
-                                                                <!--<td>
-                                                                <input type="hidden" name="pedido" value="<?php echo $listapedido->idPedidos; ?>">
-                                                                <select class="form-control" name="repartidor">
-                                                                <?php foreach ($repartidor as $repartidores) 
-                                                                {
-                                                                ?>
-                                                                    <option nombre="empleado" value="<?php echo $repartidores->idEmpleados; ?>"><?php echo $repartidores->Nombres." ".$repartidores->Apellidos; ?></option>
-                                                                    
-                                                                <?php 
-                                                                } 
-                                                                ?>
-                                                                </select>
-                                                                </td>-->
-                                                                <td><?php echo "S/.".$listapedido->Total;?></td>
-                                                                <td class="text-right">
-                                                                    <div class="btn-group">                      
-                                                                        <a  href="<?php echo base_url('VerDocumento')."/".$listapedido->idPedidos;?>" id='boton' class="btn btn-blue btn-sm"><i height="100px" class="fa fa-save fa-2x"></i> </a>    
+                                                                <td>
+                                                                    <div class="dropdown">
+                                                                        <button class="btn-xs dropdown-toggle" type="button" data-toggle="dropdown">VER DETALLE
+                                                                        <span class="caret"></span></button>
+                                                                        
+                                                                        <ul class="dropdown-menu">
+                                                                            <?php
+                                                                            foreach ($listapedidosdetalle as $detalle) 
+                                                                            { 
+                                                                                if ($listapedido->idPedidos == $detalle->Pedidos_idPedidos) 
+                                                                                {  
+                                                                            ?>
+                                                                            <li><a><?php echo $detalle->Cantidad." "."----"." ".$detalle->Nombres;  ?></a></li>
+                                                                            <?php
+                                                                                }
+                                                                            }
+                                                                            ?>
+                                                                        </ul> 
                                                                     </div>
                                                                 </td>
+                                                                <td><?php echo "S/.".$listapedido->Total;?></td>
                                                                 <td>
-                                                                    <span class="label label-primary">Pendiente</span>
+                                                                    <span class="text-center label label-primary">Pendiente</span>
                                                                 </td>
+                                                                <td>
+                                                                    <a  data-toggle="modal" data-target="#modal-form-estado"  class="text-center pull-center btn btn-sm btn-danger" onClick='CambiarEstado("<?php echo $listapedido->idPedidos; ?>");'>Ver</a>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <div class="btn-group">                      
+                                                                        <a  href="<?php echo base_url('VerDocumento')."/".$listapedido->idPedidos;?>" id='boton' class="btn btn-blue btn-md"><i height="100px"  class="fa fa-save fa-2x"></i> </a>    
+                                                                    </div>
+                                                                </td> 
                                                             </tr>
                                                             <?php 
                                                                 }
+                                                            }
                                                             ?>
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
-                                                                <td colspan="7">
-                                                                    <ul class="pagination pull-right"></ul>
-                                                                </td>
+                                                                <th>PEDIDO</th>
+                                                                <th>FECHA</th>
+                                                                <th>CLIENTE</th>
+                                                                <th>DNI</th>
+                                                                <th>DIRECCION</th>
+                                                                <th>DETALLE PEDIDO</th>
+                                                                <th>TOTAL</th>
+                                                                <th>ESTADO</th>
+                                                                <th>CAMBIAR</th>
+                                                                <th>ACCION</th>
                                                             </tr>
                                                         </tfoot>
                                                     </table>
-                                                    <!--</form>-->   
                                                 </div>
                                             </div>
                                         </div>
@@ -122,18 +131,16 @@
                                         <div class="panel-body">
                                             <div class="ibox-content">
                                                 <div class="table-responsive">
-                                                    <!--<table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">-->
                                                     <table class="table table-striped table-bordered table-hover dataTables-example" id="table">
                                                         <thead>
                                                             <tr>
                                                                 <th>DOCUMENTO</th>
-                                                                <th data-hide="phone">FECHA</th>
-                                                                <th data-hide="phone">NOMBRE</th>
-                                                                <th data-hide="phone">DNI</th>
-                                                                <th data-hide="phone,tablet" >TOTAL</th>
-                                                                <!--<th data-hide="phone">TOTAL</th>-->
-                                                                <th data-hide="phone">ESTADO</th>
-                                                                <th class="text">ACCION</th>
+                                                                <th>FECHA</th>
+                                                                <th>NOMBRE</th>
+                                                                <th>DNI</th>
+                                                                <th>TOTAL</th>
+                                                                <th>ESTADO</th>
+                                                                <th>ACCION</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -141,19 +148,11 @@
                                                                 foreach ($ListarPorCancelar as $ListarPorCancelar) {         
                                                             ?>  
                                                             <tr>
-                                                                <!--id pedido-->
                                                                  <td><?php echo $ListarPorCancelar->idDocumentoBoleta;?></td>
-                                                                <!--fecha pedido-->
                                                                 <td><?php echo date("d-m-Y",strtotime($ListarPorCancelar->Fecha_Emision));?></td>
-                                                                <!--cliente pedido-->
                                                                 <td><?php echo $ListarPorCancelar->Nombre;?></td>
-                                                                <!--cliente dni pedido-->
                                                                 <td><?php echo $ListarPorCancelar->Dni;?></td>
-                                                                <!--cliente direccion pedido-->
                                                                 <td><?php echo "S/.".$ListarPorCancelar->Total;?></td>
-                                                                <!--total pedido-->
-                                                                <!--<td><?php echo $ListarPorCancelar->Total;?></td>-->
-                                                                <!--accion pedido-->
                                                                 <td>
                                                                     <?php if($ListarPorCancelar->Estado_Boleta='Por Cancelar'){
                                                                     ?>
@@ -164,10 +163,10 @@
                                                                 </td>
                                                                 <td class="text">
                                                                     <div class="btn-group">
-                                                                     <a class="btn btn-white btn-sm" href="<?php echo base_url('caja/Documentocancelado')."/".$ListarPorCancelar->idDocumentoBoleta; ?>"><i class="fa fa-pencil"></i>CANCELAR</a>
+                                                                    <button type="submit" class="btn btn-sm btn-info"  onclick='Pagar("<?php echo $ListarPorCancelar->idDocumentoBoleta;?>");'><i class="fa fa-pencil"></i>PAGAR</button>
                                                                     </div>
                                                                     <div class="btn-group">
-                                                                     <a class="btn btn-white btn-sm" href="<?php echo base_url('caja/Documentoanulado')."/".$ListarPorCancelar->idDocumentoBoleta; ?>"><i class="fa fa-pencil"></i>ANULAR</a>
+                                                                    <button type="submit" class="btn btn-sm btn-danger"  onclick='Anular("<?php echo $ListarPorCancelar->idDocumentoBoleta;?>");'><i class="fa fa-pencil"></i>ANULAR</button>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -177,65 +176,16 @@
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
-                                                                <td colspan="7">
-                                                                    <ul class="pagination pull-right"></ul>
-                                                                </td>
-                                                            </tr>
-                                                        </tfoot>
-                                                    </table>      
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="tab-3" class="tab-pane">
-                                        <div class="panel-body">
-                                            <div class="ibox-content">
-                                                <div class="table-responsive">
-                                                    <!--<table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">-->
-                                                    <table class="table table-striped table-bordered table-hover dataTables-example" id="table">
-                                                        <thead>
-                                                            <tr>
                                                                 <th>DOCUMENTO</th>
-                                                                <th data-hide="phone">FECHA</th>
-                                                                <th data-hide="phone">NOMBRE</th>
-                                                                <th data-hide="phone">DNI</th>
-                                                                <th data-hide="phone,tablet" >TOTAL</th>
-                                                                <!--<th data-hide="phone">TOTAL</th>-->
-                                                                <th data-hide="phone">ESTADO</th>
-                                                                <!--<th class="text-right">ACCION</th>-->
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php 
-                                                                foreach ($ListarCancelados as $ListarCancelados) {          
-                                                            ?>  
-                                                            <tr>
-                                                                <!--id pedido-->
-                                                                 <td><?php echo $ListarCancelados->idDocumentoBoleta;?></td>
-                                                                <!--fecha pedido-->
-                                                                <td><?php echo date("d-m-Y",strtotime($ListarCancelados->Fecha_Emision));?></td>
-                                                                <!--cliente pedido-->
-                                                                <td><?php echo $ListarCancelados->Nombre;?></td>
-                                                                <!--cliente dni pedido-->
-                                                                <td><?php echo $ListarCancelados->Dni;?></td>
-                                                                <!--cliente direccion pedido-->
-                                                                <td><?php echo "S/.".$ListarCancelados->Total;?></td>
-                                                                <td>
-                                                                    <span class="label label-warning">Cancelado</span>
-                                                                </td>
-                                                            </tr>
-                                                            <?php 
-                                                                }
-                                                            ?>
-                                                        </tbody>
-                                                        <tfoot>
-                                                            <tr>
-                                                                <td colspan="7">
-                                                                    <ul class="pagination pull-right"></ul>
-                                                                </td>
+                                                                <th>FECHA</th>
+                                                                <th>NOMBRE</th>
+                                                                <th>DNI</th>
+                                                                <th>TOTAL</th>
+                                                                <th>ESTADO</th>
+                                                                <th>ACCION</th>
                                                             </tr>
                                                         </tfoot>
-                                                    </table>      
+                                                    </table>    
                                                 </div>
                                             </div>
                                         </div>
@@ -246,41 +196,51 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-
-        <div id="modal-form-estado" class="modal inmodal fade" aria-hidden="true" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title">Cambio de Estado</h4>
-                    </div>
-                    <form class="form-horizontal" action="<?php echo base_url('Caja/actualizarestado'); ?>" method="POST">
-                        <div class="modal-body">
-                            <div class="ibox-content">                  
-                                <div class="form-group">
-                                    <input type="hidden" id="regresarcocina" name="id">
-                                    <label class="col-md-6 control-label">Regresar a Cocina</label>
-                                    <div>
-                                        <input type="checkbox" name="regresar" class="js-switch_1" value="on" />
+            <div id="modal-form-estado" class="modal inmodal fade" aria-hidden="true" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">Cambiar de Estado el Pedido</h4>
+                        </div>
+                        <form class="form-horizontal" name="formulario" action="<?php echo base_url('Caja/actualizarestado'); ?>" method="POST">
+                            <div class="modal-body">
+                                <div class="ibox-content">
+                                    <div class="form-group">
+                                        <input type="hidden" id="idprogreso" name="id">
+                                        <label class="col-md-6 control-label">Regresar a Cocina</label>
+                                        <div>
+                                            <input type="hidden" name="porhacer" value="on" />
+                                        </div>
+                                        <div>
+                                            <input type="hidden" name="enprogreso" value="on" />
+                                        </div>
+                                        <div>
+                                            <!--<input type="checkbox" name="completado" id="completado" value="off" onclick="javascript:validar(this);" class="js-switch_3" />-->
+                                            <input type="checkbox" name="completado" id="completado"  onclick="boton.disabled=!this.checked">
+                                        </div>
                                     </div>
-                                    <div>
-                                        <input type="hidden" name="completado" value="0" />
-                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Observacion: </label>
+                                        <input id="descripcion" name="descripcion" type="text" class="form-control required">
+                                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+                                    </div>    
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-white" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Cerrar</button>
-                            <button type="submit" class="btn btn-primary" id="add"><i class="fa fa-save"></i>&nbsp;Guardar</button>
-                        </div>
-                    </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-white" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Cerrar</button>
+                                
+                                <button type="submit" class="btn btn-primary"  name="boton" id="add" disabled><i class="fa fa-save"></i>&nbsp;Guardar</button>
+                                 
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        <!--</div>-->
 
+                               
         <?php include 'footer.php'; ?>
 
         <script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>
@@ -305,13 +265,121 @@
             var switchery_3 = new Switchery(elem_3, { color: '#1AB394' });
             CambiarEstado = function(id)
             {
-                $('#regresarcocina').val(id);
+                $('#idprogreso').val(id);
             }
         </script>
+
         <script type="text/javascript">
-            setTimeout('document.location.reload()',15000); 
+            setTimeout('document.location.reload()',75000); 
         </script>
 
+        <script type="text/javascript">
+            $(document).ready(function() 
+            {
+                Anular = function (id) 
+                {               
+                    var datos = 'idDocumentoBoleta='+ id;
+                    var url = "<?php echo base_url('Caja/Documentoanulado'); ?>";           
+                    var csrf_token = '<?php echo $this->security->get_csrf_hash(); ?>';            
+                    //alert(datos);
+                    //alert(url);
+                    //alert(csrf_token);
+                    swal
+                    (
+                        {
+                            title: "¿Esta seguro que desea Anular la Boleta?",
+                            text: "Usted anulara la Boleta",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Si, Anular!",
+                            cancelButtonText: "No, cancelar!",
+                            closeOnConfirm: false,
+                            closeOnCancel: false 
+                        },
+                        function (isConfirm) 
+                        {
+                            if (isConfirm) 
+                            {
+                                swal("Anulando!", "La Boleta se esta anulando.", "success");
+                                $.ajax(
+                                {
+                                    url: url,                        
+                                    type: "POST",                       
+                                    data:{'csrf_test_name':csrf_token,'idDocumentoBoleta':id},
+                                    success: function(data) 
+                                    {    },
+                                    error: function(e) 
+                                    {
+                                        swal("No se Anulo", "Ocurrio un error", "error");
+                                    }
+                                });            
+                            } 
+                            else 
+                            {
+                                swal("Cancelado", "La Boleta esta a salvo", "error");
+                            }                
+                        }
+                    );
+                };            
+            });    
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(function() 
+            {
+                Pagar = function (id) 
+                {               
+                    var datos = 'idDocumentoBoleta='+ id;
+                    var url = "<?php echo base_url('Caja/Documentocancelado'); ?>";           
+                    var csrf_token = '<?php echo $this->security->get_csrf_hash(); ?>';            
+                    //alert(datos);
+                    //alert(url);
+                    //alert(csrf_token);
+                    swal
+                    (
+                        {
+                            title: "¿Esta seguro que desea Pagar la Boleta?",
+                            text: "Se va Pagar la Boleta",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Si, Pagar!",
+                            cancelButtonText: "No, cancelar!",
+                            closeOnConfirm: false,
+                            closeOnCancel: false 
+                        },
+                        function (isConfirm) 
+                        {
+                            if (isConfirm) 
+                            {
+                                swal("Pagado!", "La Boleta ha sido pagado.", "success");
+                                $.ajax(
+                                {
+                                    url: url,                        
+                                    type: "POST",                       
+                                    data:{'csrf_test_name':csrf_token,'idDocumentoBoleta':id},
+                                    success: function(data) 
+                                    {    },
+                                    error: function(e) 
+                                    {
+                                        swal("No se Pago", "Ocurrio un error", "error");
+                                    }
+                                });            
+                            } 
+                            else 
+                            {
+                                swal("Cancelado", "La Boleta esta a salvo", "error");
+                            }                
+                        }
+                    );
+                };            
+            });    
+        </script>
+
+         
+       
+        
 
 
 

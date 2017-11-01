@@ -40,6 +40,7 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                 </div>
             </form>
             <form action="<?php echo base_url('pedido/ListarPedidosPorFecha'); ?>" method="post">
@@ -68,6 +69,7 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                 </div>
             </form>
         </div>

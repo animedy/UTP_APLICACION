@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 <!DOCTYPE html>
 <html>
@@ -66,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         
                         <a href="<?php echo base_url("Carta"); ?>"><i class="fa fa-slack"></i> <span class="nav-label">Carta</span></a>                      
                         <a href="<?php echo base_url("Carrito"); ?>"><i class="fa fa-shopping-cart"></i><span class="nav-label">Carrito</span></a>
-                        <a href="<?php echo base_url("Mensaje"); ?>"><i class="fa fa-shopping-cart"></i><span class="nav-label">Seguimiento Pedido</span></a>    
+                       
                         
                     </li>
                     
@@ -102,8 +102,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     Cerrar1 = function () {
                  
                 swal({
-                            title: "¿Esta seguro que desea salir del sistema ?",
-                            text: "Usted cerrará su sesión",
+                            title: "¿Esta seguro que desea salir ?",
+                            
                             type: "warning",
                             showCancelButton: true,
                             confirmButtonColor: "#DD6B55",

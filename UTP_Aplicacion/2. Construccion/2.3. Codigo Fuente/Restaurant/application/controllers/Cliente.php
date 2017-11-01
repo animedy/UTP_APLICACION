@@ -6,9 +6,10 @@ class Cliente extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('model_cliente');
-		//$this->load->library('form_validation');
+		$this->load->helper('my_helper');
 	}
 
+	
 	/**
 		* registra los Clientes y los distritos.
 		*
@@ -68,7 +69,7 @@ class Cliente extends CI_Controller {
 			$celular			= $datos["celular"];
 			$telefono			= $datos["telefono"];
 			$correo				= $datos["correo"];
-			$contrasena			= $datos["contrasena"];
+			$contrasena			= encriptar($datos["contrasena"]);
 			$estado				= 'A';
 			$fecha_registro		= date('Y-m-d');
 			$distrito			= $datos["distrito"];
@@ -90,7 +91,7 @@ class Cliente extends CI_Controller {
 			$celular			= $datos["celular"];
 			$telefono			= $datos["telefono"];
 			$correo				= $datos["correo"];
-			$contrasena			= $datos["contrasena"];
+			$contrasena			= encriptar($datos["contrasena"]);
 			$estado				= 'A';
 			$fecha_registro		= date('Y-m-d');
 			$distrito			= $datos["distrito"];
@@ -132,13 +133,18 @@ class Cliente extends CI_Controller {
 	*/
 
 	function eliminar(){
-		$datos = $this->input->post();
+		if ($this->input->is_ajax_request()) {
+			$id = $this->input->post("idcliente");
+			$estado = "X";
+			$this->model_cliente->deleteCliente($id,$estado);
+		}
+		/*$datos = $this->input->post();
 		if (isset($datos)) {
 			$this->load->model('model_usuario');
 			$this->model_usuario->deleteUsuario($datos["idcliente"]);
 			$this->model_cliente->deleteCliente($datos["idcliente"]);
 		redirect(base_url('clientes'));
-		}
+		}*/
 	}
 
 	/**
@@ -171,7 +177,7 @@ class Cliente extends CI_Controller {
 			$sexo 				= $datos["sexo"];
 			$direccion 			= $datos["direccion"];
 			$correo 			= $datos["correo"];
-			$contrasena			= $datos["contrasena"];
+			$contrasena			= encriptar($datos["contrasena"]);
 			$estado				= $datos["estado"];
 			$telefono			= $datos["telefono"];
 			$celular			= $datos["celular"];

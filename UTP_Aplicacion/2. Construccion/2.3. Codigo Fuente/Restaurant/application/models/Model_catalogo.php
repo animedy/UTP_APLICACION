@@ -12,6 +12,13 @@ class Model_catalogo extends CI_Model {
         return $query->result();
     }
 
+    function search_catalogo($datos){
+
+        $this->db->where('CategoriaPlato_idCategoriaPlato',$datos);
+        $query = $this->db->get('platos');
+        return $query->result();
+    }
+
     function insertPlato($nombre,$categoria,$precio,$estado,$imagen,$cantidad,$descripcion)
     {
         $data = array(

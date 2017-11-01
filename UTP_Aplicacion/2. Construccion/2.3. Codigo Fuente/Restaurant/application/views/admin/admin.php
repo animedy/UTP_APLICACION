@@ -1,4 +1,4 @@
-<?php include 'menu.php'; ?>
+
 
                                         <!-- Contenido-->
 <div id="contenido">
@@ -58,7 +58,15 @@
             <div class="col-lg-6">
                 <div class="widget lazur-bg no-padding">
                     <div class="p-m">
-                        <h1 class="m-xs">S/. 0.00</h1>
+                        <h1 class="m-xs">S/. 
+                        <?php
+                            $suma_dia = 0;
+                            foreach ($cantidad_dia as $cantidades_dia) {
+                                $suma_dia = $suma_dia + $cantidades_dia->Total;
+                            }   
+                            echo number_format($suma_dia,2);
+                        ?>
+                        </h1>
 
                         <h3 class="font-bold no-margins">
                             Ingreso Díario
@@ -86,102 +94,3 @@
             </div>-->
     </div>
 </div>
-
-        
-                
-<?php include 'footer.php'; ?>
-        <!-- Flot -->
-    <script src="<?php echo base_url(); ?>assets/js/plugins/flot/jquery.flot.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/plugins/flot/jquery.flot.resize.js"></script>
-<script>
-        $(document).ready(function() {
-            setTimeout(function() {
-                toastr.options = {
-                    closeButton: true,
-                    progressBar: true,
-                    showMethod: 'slideDown',
-                    timeOut: 4000
-                };
-                toastr.success(null, 'Bienvenido');
-
-            }, 1300);
-        //Ingreso Mensual
-            var d1 = [<?php foreach ($cantidad as $cantidades) {
-                echo '['.$cantidades->Fecha.','. $cantidades->Total.'],';
-            }?>];
-            
-            var d2 = [<?php foreach ($cantidad_dia as $cantidades_dia) {
-                echo '['.$cantidades_dia->Fecha.','. $cantidades_dia->Total.'],';
-            }?>];
-
-            var data2 = [
-                { label: "Data 1", data: d1, color: '#19a0a1'}
-            ];
-            var data3 = [
-                { label: "Data 1", data: d2, color: '#19a0a1'}
-            ];
-            $.plot($("#flot-chart-anual"), data2, {
-                xaxis: {
-                    tickDecimals: 0
-                },
-                series: {
-                    lines: {
-                        show: true,
-                        fill: true,
-                        fillColor: {
-                            colors: [{
-                                opacity: 1
-                            }, {
-                                opacity: 1
-                            }]
-                        }
-                    },
-                    points: {
-                        width: 0.1,
-                        show: false
-                    }
-                },
-                grid: {
-                    show: false,
-                    borderWidth: 0
-                },
-                legend: {
-                    show: false
-                }
-            });
-            $.plot($("#flot-chart-mensual"), data3, {
-                xaxis: {
-                    tickDecimals: 0
-                },
-                series: {
-                    lines: {
-                        show: true,
-                        fill: true,
-                        fillColor: {
-                            colors: [{
-                                opacity: 1
-                            }, {
-                                opacity: 1
-                            }]
-                        }
-                    },
-                    points: {
-                        width: 0.1,
-                        show: false
-                    }
-                },
-                grid: {
-                    show: false,
-                    borderWidth: 0
-                },
-                legend: {
-                    show: false
-                }
-            });
-
-        });
-</script>
-
-</body>
-</html>

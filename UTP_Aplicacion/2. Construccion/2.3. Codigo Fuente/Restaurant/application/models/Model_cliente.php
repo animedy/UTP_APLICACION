@@ -10,7 +10,8 @@ class Model_cliente extends CI_Model
 		parent::__construct();
 		$this->load->database();
 	}
-function getclienteLogin($login,$password)
+
+	function getclienteLogin($login,$password)
 	{
 		/*$query = $this->db->get('empleado');
 		$this->db->where('login',$login);
@@ -21,8 +22,10 @@ function getclienteLogin($login,$password)
 		 
 	}
 
+
 	function getCliente()
 	{
+		 $this->db->where('Estado','A');
 		$query = $this->db->get('clientes');
         $this->db->order_by('idCliente');
         return $query->result();
@@ -53,9 +56,13 @@ function getclienteLogin($login,$password)
 		return $this->db->insert_id();
 	}
 
-	function deleteCliente($id){
+	function deleteCliente($id,$estado){
+		echo $estado;
+		$array = array(
+			'Estado'	=> $estado
+		);
 		$this->db->where('idCliente',$id);
-		$query = $this->db->delete('clientes');
+		$this->db->update('clientes',$array);
 	}
 
 	function updateCliente($id,$nombre,$dni,$sexo,$direccion,$estado,$telefono,$celular,$distrito,$referencia)

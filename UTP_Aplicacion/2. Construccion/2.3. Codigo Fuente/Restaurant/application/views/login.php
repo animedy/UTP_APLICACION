@@ -43,7 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div>
                             <img width="300px" src="<?php echo base_url("assets/img/pp.png"); ?>">
                         </div>
-                        <h3>LOGIN</h3>
+                        <h3>INICIO DE SESIÓN</h3>
                     </center>
                     
                     <br>
@@ -51,13 +51,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                     <form id="FormLogin" class="m-t" role="form" data-toggle="validator" method="post" action="<?php echo base_url(); ?>">
                         <div class="form-group">
-                            <input type="text" name="login" class="form-control" placeholder="Usuario">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-user"></i></button>
+                                </span>
+                                <input type="text" name="login" class="form-control" placeholder="Usuario" tabindex="1">
+                                
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default reveal" type="button"><i class="glyphicon glyphicon-eye-open"></i></button>
+                                </span> 
+                                <input type="password"  name="password" class="form-control pwd" placeholder="Contraseña" tabindex="2">
+                                
+                            </div>  
                         </div>
                         <div class="form-group">
-                            <input type="password"  name="password" class="form-control" placeholder="Contraseña" >
+                            <center><?php echo $this->recaptcha->render(); ?></center>
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                         </div>
-                        <button type="submit" class="btn btn-success block full-width m-b">Login</button>
-                        <center><? echo isset($error)?$error:''; ?></center>
+                        <button type="submit" class="btn btn-success block full-width m-b" tabindex="3">Ingresar</button>
+                        <center>
+                                <? echo isset($error)?$error:''; ?>    
+                        </center>
                     </form>
                 <!--<p class="m-t"> <small> &copy; <?php echo date("Y"); ?></small> </p>-->
                 </div>
@@ -72,6 +90,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <script src="<?php echo base_url(); ?>assets/js/bootstrapValidator.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/login.js"></script>
+
+    <script type="text/javascript">
+        $(".reveal").on('click',function() {
+            var $pwd = $(".pwd");
+            if ($pwd.attr('type') === 'password') {
+                $pwd.attr('type', 'text');
+            } else {
+                $pwd.attr('type', 'password');
+            }
+        });
+    </script>
 
 </body>
 

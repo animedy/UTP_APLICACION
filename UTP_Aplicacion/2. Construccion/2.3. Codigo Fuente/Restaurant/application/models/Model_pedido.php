@@ -11,14 +11,20 @@ class Model_pedido extends CI_Model
 		$this->load->database();
 	}
 
-	function getPedidos()
+	function getPedidosDelDia(){
+		$query = $this->db->get('vista_pedidos');
+		$this->db->order_by('idPedidos');
+        return $query->result();
+	}
+
+
+
+	function getPedidosReporte()
 	{
 		$query = $this->db->get('vista_reporte_pedidos');
         $this->db->order_by('idPedidos');
         return $query->result();
 	}
-
-	
 
 	function getPedidoPorHacer()
 	{

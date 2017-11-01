@@ -1,5 +1,5 @@
 <?php 
-include 'menu.php';
+
 foreach ($a as $key) {
 	
 ?>
@@ -96,11 +96,11 @@ foreach ($a as $key) {
 			                                        <div class="col-lg-6">
 			                                            <div class="form-group">
 			                                                <label class="control-label">Password *</label>
-			                                                <input id="password" name="password" type="text" class="form-control" value="<?php echo $key->Contrasena;?>">
+			                                                <input id="password" name="password" type="password" class="form-control" value="<?php echo desencriptar($key->Contrasena);?>">
 			                                            </div>
 			                                            <div class="form-group">
 			                                                <label class="control-label">Confirmar Password *</label>
-			                                                <input id="confirm" name="confirm" type="text" class="form-control" value="<?php echo "$key->Contrasena";?>" required>
+			                                                <input id="confirm" name="confirm" type="password" class="form-control" value="<?php echo desencriptar($key->Contrasena);?>" required>
 			                                            </div>
 			                                        </div>
 			                                    </div>
@@ -120,7 +120,7 @@ foreach ($a as $key) {
 				                                            	<option value="1" selected>Administrador</option>
 	                                                            <option value="2">Cajero</option>
 	                                                            <option value="3">Cocina</option>
-	                                                            <option value="4">Moto</option>
+	                                                            <option value="4">Repartidor</option>
 				                                            <?php
 				                                            }
 				                                            elseif($key->TipoEmpleado_idTipoEmpleado=="2") {
@@ -128,7 +128,7 @@ foreach ($a as $key) {
 				                                            	<option value="1">Administrador</option>
 	                                                            <option value="2" selected>Cajero</option>
 	                                                            <option value="3">Cocina</option>
-	                                                            <option value="4">Moto</option>
+	                                                            <option value="4">Repartidor</option>
 				                                            <?php
 				                                            }
 				                                            elseif($key->TipoEmpleado_idTipoEmpleado=="3") {
@@ -136,7 +136,7 @@ foreach ($a as $key) {
 				                                            	<option value="1">Administrador</option>
 	                                                            <option value="2">Cajero</option>
 	                                                            <option value="3" selected>Cocina</option>
-	                                                            <option value="4">Moto</option>
+	                                                            <option value="4">Repartidor</option>
 				                                            <?php
 				                                            }
 				                                            elseif($key->TipoEmpleado_idTipoEmpleado=="4") {
@@ -144,14 +144,14 @@ foreach ($a as $key) {
 				                                            	<option value="1">Administrador</option>
 	                                                            <option value="2">Cajero</option>
 	                                                            <option value="3">Cocina</option>
-	                                                            <option value="4" selected>Moto</option>
+	                                                            <option value="4" selected>Repartidor</option>
 				                                            <?php
 				                                            }else{
 				                                           	?>
 				                                           		<option value="1">Administrador</option>
 	                                                            <option value="2">Cajero</option>
 	                                                            <option value="3">Cocina</option>
-	                                                            <option value="4" selected>Moto</option>
+	                                                            <option value="4" selected>Repartidor</option>
 				                                           	<?php
 				                                            }
 				                                             ?>
@@ -188,6 +188,7 @@ foreach ($a as $key) {
 				                                            ?>
 				                                            </select>
 				                                        </div>
+				                                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 				                                    </div>
 			                                    </div>
 			                                </fieldset>
@@ -201,33 +202,5 @@ foreach ($a as $key) {
 
 <?php 
 }  
-	include 'footer.php'; ?>
-      	<script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>
-        <!-- Bootstrap Validator -->
-    	<script src="<?php echo base_url(); ?>assets/js/bootstrapValidator.min.js"></script>
-        <!-- Script Validación -->
-        <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
-
-        <script src="<?php echo base_url(); ?>assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-	    <script>
-	        $(document).ready(function() {
-
-	            $('#fec_nac').datepicker({
-	                todayBtn: "linked",
-	                keyboardNavigation: false,
-	                forceParse: false,
-	                calendarWeeks: true,
-	                autoclose: true
-	            });
-
-	            $('#fec_in').datepicker({
-	                todayBtn: "linked",
-	                keyboardNavigation: false,
-	                forceParse: false,
-	                calendarWeeks: true,
-	                autoclose: true
-	            });
-
-	        });
-
-	    </script>
+?>
+   

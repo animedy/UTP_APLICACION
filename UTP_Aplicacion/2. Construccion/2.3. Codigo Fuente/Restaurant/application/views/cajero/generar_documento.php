@@ -27,8 +27,8 @@ include 'menu.php';
     <br>
 
     <div id="" class="row wrapper white-bg col-sm-7 page-heading">
-        <form action="<?php echo base_url('Caja/DocumentoPdf')?>" method="POST">
-            <div class="form-group">
+        <form target="_blank" action="<?php echo base_url('Caja/DocumentoPdf')?>" method="POST">
+            <!--<div class="form-group">
                 <label class="col-lg-2 control-label">Seleccione un Repartidor: </label>
                 <div class="col-sm-10">
                     <select class="form-control" name="repartidor">
@@ -41,13 +41,13 @@ include 'menu.php';
                     ?>
                     </select>
                 </div>
-            </div>
+            </div>-->
             <br>
             <br>
             <br>
             <br>
             <div class="col-lg-12">
-                <button class="btn btn-white"><i class="btn btn-primary fa fa-print"></i> Imprimir </button>
+                <button class="btn btn-white" ><i class="btn btn-primary fa fa-print"></i> Imprimir </button>
                 <br>
                 <br>
             </div>
@@ -96,19 +96,19 @@ include 'menu.php';
                     <label>Cajero :</label><label><?php echo $cajero ?></label>
                     <input type="hidden" name="cajero" value="<?php echo $cajero ?>">
                     <br>
-                    <label>Repartidor :</label><label><?php echo $cajero ?></label>
-                    <input type="hidden" name="cajero" value="<?php echo $cajero ?>">
+                    <!--<label>Repartidor :</label><label><?php echo $cajero ?></label>
+                    <input type="hidden" name="cajero" value="<?php echo $cajero ?>">-->
                 </div>
             </div>
             <div class="col-sm-12 table-responsive m-t">
                 <table class="table invoice-table">
                     <thead>
-                    <tr>
-                        <th>DESCRIPCION</th>
-                        <th>CANTIDAD</th>
-                        <th>PRECIO UNIT.</th>
-                        <th>TOTAL</th>
-                    </tr>
+                        <tr>
+                            <th>DESCRIPCION</th>
+                            <th>CANTIDAD</th>
+                            <th>PRECIO UNIT.</th>
+                            <th>TOTAL</th>
+                        </tr>
                     </thead>
                     <?php
                     foreach ($docu as $documento) 
@@ -176,14 +176,15 @@ include 'menu.php';
                     </tbody>
                 </table>
                 <div>
-                    <label><?php echo "SON:"." ".$letras." "."/Nuevos Soles"; ?></label>
-                    <input type="hidden" name="letras" value="<?php echo "SON:"." ".$letras." "."/Nuevos Soles"; ?>">
+                    <label><?php echo "SON:"." ".$letras; ?></label>
+                    <input type="hidden" name="letras" value="<?php echo "SON:"." ".$letras; ?>">
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                 </div>
             </div>
         </form>
     </div>
 </div>
-</div>
+
 
 <?php 
     include 'footer.php';
@@ -213,5 +214,3 @@ include 'menu.php';
                         });
             }
 </script>
-
-

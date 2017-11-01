@@ -6,6 +6,7 @@ class Login_cliente extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Model_cliente');
+		$this->load->helper('my_helper');
 	}
 
 	/**
@@ -47,7 +48,7 @@ class Login_cliente extends CI_Controller {
 		{
 
 			$this->load->model('Model_cliente');
-			$password = $password;
+			$password = encriptar($password);
 			$cliente = $this->Model_cliente->getclienteLogin($login,$password);
 			
 			if($cliente->num_rows() > 0)

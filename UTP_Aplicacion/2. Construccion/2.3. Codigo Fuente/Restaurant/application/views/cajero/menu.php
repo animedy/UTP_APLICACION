@@ -1,5 +1,5 @@
  <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') || exit('No direct script access allowed');
 ?>
 <!DOCTYPE html>
 <html>
@@ -60,13 +60,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </li>
                     <li class="active">
-                        <a href="<?php echo base_url("cajero"); ?>" id="inicio"><i class="fa fa-slack"></i> <span class="nav-label">Inicio</span></a>
+                        <a href="<?php echo base_url("cajero"); ?>" id="inicio"><i class="fa fa-home fa-fw"></i> <span class="nav-label">Inicio</span></a>
                     </li>
                     <li>
-                        <a href="index.html"><i class="fa fa-envelope"></i> <span class="nav-label">Cajero</span></a>
+                        <a href="index.html"><i class="fa fa-folder-o"></i> <span class="nav-label">Documentos</span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="cajero">Lista de Pedidos</a></li>
-                            <li><a href="cajeroanu">Documentos Anulados</a></li>
+                            <li><a class="fa fa-file-o" href="<?php echo base_url("docupagados"); ?>">Documentos Pagados</a></li>
+                            <li><a class="fa fa-file" href="<?php echo base_url("docuanulados"); ?>">Documentos Anulados</a></li>
                         </ul>
                     </li>
                 </ul>

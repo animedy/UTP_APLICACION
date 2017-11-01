@@ -16,8 +16,10 @@ class Cocina extends CI_Controller {
 	*/
 
 	function listar(){
-		$data['progreso'] 		= $this->model_cocina->getPedido();
-		$data['vistaenprogreso'] = $this->model_cocina->getVistaPedido();
+		$this->load->model('model_pedido');
+		//$data['progreso'] 		= $this->model_cocina->getPedido();
+		$data['progreso'] 		=	$this->model_pedido->getPedidosDelDia();
+		$data['vistaenprogreso'] = 	$this->model_cocina->getVistaPedido();
 		$this->load->view('cocina/cocina',$data);
 	}
 

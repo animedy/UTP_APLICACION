@@ -7,23 +7,7 @@
                     <div class="ibox">
                         <div class="ibox-title">
                             <h5>Pedidos Atendidos</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">Config option 1</a>
-                                    </li>
-                                    <li><a href="#">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
+
                         </div>
                         <div class="ibox-content">
                             <form action="<?php echo base_url('pedido/ExportarPedidosAtendidos'); ?>" method="POST">
@@ -35,10 +19,10 @@
                                         <tr>
 
                                             <th>Comanda</th>
-                                            <th data-hide="phone">Cliente</th>
-                                            <th data-hide="phone">Precio</th>
-                                            <th data-hide="phone">Fecha Pedido</th>
-                                            <th data-hide="phone">Estado</th>
+                                            <th>Cliente</th>
+                                            <th>Precio</th>
+                                            <th>Fecha Pedido</th>
+                                            <th>Estado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -77,6 +61,7 @@
                                     
                                     </tfoot>
                                 </table>
+                                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                             </form>
 
                         </div>
