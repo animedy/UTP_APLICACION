@@ -20,7 +20,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body>
 
-
+		<?php if (!$this->session->userdata('id')) {
+            redirect('Login');
+        } ?>
 			<div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-12">
                             <div class="row border-bottom">

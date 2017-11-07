@@ -101,7 +101,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Pedidos </span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="<?php echo base_url("pedidos"); ?>">Gestion de Pedidos</a></li>
-                            <li><a href="<?php echo base_url("catalogos"); ?>">Catalogo de Productos</a></li>
+                            <li><a href="<?php echo base_url("productos"); ?>">Catalogo de Productos</a></li>
+                            <li><a href="<?php echo base_url("categoria"); ?>">Gestion de Categoria de Productos</a></li>
                         </ul>
                     </li>
                     <li>

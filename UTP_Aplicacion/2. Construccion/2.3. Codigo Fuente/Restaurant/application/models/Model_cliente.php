@@ -21,7 +21,16 @@ class Model_cliente extends CI_Model
 		return $this->db->query($sql, array($login,$password));
 		 
 	}
-
+	function getrestartLogin($login,$dni)
+	{
+		/*$query = $this->db->get('empleado');
+		$this->db->where('login',$login);
+		$this->db->where('password',$password);
+		return $query->result();*/
+		$sql = "SELECT c.idCliente,c.DNI, e.CorreoElectronico,e.Contrasena  FROM usuario as e INNER JOIN clientes as c ON e.Cliente_idCliente  = c.idCliente WHERE CorreoElectronico = ? AND Dni = ?";
+		return $this->db->query($sql, array($login,$dni));
+		 
+	}
 
 	function getCliente()
 	{
@@ -65,14 +74,14 @@ class Model_cliente extends CI_Model
 		$this->db->update('clientes',$array);
 	}
 
-	function updateCliente($id,$nombre,$dni,$sexo,$direccion,$estado,$telefono,$celular,$distrito,$referencia)
+	function updateCliente($id,$nombre,$dni,$sexo,$direccion,$telefono,$celular,$distrito,$referencia)
 	{
 		$array = array(
 			'Nombres'					=> $nombre,
 			'Dni'						=> $dni,
 			'Sexo'						=> $sexo,
 			'Direccion'					=> $direccion,
-			'Estado'					=> $estado,
+			
 			'Telefono'					=> $telefono,
 			'Celular'					=> $celular,
 			'Distritos_idDistritos'		=> $distrito,

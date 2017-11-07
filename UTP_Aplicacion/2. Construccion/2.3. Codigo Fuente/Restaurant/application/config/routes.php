@@ -98,9 +98,11 @@ $route['pedidos']= 'pedido/listar';
 /*
 | --------- URL Catalogo -------------
 */
-$route['catalogos']= 'catalogo/listar';
+$route['productos']= 'producto/listar';
+
+$route['categoria']= 'Categoria/listar';
 /*
-| --------- FIN URL Pedidos ---------
+| --------- FIN URL Catalogo ---------
 */
 /*
 | --------- URL Cocina -------------
@@ -114,7 +116,7 @@ $route['cocina']= 'cocina/listar';
 */
 $route['pedidosatendidos']= 'pedido/listarpedidosatendidos';
 $route['pedidosdevueltos']= 'pedido/listarpedidosdevueltos';
-$route['platosmasvendidos']= 'catalogo/platosmasvendidos';
+$route['platosmasvendidos']= 'Producto/platosmasvendidos';
 $route['ventasdeldia']= 'ventas/listar';
 $route['ventasdelmes']= 'ventas/ListarVentasDelMes';
 $route['filtropedidos']= 'pedido/listarpedidos';
@@ -127,23 +129,24 @@ $route['filtropedidos']= 'pedido/listarpedidos';
 $route['cliente']= 'cliente/listar';
 $route['salir']= 'login/salir';
 $route['registrarse']= 'login/registrarse';
+$route['recuperar']= 'cliente/Contrasena';
 /*
 | --------- FIN URL Empleados ---------
 */
 /*
- ---------- URL Carta -----------
+ ---------- URL Catalogo o Carta -----------
 */
-$route['Carta']= 'Catalogo/ListarCarta';
+$route['Carta']= 'Producto/ListarCarta';
 
-$route['Carta1']= 'index.php/Carta';
+$route['Carta1']= 'index.php/Catalogo';
 /*
 | --------- FIN URL Carta ---------
 */
 /*
 | ---------- URL Carrito -----------
 */
-$route['Carrito']= 'Catalogo/MostrarCarrito';
-$route['Mensaje']= 'Catalogo/MostrarSeguimiento';
+$route['Carrito']= 'Carrito/MostrarCarrito';
+$route['Mensaje']= 'Producto/MostrarSeguimiento';
 
 /*
 | --------- FIN URL Carrito ---------
@@ -151,17 +154,10 @@ $route['Mensaje']= 'Catalogo/MostrarSeguimiento';
 /*
 | --------- URL Caja-------------
 */
-$route['cajero']= 'Caja/ListarPedidos';
-$route['docupagados']= 'Caja/ListaDcumentosPagados';
-$route['docuanulados']= 'Caja/ListaDocumentosAnulados';
-$route['VerDocumento/(:any)']= 'Caja/VerDocumento/$1';
+$route['cajero']= 'Documento/ListarPedidos';
+$route['docupagados']= 'Documento/ListaDcumentosPagados';
+$route['docuanulados']= 'Documento/ListaDocumentosAnulados';
+$route['VerDocumento/(:any)']= 'Documento/VerDocumento/$1';
 /*
 | --------- FIN URL Caja ---------
 */
-/*
-| -------------------------------------------------------------------------
-| Sample REST API Routes
-| -------------------------------------------------------------------------
-*/
-$route['api/example/users/(:num)'] = 'api/example/users/id/$1'; // Example 4
-$route['api/example/users/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'api/example/users/id/$1/format/$3$4'; // Example 8

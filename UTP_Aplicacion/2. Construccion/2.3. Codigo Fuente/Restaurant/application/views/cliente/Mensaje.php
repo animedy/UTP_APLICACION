@@ -35,7 +35,7 @@
 
                            
                         </div>
-<a class="btn btn-white" href="<?php echo base_url("Catalogo/ListarCarta"); ?>"><i class="fa fa-arrow-left"></i> Seguir Comprando</a>
+<a class="btn btn-white" href="<?php echo base_url("Producto/ListarCarta"); ?>"><i class="fa fa-arrow-left"></i> Seguir Comprando</a>
                     </div>
                 </div>
             </div>

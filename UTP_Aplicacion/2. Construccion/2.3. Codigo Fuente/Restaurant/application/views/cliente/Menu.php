@@ -66,6 +66,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         
                         <a href="<?php echo base_url("Carta"); ?>"><i class="fa fa-slack"></i> <span class="nav-label">Carta</span></a>                      
                         <a href="<?php echo base_url("Carrito"); ?>"><i class="fa fa-shopping-cart"></i><span class="nav-label">Carrito</span></a>
+                        
+                        <a href="<?php echo base_url('EditarCliente'); ?>"><i class="fa fa-user"></i><span class="nav-label">Modificar Cuenta</span></a>
+                         
                        
                         
                     </li>

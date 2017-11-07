@@ -16,6 +16,15 @@ class Pedido extends CI_Controller {
 	*/
 
 	function listar(){
+		$this->load->model('model_tipo_empleado');
+		$data['repartidores']	= $this->model_tipo_empleado->getTipoEmpleadoRepartidor();
+
+		$this->load->model('model_empleado');
+		$data['empleados']	= $this->model_empleado->getEmpleado();
+
+		$this->load->model('model_repartidor');
+		$data['asignacion_repartidor']	= $this->model_repartidor->getRepartidor();
+		
 		//$data['porhacer'] 	= $this->model_pedido->getPedidoPorHacer();
 		$data['porhacer'] 	= $this->model_pedido->getPedidosDelDia();
 		$data['vistaporhacer'] 	= $this->model_pedido->getVistaPedidoPorHacer();
@@ -59,18 +68,18 @@ class Pedido extends CI_Controller {
 			//print_r( $Stock);
 
 			$this->load->model('model_DetallePedido');
-			$this->load->model('model_catalogo');
+			$this->load->model('Model_Producto');
 			
 			for ($i=0; $i <count($idPlatos) ; $i++) { 
 				echo $idPlatos[$i] . " Observacion " . $Observaciones[$i] . "Cantidad  " . $Cantidades[$i] . "<br> ";
 				$this->model_DetallePedido->insertDetallePedido($Cantidades[$i],$Observaciones[$i],$idPedidos,$idPlatos[$i]);
-				$this->model_catalogo->Set_cantidad($idPlatos[$i],$Stock[$i]);
+				$this->Model_Producto->Set_cantidad($idPlatos[$i],$Stock[$i]);
 
 			}
 				
 
             $this->cart->destroy();
-			redirect(base_url()."Catalogo/MostrarSeguimiento");
+			redirect(base_url()."Producto/MostrarSeguimiento");
 
 		
 		}
@@ -232,43 +241,6 @@ class Pedido extends CI_Controller {
 			
 	}
 
-	function EntregaPedidos()
-	{
-		$this->load->model('model_tipo_empleado');
-		$this->load->model('model_empleado');
-		$this->load->model('model_asignacion');
-		$data['asignaciones'] = $this->model_asignacion->getAsignacion();
-		
-
-		$data['repartidores']	= $this->model_tipo_empleado->getTipoEmpleadoRepartidor();
-		$data['empleados']	= $this->model_empleado->getEmpleado();
-		$data['reportecompletados'] = $this->model_pedido->getVistaReporteCompletado();
-		$this->load->view('admin/entregar_pedido',$data);
-
-	}
-
-	function InsertarAsignacion()
-	{
-		$this->load->model('model_asignacion');
-		$datos = $this->input->post();
-		if (isset($datos)) {
-			$idpedidoasignado 	= 	$datos['idpedidoasignado'];
-			$repartidor 		= 	$datos['repartidor'];
-			$this->model_asignacion->insertAsignacion($idpedidoasignado,$repartidor);
-			redirect(base_url('Pedido/EntregaPedidos'));
-		}
-	}
-
-	function ActualizarAsignacion()
-	{
-		$this->load->model('model_asignacion');
-		$datos = $this->input->post();
-		if (isset($datos)) {
-			$repartidor 		= 	$datos['repartidor'];
-			$this->model_asignacion->updateAsignacion($repartidor,$datos['idasignacion']);
-			redirect(base_url('Pedido/EntregaPedidos'));
-		}
-	}
 
 	function ExportarPedidosAtendidos()
 	{

@@ -98,21 +98,21 @@
 
      <input id="cantidad_plato_e_<?php echo $c_c;?>" type="hidden"  name="Cantidad[]" value="<?php echo $items['qty']; ?>">
      <?php $c++; ?>
-     <input id="cantidad_plato_<?php echo $c;?>" type="number"  name="qty1" min="1" class="form-control" value="<?php echo $items['qty']; ?>">
+     <input id="cantidad_plato_<?php echo $c;?>"  name="qty1" min="1" class="form-control" value="<?php echo $items['qty']; ?>" readonly>
 
 
      <p>
        <h1> 
         <?php 
         $row = $items['rowid']."-".($items['qty']+1); 
-        echo anchor ('Catalogo/update_cart/'.$row, '+');
+        echo anchor ('Carrito/update_cart/'.$row, '+');
         ?> 
 
 
 
         <?php 
         $row = $items['rowid']."-".($items['qty']-1); 
-        echo anchor ('Catalogo/update_cart/'.$row, '-');
+        echo anchor ('Carrito/update_cart/'.$row, '-');
         ?> 
       </h1>
      <!-- <input type="button" onclick="Sumar(<?php echo $c; ?>)" class="btn btn-success" value="+">
@@ -126,8 +126,8 @@
    <div class="m-t-sm">
 
 
-    <!--<a href="#" class="text-muted"><?php echo anchor('Catalogo/remove/'.$items['rowid'],'Eliminar plato');?></a>-->
-    <a href="<?php echo base_url('Catalogo/remove/').$items['rowid']; ?>" class="pull-right"><i class="glyphicon glyphicon-trash "></i>Eliminar </a>
+    <!--<a href="#" class="text-muted"><?php echo anchor('Carrito/remove/'.$items['rowid'],'Eliminar plato');?></a>-->
+    <a href="<?php echo base_url('Carrito/remove/').$items['rowid']; ?>" class="pull-right"><i class="glyphicon glyphicon-trash "></i>Eliminar </a>
 
 
   </div>
@@ -165,15 +165,15 @@
 
  <hr/>
  <span class="text-muted small">
-   *Costo de envio incluido e IGV
+   *Costo de envio incluido mas IGV
  </span>
 
 </div>
 
 
 
-<a class="btn btn-danger" href="<?php echo base_url ('Catalogo/VaciarCarrito');?>">Vaciar Carrito</a>
-<a class="btn btn-white" href="<?php echo base_url("Catalogo/ListarCarta"); ?>"><i class="fa fa-arrow-left"></i> Seguir Comprando</a>
+<a class="btn btn-danger" href="<?php echo base_url ('Carrito/VaciarCarrito');?>">Vaciar Carrito</a>
+<a class="btn btn-white" href="<?php echo base_url("Producto/ListarCarta"); ?>"><i class="fa fa-arrow-left"></i> Seguir Comprando</a>
 
 <div class="ibox-title">
  <?php         
@@ -210,7 +210,7 @@ else {
 
 
 </div>
- <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 </div>
 
 </form>                          

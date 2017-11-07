@@ -28,7 +28,7 @@ class Login extends CI_Controller {
 
 	function index()
 	{
-		$this->load->model('Model_caja');
+		$this->load->model('Model_Caja');
 		
 
 		$captcha_answer = $this->input->post('g-recaptcha-response');
@@ -37,13 +37,13 @@ class Login extends CI_Controller {
 
 		if( $this->session->userdata('id') ){
 			if($this->session->userdata('rol')=='ADMINISTRADOR'){
-				$mes 		= date('m');
-				$fecha_dia 	= date('Y-m-d');
-				$data['cantidad']		 	= $this->Model_caja->getPedidoCompletadoMes($mes);
-				$data['cantidad_dia'] 		= $this->Model_caja->getPedidoCompletadoDia($fecha_dia);
-				$data['contenido'] = 'admin';
+				$mes 					= date('m');
+				$fecha_dia 				= date('Y-m-d');
+				$data['cantidad']		= $this->Model_Caja->getPedidoCompletadoMes($mes);
+				$data['cantidad_dia'] 	= $this->Model_Caja->getPedidoCompletadoDia($fecha_dia);
+				$data['contenido'] 		= 'admin';
 				$this->load->view('admin/plantilla',$data);
-				}
+			}
 			elseif($this->session->userdata('rol')=='CAJERO')
 				//$this->load->view('Cajero/admin');
 				redirect(base_url()."cajero");
@@ -74,8 +74,8 @@ class Login extends CI_Controller {
 					if($this->session->userdata('rol')=='ADMINISTRADOR'){
 						$mes 		= date('m');
 						$fecha_dia 	= date('Y-m-d');
-						$data['cantidad'] = $this->Model_caja->getPedidoCompletadoMes($mes);
-						$data['cantidad_dia'] = $this->Model_caja->getPedidoCompletadoDia($fecha_dia);
+						$data['cantidad'] = $this->Model_Caja->getPedidoCompletadoMes($mes);
+						$data['cantidad_dia'] = $this->Model_Caja->getPedidoCompletadoDia($fecha_dia);
 						$data['contenido'] = 'admin';
 						$this->load->view('admin/plantilla',$data);
 					}

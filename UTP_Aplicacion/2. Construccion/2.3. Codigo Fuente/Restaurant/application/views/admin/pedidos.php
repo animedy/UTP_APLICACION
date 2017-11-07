@@ -130,7 +130,7 @@
                             <ul class="sortable-list connectList agile-list" id="completed">
                                 <?
                                     foreach ($completado as $pedidocompletado) {
-                                        if ($pedidocompletado->Estado_Administrador == 1 && $pedidocompletado->Estado_Cocinero == 1  && $pedidocompletado->Estado_Cajero==1) {
+                                        if ($pedidocompletado->Estado_Administrador == 1 && $pedidocompletado->Estado_Cocinero == 1  && $pedidocompletado->Estado_Cajero==1 && $pedidocompletado->emitido =='emitido' ) {
                                             
                                         
                                  ?>
@@ -169,11 +169,31 @@
                                         </div>
                                     </div>
                                     <div class="panel-footer">
+                                    <?  if ($asignacion_repartidor != null) {
+                                            foreach ($empleados as $empleado) {
+                                            
+                                                foreach ($asignacion_repartidor as $repartidorasignado) {
+                                                    if ($repartidorasignado->empleados_idEmpleados == $empleado->idEmpleados) {
+                                                            echo "<b>Asignado a: </b>" .$empleado->Nombres . " " .$empleado->Apellidos . "<br>";
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                        else{
+                                        ?>           
+                                                <a data-toggle="modal" href="#modal-form-asignar" class="pull-right btn btn-xs btn-primary" onclick='AsignarRepartidor("<?php echo $pedidocompletado->idPedidos; ?>");'>Asignar</a>
+                                        <?php
+                                            }  
+                                         ?>
+                                       
                                         <i class="fa fa-clock-o"></i> <? echo date('d.m.Y', strtotime($pedidocompletado->Fecha)) . " " .$pedidocompletado->Hora_Pedido; ?>Hrs.
                                     </div>
+                                    
                                 </div>
                                 <?
                                         }
+
                                     } 
                                  ?>
                             </ul>
@@ -256,6 +276,51 @@
                         </div>
                     </div>
                 </div>
+                <div id="modal-form-asignar" class="modal inmodal fade" aria-hidden="true" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title">Asignación de Repartidor</h4>
+                            </div>
+                            <form class="form-horizontal" action="<?php echo base_url('repartidor/insertar'); ?>" method="POST">
+                                <div class="modal-body">
+                                    <div class="ibox-content">
+                                        <div class="form-group">
+                                            <div>
+                                                <input type="hidden" name="idrepartidor" id="idrepartidor" />
+                                            </div>                                            
+                                        </div>                    
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Asignar</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control" name="asignacion_repartidor"  required="required">
+                                                    <option>-- Seleccione Repartidor --</option>
+                                                    <?php 
+                                                        foreach ($empleados as $empleado) {
+                                                            foreach ($repartidores as $repartidor) {
+                                                                if ($repartidor->idTipoEmpleado == $empleado->TipoEmpleado_idTipoEmpleado ) {
+                                                        ?>
+                                                                    <option value="<?php echo  $empleado->idEmpleados; ?>"><?php echo ucwords(strtolower($empleado->Nombres . " " . $empleado->Apellidos));  ?></option>
+                                                        <?php  } 
+                                                            }
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-white" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Cerrar</button>
+                                    <button type="submit" class="btn btn-primary" id="add"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 <?php include 'footer.php'; ?>
@@ -275,6 +340,9 @@
         var elem_3 = document.querySelector('.js-switch_3');
         var switchery_3 = new Switchery(elem_3, { color: '#1AB394' });
 
+        var elem_4 = document.querySelector('.js-switch_4');
+        var switchery_4 = new Switchery(elem_4, { color: '#1AB394' });
+
         CambiarEstadoPorHacer = function(id)
         {
             $('#idporhacer').val(id);
@@ -282,6 +350,9 @@
 
         CambiarEstadoProgreso = function (id) {
             $('#idprogreso').val(id);
+        }
+        AsignarRepartidor = function (id) {
+            $('#idrepartidor').val(id);
         }
    </script>
    <script type="text/javascript">

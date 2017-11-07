@@ -7,6 +7,8 @@ class Model_Documento extends CI_Model
 		parent::__construct();
 		$this->load->database();
 	}
+
+	
 	
 	/**
         * lista los documentos 
@@ -24,9 +26,9 @@ class Model_Documento extends CI_Model
 	}
 
 	/**
-        * lista los clientes por parametro id 
+        * lista los documentos por parametro id 
         *
-        * @author Juan Jose Paz Chalco
+        * @author Carlos Sanchez Aquino
         *
         * @param id
         *
@@ -42,34 +44,29 @@ class Model_Documento extends CI_Model
 	}
 
 	/**
-		* Inserta un nuevo cliente.
+		* Inserta un nuevo documento.
 		* 
-		* @author Ricardo Palacios Arce
+		* @author Carlos Sanchez Aquino
 		*
 		* @param nombre
 		* @param dni
-		* @param sexo
-		* @param direccion
-		* @param celular
-		* @param telefono
+		* @param total
+		* @param fecha
+		* @param hora
+		* @param pedido
 		* @param estado
-		* @param fecha_registro	
-		* @param distrito
-		* @param referencia
+		* @param empleado	
 		*
 		fecha creacion: 20/08/2017
 		fecha modificacion: 23/08/2017
 		* 
 	*/
-	function insertBoleta($nombre,$dni,$total,$fecha,$hora,$pedido,$estado,$empleado)
+	function insertBoleta($nombre,$dni,$fecha,$hora,$pedido,$estado,$empleado)
 	{
-		/*$this->db->query("CALL SP_INSERTAR_DOCUMENTO_BOLETA('$nombre', '$dni', '$total', '$fecha', '$hora','$pedido', '$estado', '$empleado')");
-		return $this->db->insert_id();*/
-
 		$array = array(
 			'Nombre'					=> $nombre,
 			'Dni'						=> $dni,
-			'Total'						=> $total,
+			'Total'						=> 0,
 			'Fecha_Emision'					=> $fecha,
 			'Hora_Emision'					=> $hora,
 			'Pedidos_idPedidos'					=> $pedido,
@@ -80,20 +77,25 @@ class Model_Documento extends CI_Model
 		return $this->db->insert_id();
 	}
 
-	
-	function insertBoletaDetalle($nro,$producto,$cantidad,$precio,$idboleta)
+	/**
+		* Actualiza un documento segun id.
+		* 
+		* @author Carlos Sanchez Aquino
+		*
+		* @param idboleta
+		* @param total
+		*
+		fecha creacion: 20/08/2017
+		fecha modificacion: 23/08/2017
+		* 
+	*/
+	function updateBoleta($idboleta,$total)
 	{
-		/*$this->db->query("CALL SP_INSERTAR_DETALLE_DOCUMENTO_BOLETA('$producto', '$cantidad', '$precio', '$idboleta')");*/
-
 		$array = array(
-			'Nro'					=> $nro,
-			'Producto'					=> $producto,
-			'Cantidad'						=> $cantidad,
-			'Precio'						=> $precio,
-			'DocumentoBoleta_idDocumentoBoleta'				=> $idboleta
-			
+			'Total'						=> $total
 		);
-		$this->db->insert('detalledocumentoboleta',$array);
+		$this->db->where('idDocumentoBoleta',$idboleta);
+		$this->db->update('documentoboleta',$array);
 	}
 	
 }

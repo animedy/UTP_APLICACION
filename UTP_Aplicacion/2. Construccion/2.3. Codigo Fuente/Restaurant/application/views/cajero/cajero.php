@@ -205,7 +205,7 @@
                             <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                             <h4 class="modal-title">Cambiar de Estado el Pedido</h4>
                         </div>
-                        <form class="form-horizontal" name="formulario" action="<?php echo base_url('Caja/actualizarestado'); ?>" method="POST">
+                        <form class="form-horizontal" name="formulario" action="<?php echo base_url('EstadoPedido/actualizarestadocaja'); ?>" method="POST">
                             <div class="modal-body">
                                 <div class="ibox-content">
                                     <div class="form-group">
@@ -270,7 +270,7 @@
         </script>
 
         <script type="text/javascript">
-            setTimeout('document.location.reload()',75000); 
+            setTimeout('document.location.reload()',21000); 
         </script>
 
         <script type="text/javascript">
@@ -279,11 +279,8 @@
                 Anular = function (id) 
                 {               
                     var datos = 'idDocumentoBoleta='+ id;
-                    var url = "<?php echo base_url('Caja/Documentoanulado'); ?>";           
+                    var url = "<?php echo base_url('EstadoDocumento/Documentoanulado'); ?>";           
                     var csrf_token = '<?php echo $this->security->get_csrf_hash(); ?>';            
-                    //alert(datos);
-                    //alert(url);
-                    //alert(csrf_token);
                     swal
                     (
                         {
@@ -331,11 +328,8 @@
                 Pagar = function (id) 
                 {               
                     var datos = 'idDocumentoBoleta='+ id;
-                    var url = "<?php echo base_url('Caja/Documentocancelado'); ?>";           
+                    var url = "<?php echo base_url('EstadoDocumento/Documentocancelado'); ?>";           
                     var csrf_token = '<?php echo $this->security->get_csrf_hash(); ?>';            
-                    //alert(datos);
-                    //alert(url);
-                    //alert(csrf_token);
                     swal
                     (
                         {
@@ -365,7 +359,8 @@
                                     {
                                         swal("No se Pago", "Ocurrio un error", "error");
                                     }
-                                });            
+                                }); 
+                                location.reload();           
                             } 
                             else 
                             {

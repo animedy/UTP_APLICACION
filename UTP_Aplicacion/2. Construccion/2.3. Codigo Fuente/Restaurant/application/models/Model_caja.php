@@ -1,18 +1,39 @@
 <?php
-class Model_caja extends CI_Model {
+class Model_Caja extends CI_Model {
 
     function __construct(){
         parent::__construct();
 		$this->load->database();
     }
+    /**
+        * Obtiene los pedidos completados del Mes
+        *
+        * @author Ricardo Palacios Arce
+        *
+        * @param mes
+        *
+        * fecha creacion: 18/08/2017
+        * fecha modificacion: 23/08/2017  
+    **/
 
-    function getPedidoCompletadoMes($mes)
+     function getPedidoCompletadoMes($mes)
     {
         $this->db->like('Mes',$mes);
         $this->db->order_by('Fecha');
         $query = $this->db->get('vista_venta_completada');
         return $query->result();
     }
+
+    /**
+        * Obtiene los pedidos completados del Dia
+        *
+        * @author Ricardo Palacios Arce
+        *
+        * @param dia
+        *
+        * fecha creacion: 18/08/2017
+        * fecha modificacion: 23/08/2017  
+    **/
 
     function getPedidoCompletadoDia($dia)
     {
@@ -32,8 +53,52 @@ class Model_caja extends CI_Model {
     **/
     function getListaPedidos()
     {
-        $query = $this->db->get('vista_ver_pedidos');
+        $query = $this->db->get('vista_pedidos');
         return $query->result();
+    }
+
+    /**
+        * lista los detalles del pedidos por generar documento
+        *
+        * @author Carlos Sanchez Aquino
+        *
+        * fecha creacion: 18/08/2017
+        * fecha modificacion: 23/08/2017    
+    **/
+     function getPedidoDetalle()
+    {
+        $query = $this->db->get('vista_pedidosdetalle');
+        return $query->result();
+    }
+
+    /**
+        * conteo de documentos emitidos.
+        *
+        * @author Carlos Sanchez Aquino
+        *
+        * fecha creacion: 18/08/2017
+        * fecha modificacion: 23/08/2017    
+    **/
+    function conteoemitidos()
+    {
+        $this->db->where('EstadoBoleta_idEstadoPedido',2);
+        $this->db->from("documentoboleta");
+        return  $this->db->count_all_results();
+    }
+
+    /**
+        * conteo de documentos anulados.
+        *
+        * @author Carlos Sanchez Aquino
+        *
+        * fecha creacion: 18/08/2017
+        * fecha modificacion: 23/08/2017    
+    **/
+    function conteoanulados()
+    {
+        $this->db->where('EstadoBoleta_idEstadoPedido',3);
+        $this->db->from("documentoboleta");
+        return $this->db->count_all_results();
     }
 
     /**
@@ -53,7 +118,7 @@ class Model_caja extends CI_Model {
         return $query->result();
     }
 
-    /**
+    /***********NUEVO***************
         * lista los detalles del pedidos por generar documento
         *
         * @author Carlos Sanchez Aquino
@@ -61,8 +126,9 @@ class Model_caja extends CI_Model {
         * fecha creacion: 18/08/2017
         * fecha modificacion: 23/08/2017    
     **/
-     function getPedidoDetalle()
+    function getPedidoDetalleById($id)
     {
+        $this->db->where('idPedidos',$id);
         $query = $this->db->get('vista_pedidosdetalle');
         return $query->result();
     }
@@ -174,19 +240,70 @@ class Model_caja extends CI_Model {
         * fecha creacion: 18/08/2017
         * fecha modificacion: 23/08/2017    
     **/
-    function updateEstado($idprogreso,$porhacer,$enprogreso,$completado)
+    function updateEstado($idprogreso,$porhacer,$enprogreso,$completado,$observacion)
     {
         $array = array(
             'Estado_Administrador'  => $porhacer,
             'Estado_Cocinero'       => $enprogreso,
-            'Estado_Cajero'         => $completado
+            'Estado_Cajero'         => $completado,
+            'ObservacionAdministrador'      =>$observacion
         );
         $this->db->where('idPedidos',$idprogreso);
         $this->db->update('pedidos',$array);
     }
 
+
+
     /**
-        * lista todos los empleados asignados a una moto.
+        * obtiene el ultimo id de la tabla boleta .
+        *
+        * @author Carlos Sanchez Aquino
+        *
+        * fecha creacion: 18/08/2017
+        * fecha modificacion: 23/08/2017    
+    **/
+    function obtenerultimoidboleta()
+    {        
+        $rs = $this->db->query("SELECT MAX(idDocumentoBoleta) AS idBoleUltimo FROM documentoboleta");
+        return $rs->result();
+    }
+
+
+    /**
+        * actualiza el pedido segun el id.
+        *
+        * @author Carlos Sanchez Aquino
+        *
+        * fecha creacion: 18/08/2017
+        * fecha modificacion: 23/08/2017    
+    **/    
+    function updatePedido($pedido,$emitido)
+    {
+        $array = array(
+            'emitido' => $emitido
+        );
+        $this->db->where('idPedidos',$pedido);
+        $this->db->update('pedidos',$array);
+    }
+
+    /**
+        * devuelve el id de la boleta seleccionada segun id del documento
+        *
+        * @author Carlos Sanchez Aquino
+        *
+        * fecha creacion: 18/08/2017
+        * fecha modificacion: 23/08/2017    
+    **/ 
+    function devolveridpedidoboleta($id)
+    {
+        $this->db->SELECT('Pedidos_idPedidos');
+        $this->db->from('documentoboleta');
+        $this->db->where('idDocumentoBoleta',$id);
+        return $this->db->get();
+    }
+
+    /**
+        * Actualiza los estados del pedido cuando la boleta ha sido anulada.
         *
         * @author Carlos Sanchez Aquino
         *   
@@ -198,88 +315,17 @@ class Model_caja extends CI_Model {
         * fecha creacion: 18/08/2017
         * fecha modificacion: 23/08/2017    
     **/
-    function tipoempleado()
+    function updateEstadoPedidoBoleta($ultimopedido,$estado1,$est0ado2,$estado3)
     {
-        
-         $query = $this->db->get('vista_listar_moto_empleado');
-        return $query->result();
-    }
-
-    /**
-        * obtiene el ultimo id de la tabla boleta .
-        *
-        * @author Carlos Sanchez Aquino
-        *
-        * fecha creacion: 18/08/2017
-        * fecha modificacion: 23/08/2017    
-    **/
-    function obtenerultimoidboleta()
-    {
-
-        //$query=$this->db->SELECT('MAX(idDocumentoBoleta) AS idBoleUltimo');
-        //$query=$this->db->FROM('documentoboleta');
-        //    return $query->result();
-        
-        $rs = $this->db->query("SELECT MAX(idDocumentoBoleta) AS idBoleUltimo FROM documentoboleta");
-        $result = $rs->result();
-        return $result;
+        $array = array(
+            'Estado_Administrador'  => $estado1,
+            'Estado_Cocinero'       => $estado2,
+            'Estado_Cajero'         => $estado3
+        );
+        $this->db->where('idPedidos',$ultimopedido);
+        $this->db->update('pedidos',$array);
     }
 
 
-    /**
-        * inserta el empleado repartidor asignado a un pedido.
-        *
-        * @author Carlos Sanchez Aquino
-        *
-        * fecha creacion: 18/08/2017
-        * fecha modificacion: 23/08/2017    
-    **/
-    function repartidor($empleado ,$pedido)
-    {
-
-         $data = array(
-            'empleados_idEmpleados' => $empleado,
-            'pedidos_idPedidos'   => $pedido,
-            );
-        $this->db->insert('asignacion',$data);
-    }
-
-    /**
-        * conteo de documentos emitidos.
-        *
-        * @author Carlos Sanchez Aquino
-        *
-        * fecha creacion: 18/08/2017
-        * fecha modificacion: 23/08/2017    
-    **/
-    function conteoemitidos()
-    {
-        //$query = $this->db->get('VISTA_CONTEO_EMITIDOS');
-        //return $query->result();
-
-        $this->db->where('EstadoBoleta_idEstadoPedido',2);
-        $this->db->from("documentoboleta");
-        $res=  $this->db->count_all_results();
-        return $res;
-    }
-
-    /**
-        * conteo de documentos anulados.
-        *
-        * @author Carlos Sanchez Aquino
-        *
-        * fecha creacion: 18/08/2017
-        * fecha modificacion: 23/08/2017    
-    **/
-    function conteoanulados()
-    {
-        //$query = $this->db->get('VISTA_CONTEO_ANULADOS');
-        //return $query->result();
-
-        $this->db->where('EstadoBoleta_idEstadoPedido',3);
-        $this->db->from("documentoboleta");
-        $res=  $this->db->count_all_results();
-        return $res;
-    }
 }
 ?>

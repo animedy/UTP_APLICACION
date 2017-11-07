@@ -26,22 +26,8 @@ include 'menu.php';
     <br>
     <br>
 
-    <div id="" class="row wrapper white-bg col-sm-7 page-heading">
-        <form target="_blank" action="<?php echo base_url('Caja/DocumentoPdf')?>" method="POST">
-            <!--<div class="form-group">
-                <label class="col-lg-2 control-label">Seleccione un Repartidor: </label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="repartidor">
-                    <?php foreach ($repartidor as $repartidores) 
-                    {
-                    ?>
-                        <option value="<?php echo $repartidores->idEmpleados; ?>"><?php echo $repartidores->Nombres." ".$repartidores->Apellidos; ?></option>
-                    <?php 
-                    } 
-                    ?>
-                    </select>
-                </div>
-            </div>-->
+    <div id="" class="row wrapper white-bg col-sm-7 page-headin g">
+        <form target="_blank" action="<?php echo base_url('Documento/DocumentoPdf')?>" method="POST">
             <br>
             <br>
             <br>

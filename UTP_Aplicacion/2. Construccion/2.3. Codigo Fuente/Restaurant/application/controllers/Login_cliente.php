@@ -37,7 +37,7 @@ class Login_cliente extends CI_Controller {
 			
 
 			//$this->load->view('cliente/Carta');
-			redirect(base_url()."Catalogo/ListarCarta");
+			redirect(base_url()."Producto/ListarCarta");
 		}	
 		else
 		{
@@ -57,10 +57,10 @@ class Login_cliente extends CI_Controller {
 				$this->session->set_userdata('id',$cliente->idCliente);
 				$this->load->model('model_tipo_plato');
 				$data['tipo_platos'] 	= $this->model_tipo_plato->get_tipoplato();
-				$this->load->model('model_catalogo');
-				$data['platos']			= $this->model_catalogo->get_catalogo();
+				$this->load->model('Model_Producto');
+				$data['platos']			= $this->Model_Producto->get_catalogo();
 
-				$this->load->view('cliente/Carta',$data);
+				$this->load->view('cliente/Catalogo',$data);
 		
 				}else {
 					$data['error']="error de contraseña";

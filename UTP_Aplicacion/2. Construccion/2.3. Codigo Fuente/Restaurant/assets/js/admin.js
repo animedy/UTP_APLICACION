@@ -759,7 +759,7 @@
                          },
                          regexp: {
      
-                           regexp: /^[A-Za-z ]+$/,
+                           regexp: /^[a-zA-ZáéíóúñÁÉÍÓÚÑ ]+$/,
                  
                            message: 'El nombre solo puede contener letras'
                  
@@ -817,7 +817,13 @@
                            message: 'El dirección es requerido'
                  
                          },
-
+                          regexp: {
+     
+                           regexp: /^[a-zA-ZáéíóúñÁÉÍÓÚÑ ]+$/,
+                 
+                           message: 'La dirección solo puede contener letras'
+                 
+                         },
                          stringLength: {
      
                            min: 3,
@@ -881,10 +887,10 @@
 
                          stringLength: {
      
-                           min: 9,
-                           max: 9,
+                           min: 6,
+                           max: 6,
                  
-                           message: 'El teléfono debe contener al menos 9 números'
+                           message: 'El teléfono debe contener al menos 6 números'
                  
                          }
                  
@@ -1090,7 +1096,13 @@
                            message: 'El dirección es requerido'
                  
                          },
-
+                         regexp: {
+     
+                           regexp: /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/,
+                 
+                                            
+                         },
+                          
                          stringLength: {
      
                            min: 3,
@@ -1154,10 +1166,10 @@
 
                          stringLength: {
      
-                           min: 9,
-                           max: 9,
+                           min: 6,
+                           max: 6,
                  
-                           message: 'El teléfono debe contener al menos 9 números'
+                           message: 'El teléfono debe contener 6 números'
                  
                          }
                  

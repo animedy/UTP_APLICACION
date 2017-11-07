@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Pepe Tiburon | Login</title>
+
 
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -18,39 +18,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/css/bootstrap-select.min.css" rel="stylesheet">
 
-
 </head>
 
 <body class="gray-bg">
 
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
-            <div>
-
-                
-                <img src="<?php echo base_url("assets/img/logo.png"); ?>">
-
-            </div>
-            <h3>Bienvenido</h3>
             
-            <form id="FormLogin" class="m-t" role="form" data-toggle="validator" method="post" action="<?php echo base_url('Login_cliente/index'); ?>">
+            <h3>RECUPERA TU CONTRASEÑA</h3>
+            
+            <form id="FormLogin" class="m-t" role="form" data-toggle="validator" method="post" action="<?php echo base_url('Cliente/Contrasena'); ?>">
                 <div class="form-group">
+						<h3>Ingrese su correo</h3>
                     <input  type="text" name="login" class="form-control" placeholder="Correo" >
                 </div>
                 <div class="form-group">
-                    <input type="password"  name="password" class="form-control" placeholder="Contraseña" >
+               		 <h3>Ingrese su DNI</h3>	
+                    <input type="number"  name="Dni" class="form-control" placeholder="Dni" >
                 </div>
-                <button type="submit" class="btn btn-success block full-width m-b">Login</button>
+                <button type="submit" class="btn btn-success block full-width m-b">Aceptar</button>
                
      
-                <a data-toggle="modal" class="btn btn-success block full-width m-b" href="<?php echo base_url("cliente/Registrar"); ?>"></i>&nbsp;Registrar</a>  
+                
                    
                   <? echo isset($error)?$error:''; ?>
-                  <td>
-                  <a data-toggle="modal" class="btn btn-light" href="<?php echo base_url("cliente/Contrasena"); ?>"></i>&nbsp;olvido su contraseña</a>
+                  <div>
+                  <a type="button" class="btn btn-white" data-dismiss="modal" href="<?php echo base_url ('Login_cliente');?>" class="fa fa-times">Cerrar</a>
+                  </div>
                 <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
             </form>
-            <p class="m-t"> <small> &copy; <?php echo date("Y"); ?></small> </p>
+            
         </div>
     </div>
 

@@ -6,22 +6,57 @@ class Cliente extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('model_cliente');
+		$this->load->model('Model_cliente');
 		$this->load->helper('my_helper');
 	}
 
 	
+	/**
+		* autentica el Dni del usuario para recuperar su contraseña.
+		*
+		* @author Juan Jose Paz Chalco
+		* 	
+	*/
+
+function Contrasena(){
+$login = $this->input->post('login');
+$Dni = $this->input->post('Dni');
+	if($login!='' and $Dni!='')
+		{
+
+			$this->load->model('model_cliente');
+			
+			$cliente = $this->Model_cliente->getrestartLogin($login,$Dni);
+			
+			if($cliente->num_rows() > 0)
+				{
+				$cliente = $cliente->row();
+				$this->session->set_userdata('id',$cliente->idCliente);
+				
+				redirect(base_url('Cliente/ActualizarContrasena'));
+		
+				}else {
+					$data['error']="error de contraseña";
+					 $this->load->view('cliente/Recuperar',$data);
+					 }
+		}
+		else    {
+			 $data['error']="Ingrese sus datos";
+			 $this->load->view('cliente/Recuperar',$data);
+			
+		 		}
+}
 	/**
 		* registra los Clientes y los distritos.
 		*
 		* @author Juan Jose Paz Chalco
 		* 	
 	*/
-
 	function Registrar(){
 		$this->load->model('model_distrito');
 		$data['distritos'] = $this->model_distrito->getDistrito();
 		
-		$this->load->view('cliente/Registrarse',$data);
+		$this->load->view('cliente/NuevoCliente',$data);
 	}
 
 
@@ -107,6 +142,7 @@ class Cliente extends CI_Controller {
 		* Edita un cliente existente por su id.
 		* 
 		* @author Ricardo Palacios Arce
+		* @author Juan Jose Paz Chalco
 		*
 		* @param id
 	*/
@@ -114,12 +150,29 @@ class Cliente extends CI_Controller {
 	function editar(){
 		$datos = $this->input->post();
 		if (isset($datos)) {
+
 			$this->load->model('model_usuario');
 			$this->load->model('model_distrito');
+
 			$edit_cli['distritos'] 		= $this->model_distrito->getDistrito();
-			$edit_cli['editar_usuario'] = $this->model_usuario->getUsuarioById($datos["idcliente"]);
-			$edit_cli['editar_cliente'] = $this->model_cliente->getClienteById($datos["idcliente"]);
-			$this->load->view('admin/editar_cliente', $edit_cli);
+			$edit_cli['editar_usuario'] = $this->model_usuario->getUsuarioById($this->session->userdata('id'));
+			/*$edit_cli['editar_cliente'] = $this->model_cliente->getClienteById($datos["idcliente"]);*/
+			$edit_cli['editar_cliente']	= $this->model_cliente->getClienteById($this->session->userdata('id'));
+			$this->load->view('cliente/editar_cliente', $edit_cli);
+		}
+	}
+	function ActualizarContrasena(){
+		$datos = $this->input->post();
+		if (isset($datos)) {
+
+			$this->load->model('model_usuario');
+			$this->load->model('model_distrito');
+
+			$edit_cli['distritos'] 		= $this->model_distrito->getDistrito();
+			$edit_cli['editar_usuario'] = $this->model_usuario->getUsuarioById($this->session->userdata('id'));
+			/*$edit_cli['editar_cliente'] = $this->model_cliente->getClienteById($datos["idcliente"]);*/
+			$edit_cli['editar_cliente']	= $this->model_cliente->getClienteById($this->session->userdata('id'));
+			$this->load->view('cliente/EditarContrasena', $edit_cli);
 		}
 	}
 
@@ -178,15 +231,37 @@ class Cliente extends CI_Controller {
 			$direccion 			= $datos["direccion"];
 			$correo 			= $datos["correo"];
 			$contrasena			= encriptar($datos["contrasena"]);
-			$estado				= $datos["estado"];
+			
 			$telefono			= $datos["telefono"];
 			$celular			= $datos["celular"];
 			$distrito			= $datos["distrito"];
 			$referencia			= $datos["referencia"];
-			$this->model_cliente->updateCliente($id,$nombre,$dni,$sexo,$direccion,$estado,$telefono,$celular,$distrito,$referencia);
+			$this->model_cliente->updateCliente($id,$nombre,$dni,$sexo,$direccion,$telefono,$celular,$distrito,$referencia);
 			$this->load->model('model_usuario');
 			$this->model_usuario->updateUsuario($id,$correo,$contrasena);
-			redirect(base_url('clientes'));
+			redirect(base_url('Carta'));
+		}
+	}
+		/**
+		* Actualiza la contraseña del usuario
+		* 
+		* @author Juan Jose Paz Chalco
+		*
+		* @param id
+		* @param correo
+		* @param contrasena	
+	*/
+	function actualizaringreso(){
+		$datos = $this->input->post();
+		if (isset($datos)) {
+			$id 				= $datos["id"];
+			$correo 			= $datos["correo"];
+			$contrasena			= encriptar($datos["contrasena"]);
+			$this->load->model('model_usuario');
+			$this->model_usuario->updateUsuario($id,$correo,$contrasena);
+			$this->session->sess_destroy();
+			$this->load->view('cliente/Login_Cliente');
+
 		}
 	}
 }
