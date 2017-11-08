@@ -7,20 +7,10 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Clientes</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
+
                     </div>
                         <div class="ibox-content">
-                            <a data-toggle="modal" class="btn btn-success" href="#modal-form"><i class="fa fa-plus"></i>&nbsp;Nuevo</a>
+                            <!--<a data-toggle="modal" class="btn btn-success" href="#modal-form"><i class="fa fa-plus"></i>&nbsp;Nuevo</a>-->
                             </br>
                             </br>
                             <div class="table-responsive">
@@ -48,13 +38,11 @@
                                         <td><?php echo $cliente->Nombres;?></td>
                                         <td><?php echo $cliente->Dni;?></td>
                                         <td><?php
-                                                if ($cliente->Sexo == "M") {
+                                                if ($cliente->Sexo == "Masculino") {
                                                      echo "Masculino";
                                                  } else {
                                                      echo "Femenino";
                                                  }
-                                                  
-                                                
                                             ?>
                                         </td>
                                         <td><?php echo $cliente->Direccion;?></td>
@@ -62,10 +50,19 @@
                                         <td><?php echo $cliente->Celular;?></td>
                                         <td><?php echo $cliente->Referencia;?></td>
                                         <td>
-                                            <center>
-                                                <a href="<?php echo base_url('cliente/eliminar')."/".$cliente->idCliente; ?>"><span class="fa fa-trash"></span></a>
-                                                <a href="<?php echo base_url('EditarCliente'). "/".$cliente->idCliente; ?>"><span class="fa fa-pencil"></span></a>
-                                            </center>
+                                        <center>
+                                            <!--<div class="col-md-1">
+                                                <form method="post" action="<?php echo base_url('EditarCliente'); ?>">
+                                                     <button type="submit" class="btn btn-success btn-xs"><span class="fa fa-pencil"></span></button>
+                                                     <input type="hidden" name="idcliente" value="<? echo $cliente->idCliente; ?>">
+                                                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+                                                </form>
+                                            </div>-->
+                                            <div class="col-md-1">
+                                                    <button  type="submit" class="btn btn-success btn-xs" onclick='Eliminar("<? echo $cliente->idCliente?>");'><i class="fa fa-trash"></i></button>
+                                                    <!--<input type="submit" class="btn btn-success btn-xs"  ><span class="fa fa-trash"></span>-->
+                                            </div>
+                                        </center>
                                         </td>
                                     </tr>
                                     <?php 
@@ -94,7 +91,7 @@
     </div>
         <!-- Fin Contenido -->
         <!-- Formulario Nuevo Contenido -->
-        <div id="modal-form" class="modal inmodal fade" aria-hidden="true" tabindex="-1">
+        <!--<div id="modal-form" class="modal inmodal fade" aria-hidden="true" tabindex="-1">
         
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -109,16 +106,17 @@
                             <div class="ibox-content">                    
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Nombre</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese nombre" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="nombre"  placeholder="Ingrese nombre" ></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">DNI</label>
-                                    <div class="col-sm-10"><input type="number" class="form-control" name="dni" id="dni" placeholder="Ingrese DNI" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="dni" placeholder="Ingrese DNI" ></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Sexo</label>
                                     <div class="col-sm-10">
                                     <select class="form-control" name="sexo">
+                                        <option value="">-- Seleccionar --</option>
                                         <option value="Masculino">Masculino</option>
                                         <option value="Femenino">Femenino</option>
                                     </select>
@@ -126,28 +124,29 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Dirección</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="direccion" id="direccion" placeholder="Ingrese Dirección" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="direccion"  placeholder="Ingrese Dirección" ></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Celular</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="celular" id="celular" placeholder="Ingrese celular" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="celular" placeholder="Ingrese celular"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Teléfono</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="telefono" id="telefono" placeholder="Ingrese telefono" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="telefono" placeholder="Ingrese telefono"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Correo</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="correo" id="email" placeholder="Ingrese Correo" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="correo" placeholder="Ingrese Correo"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Contraseña</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" id="contrasena" name="contrasena" placeholder="Ingrese Contraseña" required></div>
+                                    <div class="col-sm-10"><input type="password" class="form-control" name="contrasena" placeholder="Ingrese Contraseña" required></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Distrito</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" name="distrito">
+                                        <option value=""> -- Seleccionar --</option>
                                     <?php foreach ($distritos as $distrito) {
                                     ?>
                                             <option value="<?php echo $distrito->idDistritos; ?>"><?php echo $distrito->Distrito; ?></option>
@@ -160,7 +159,8 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Referencia</label>
                                     <div class="col-sm-10"><input type="text" class="form-control" name="referencia" id="referencia" placeholder="Ingrese Referencia"></div>
-                                </div>                                 
+                                </div>
+                                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">                              
                             </div>
 
                         </div>
@@ -173,15 +173,56 @@
                 </div>                    
             </div>
                            
-        </div>
+        </div>-->
                                   
 		<!-- Fin Formulario Nuevo Contenido -->
         
         
 <?php include 'footer.php'; ?>
         
-        <!-- Jquery Validate -->
-        <script src="<?php echo base_url(); ?>assets/js/plugins/validate/jquery.validate.min.js"></script>
-        <!-- Script Validación -->
-        <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
         
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                            Eliminar = function (id) {
+                                
+                                
+                                var url = "<?php echo base_url('cliente/eliminar'); ?>";
+                                var csrf_token = '<?php echo $this->security->get_csrf_hash(); ?>';
+
+                                swal({
+                                    title: "¿Esta seguro que desea eliminar?",
+                                    text: "Usted no podra recuperar esta información una vez eliminada",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "Si, eliminar!",
+                                    cancelButtonText: "No, cancelar!",
+                                    closeOnConfirm: false,
+                                    closeOnCancel: false },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        swal("Eliminado!", "El plato a sido eliminado.", "success");
+                                         $.ajax({
+                                            url: url,                        
+                                            type: "POST",                       
+                                            data:{'csrf_test_name': csrf_token,"idcliente":id},
+                                        success: function(data) {
+                                            
+                                        },
+                                        error: function(e) {
+                                            swal("No se Elimino", "Ocurrio un error", "error");
+                                        }
+                                       });
+                                        
+                                    } else {
+                                        swal("Cancelado", "El plato esta a salvo :)", "error");
+                                    }
+                                        
+                                });
+
+                            };
+                            
+             });  
+            
+        </script>

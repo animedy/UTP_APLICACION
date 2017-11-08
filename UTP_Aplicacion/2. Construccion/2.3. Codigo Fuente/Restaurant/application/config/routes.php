@@ -65,7 +65,8 @@ $route['sucursal']= 'sucursal/listar';
 */
 $route['empleados']= 'login/listar';
 $route['salir']= 'login/salir';
-$route['EditarEmpleado/(:any)']= 'login/editar/$1';
+//$route['EditarEmpleado/(:any)']= 'login/editar/$1';
+$route['EditarEmpleado']= 'login/editar';
 /*
 | --------- FIN URL Empleados ---------
 */
@@ -73,7 +74,8 @@ $route['EditarEmpleado/(:any)']= 'login/editar/$1';
 | --------- URL Motos -------------
 */
 $route['motos']= 'moto/listar';
-$route['EditarMoto/(:any)']= 'moto/editar/$1';
+//$route['EditarMoto/(:any)']= 'moto/editar/$1';
+$route['EditarMoto']= 'moto/editar';
 /*
 | --------- FIN URL Motos ---------
 */
@@ -81,7 +83,8 @@ $route['EditarMoto/(:any)']= 'moto/editar/$1';
 | --------- URL Clientes -------------
 */
 $route['clientes']= 'cliente/listar';
-$route['EditarCliente/(:any)']= 'cliente/editar/$1';
+//$route['EditarCliente/(:any)']= 'cliente/editar/$1';
+$route['EditarCliente']= 'cliente/editar/';
 /*
 | --------- FIN URL Clientes ---------
 */
@@ -95,9 +98,11 @@ $route['pedidos']= 'pedido/listar';
 /*
 | --------- URL Catalogo -------------
 */
-$route['catalogos']= 'catalogo/listar';
+$route['productos']= 'producto/listar';
+
+$route['categoria']= 'Categoria/listar';
 /*
-| --------- FIN URL Pedidos ---------
+| --------- FIN URL Catalogo ---------
 */
 /*
 | --------- URL Cocina -------------
@@ -111,8 +116,9 @@ $route['cocina']= 'cocina/listar';
 */
 $route['pedidosatendidos']= 'pedido/listarpedidosatendidos';
 $route['pedidosdevueltos']= 'pedido/listarpedidosdevueltos';
-$route['platosmasvendidos']= 'catalogo/platosmasvendidos';
-$route['ventasdelmes']= 'ventas/listar';
+$route['platosmasvendidos']= 'Producto/platosmasvendidos';
+$route['ventasdeldia']= 'ventas/listar';
+$route['ventasdelmes']= 'ventas/ListarVentasDelMes';
 $route['filtropedidos']= 'pedido/listarpedidos';
 /*
 | --------- FIN URL Reportes ---------
@@ -123,46 +129,35 @@ $route['filtropedidos']= 'pedido/listarpedidos';
 $route['cliente']= 'cliente/listar';
 $route['salir']= 'login/salir';
 $route['registrarse']= 'login/registrarse';
+$route['recuperar']= 'cliente/Contrasena';
 /*
 | --------- FIN URL Empleados ---------
 */
 /*
- ---------- URL Carta -----------
+ ---------- URL Catalogo o Carta -----------
 */
-$route['Carta']= 'Catalogo/ListarCarta';
-$route['Carta1']= 'index.php/Carta';
+$route['Carta']= 'Producto/ListarCarta';
+
+$route['Carta1']= 'index.php/Catalogo';
 /*
 | --------- FIN URL Carta ---------
 */
 /*
 | ---------- URL Carrito -----------
 */
-$route['Carrito']= 'Catalogo/MostrarCarrito';
+$route['Carrito']= 'Carrito/MostrarCarrito';
+$route['Mensaje']= 'Producto/MostrarSeguimiento';
+
 /*
 | --------- FIN URL Carrito ---------
 */
-
 /*
 | --------- URL Caja-------------
 */
-$route['cajero']= 'Caja/ListarPedidos';
-
-$route['cajeroanu']= 'Caja/ListaPedidosAnulados';
-/*$route['VerDocumento']= 'Caja/VerDocumento';*/
-$route['VerDocumento/(:any)']= 'Caja/VerDocumento/$1';
-$route['Documento/(:any)']= 'Caja/Documento/$1';
-
-
-$route['anular']= 'Caja/ListarDocuAnulados';
+$route['cajero']= 'Documento/ListarPedidos';
+$route['docupagados']= 'Documento/ListaDcumentosPagados';
+$route['docuanulados']= 'Documento/ListaDocumentosAnulados';
+$route['VerDocumento/(:any)']= 'Documento/VerDocumento/$1';
 /*
-| --------- FIN URL Reportes ---------
+| --------- FIN URL Caja ---------
 */
-
-
-/*
-| -------------------------------------------------------------------------
-| Sample REST API Routes
-| -------------------------------------------------------------------------
-*/
-$route['api/example/users/(:num)'] = 'api/example/users/id/$1'; // Example 4
-$route['api/example/users/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'api/example/users/id/$1/format/$3$4'; // Example 8

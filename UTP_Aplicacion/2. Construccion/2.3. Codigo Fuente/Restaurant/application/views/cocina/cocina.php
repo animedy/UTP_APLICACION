@@ -20,8 +20,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body>
 
+		<?php if (!$this->session->userdata('id')) {
+            redirect('Login');
+        } ?>
 			<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
+                <div class="col-lg-12">
                             <div class="row border-bottom">
 					            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
 					            <div class="navbar-header">
@@ -43,28 +46,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					            </nav>
 					        </div>
                 </div>
-                <div class="col-lg-2">
-
-                </div>
             </div>
                     <div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
                
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h3>En Progreso</h3>
-                            <p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>
+                            <h3>En Cocina</h3>
                             <ul class="sortable-list connectList agile-list" id="inprogress">
-                                <?php
+                                <?
                                     foreach ($progreso as $pedidoprogreso) {
-                                        if ($pedidoprogreso->Estado_Administrador == 1 && $pedidoprogreso->Estado_Cocinero == 1 && $pedidoprogreso->Estado_Cajero==0) {
+                                        if ($pedidoprogreso->Estado_Administrador == 1 && $pedidoprogreso->Estado_Cocinero == 1 && $pedidoprogreso->Estado_Cajero==0 && $pedidoprogreso->ObservacionAdministrador == NULL) {
                                             
                                         
                                  ?>
                                 <div class="panel panel-warning">
                                     <div class="panel-heading">
-                                        Comanda N° <?php echo $pedidoprogreso->Comanda; ?>
+                                        Comanda N°: <?php echo $pedidoprogreso->Comanda; ?><br>
+                                            Cliente: <?php echo $pedidoprogreso->Nombres; ?>
+                                            
                                     </div>
                                     <div class="panel-body">
                                         <div class="panel-group" id="accordion">
@@ -76,7 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <div class="panel-heading">
                                                     <h5 class="panel-title">
                                                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $nuevo->idDetallePedido ?>">
-                                                        <?php
+                                                        <?
                                                         echo $nuevo->Cantidad . " " . $nuevo->Platos; 
                                                          ?>
                                                         </a>
@@ -88,7 +89,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     </div>
                                                 </div>
                                             </div>
-                                        <?php
+                                        <?
                                             }
                                         }
                                         ?>
@@ -96,10 +97,76 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                     <div class="panel-footer">
                                         <a data-toggle="modal" href="#modal-form-progreso" class="pull-right btn btn-xs btn-warning" onclick='CambiarEstadoProgreso("<?php echo $pedidoprogreso->idPedidos; ?>");'>Ver</a>
-                                        <i class="fa fa-clock-o"></i> <?php echo date('d.m.Y', strtotime($pedidoprogreso->Fecha)); ?><?php echo $pedidoprogreso->Hora_Pedido; ?>Hrs.
+                                        <i class="fa fa-clock-o"></i> <?php echo date('d.m.Y', strtotime($pedidoprogreso->Fecha)) . " " .$pedidoprogreso->Hora_Pedido; ?>Hrs.<br>
+                                        <? if ($pedidoprogreso->ObservacionAdministrador!= null) { ?>
+                                            <b>Observación:</b> <?php echo $pedidoprogreso->ObservacionAdministrador; 
+                                        } ?>
+                                        
                                     </div>
                                 </div>
-                                <?php
+                                <?
+                                        }
+                                    } 
+                                 ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h3>Pedidos Devueltos</h3>
+                            <ul class="sortable-list connectList agile-list" id="inprogress">
+                                <?
+                                    foreach ($progreso as $pedidoprogreso) {
+                                        if ($pedidoprogreso->Estado_Administrador == 1 && $pedidoprogreso->Estado_Cocinero == 1 && $pedidoprogreso->Estado_Cajero==0 && $pedidoprogreso->ObservacionAdministrador != NULL) {
+                                            
+                                        
+                                 ?>
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">
+                                        Comanda N°: <?php echo $pedidoprogreso->Comanda; ?><br>
+                                            Cliente: <?php echo $pedidoprogreso->Nombres; ?>
+                                            
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="panel-group" id="accordion">
+                                        <?php
+                                        foreach ($vistaenprogreso as $nuevo) {
+                                            if ($pedidoprogreso->idPedidos == $nuevo->idPedidos) {  
+                                         ?>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h5 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $nuevo->idDetallePedido ?>">
+                                                        <?
+                                                        echo $nuevo->Cantidad . " " . $nuevo->Platos; 
+                                                         ?>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse<?php echo $nuevo->idDetallePedido ?>" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <b>Observación: <i><?php echo $nuevo->Observacion;  ?></i></b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?
+                                            }
+                                        }
+                                        ?>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <a data-toggle="modal" href="#modal-form-progreso" class="pull-right btn btn-xs btn-danger" onclick='CambiarEstadoProgreso("<?php echo $pedidoprogreso->idPedidos; ?>");'>Ver</a>
+                                        <i class="fa fa-clock-o"></i> <?php echo date('d.m.Y', strtotime($pedidoprogreso->Fecha)) . " " .$pedidoprogreso->Hora_Pedido; ?>Hrs.<br>
+                                        <? if ($pedidoprogreso->ObservacionAdministrador!= null) { ?>
+                                            <b>Observación:</b> <?php echo $pedidoprogreso->ObservacionAdministrador; 
+                                        } ?>
+                                        
+                                    </div>
+                                </div>
+                                <?
                                         }
                                     } 
                                  ?>
@@ -123,16 +190,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="ibox-content">
                                         <div class="form-group">
                                             <input type="hidden" id="idprogreso" name="id">
-                                            <label class="col-md-6 control-label">Pedido en Progreso</label>
+                                            <!--<label class="col-md-6 control-label">Pedido en Progreso</label>-->
                                             <div>
                                                 <input type="hidden" name="porhacer" value="on" />
                                             </div>
                                             <div>
-                                                <input type="checkbox" name="enprogreso" class="js-switch_2" checked />
+                                                <input type="hidden" name="enprogreso" value="on" />
                                             </div>
+                                            <!--<div>
+                                                <input type="checkbox" name="enprogreso" class="js-switch_2" checked disabled />
+                                            </div>-->
                                         </div>                    
                                         <div class="form-group">
-                                            <label class="col-md-6 control-label">Pedido Completado</label>
+                                            <label class="col-md-6 control-label">Enviar a Caja</label>
                                             <div>
                                                 <input type="checkbox" name="completado" class="js-switch_3" />
                                             </div>
@@ -143,6 +213,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <button type="button" class="btn btn-white" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Cerrar</button>
                                     <button type="submit" class="btn btn-primary" id="add"><i class="fa fa-save"></i>&nbsp;Guardar</button>
                                 </div>
+                                 <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                             </form>|
                         </div>
                     </div>
@@ -176,7 +247,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
     </script>
     <script type="text/javascript">
-    setTimeout('document.location.reload()',10000); 
+    setTimeout('document.location.reload()',60000); 
     </script>
 </body>
 </html>

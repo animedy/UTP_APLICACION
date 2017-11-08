@@ -6,6 +6,7 @@ class Model_tipo_plato extends CI_Model {
 		$this->load->database();
     }
 
+    
     /**
         * Lista los tipos de categoria
         *
@@ -20,7 +21,55 @@ class Model_tipo_plato extends CI_Model {
         return $query->result();
     }
 
+
+    function get_Categoria()
+    {
+        $query = $this->db->get('categoriaplato');
+        $this->db->order_by('id');
+        return $query->result();
+    }
+    /**
+        * Inserta una nueva categoria
+        *
+        * @author Carlos Sanchez
+        *
+        *
+        * @param categoria
+        *
+        fecha creacion: 31/08/2017
+        fecha modificacion: 31/08/2017
+        *   
+    */
+    function insertCategoria($categoria)
+    {
+        $data = array(
+            'Categoria'                           => $categoria,
+            );
+        $this->db->insert('categoriaplato',$data);        
+    }
+
+    /**
+        * Elimina una categoria.
+        *
+        * @author Juan Jose Paz Chalco
+        *
+        * @param id 
+        *   
+        fecha creacion: 31/08/2017
+        fecha modificacion: 31/08/2017          
+    */
+    function deleteCategoria($id)
+    {
+        $this->db->where('idCategoriaPlato',$id);
+        $this->db->delete('categoriaplato');
+
+        /*$estado = 'A';
+        $this->db->query("CALL SP_ELIMINAR_PLATO('$id', '$estado')");*/
+
+    }
     
+
+    /** PLATOS **/
     /**
         * Inserta un nuevo plato.
         *

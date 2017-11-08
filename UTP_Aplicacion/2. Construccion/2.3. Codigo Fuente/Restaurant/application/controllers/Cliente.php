@@ -6,35 +6,68 @@ class Cliente extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('model_cliente');
+		$this->load->model('Model_cliente');
+		$this->load->helper('my_helper');
 	}
 
+	
 	/**
-		* lista los datos de los distritos 
+		* autentica el Dni del usuario para recuperar su contraseña.
 		*
 		* @author Juan Jose Paz Chalco
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
 		* 	
 	*/
-	function Registrar()
-	{
+
+function Contrasena(){
+$login = $this->input->post('login');
+$Dni = $this->input->post('Dni');
+	if($login!='' and $Dni!='')
+		{
+
+			$this->load->model('model_cliente');
+			
+			$cliente = $this->Model_cliente->getrestartLogin($login,$Dni);
+			
+			if($cliente->num_rows() > 0)
+				{
+				$cliente = $cliente->row();
+				$this->session->set_userdata('id',$cliente->idCliente);
+				
+				redirect(base_url('Cliente/ActualizarContrasena'));
+		
+				}else {
+					$data['error']="error de contraseña";
+					 $this->load->view('cliente/Recuperar',$data);
+					 }
+		}
+		else    {
+			 $data['error']="Ingrese sus datos";
+			 $this->load->view('cliente/Recuperar',$data);
+			
+		 		}
+}
+	/**
+		* registra los Clientes y los distritos.
+		*
+		* @author Juan Jose Paz Chalco
+		* 	
+	*/
+	function Registrar(){
 		$this->load->model('model_distrito');
 		$data['distritos'] = $this->model_distrito->getDistrito();
-		$this->load->view('cliente/registrarse',$data);
+		
+		$this->load->view('cliente/NuevoCliente',$data);
 	}
+
 
 	/**
 		* Lista los Clientes y los distritos.
 		*
-		* @author Juan Jose Paz Chalco
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
+		* @author Ricardo Palacios Arce
 		* 	
 	*/
-	function listar()
-	{
+
+	function listar(){
 		$this->load->model('model_distrito');
 		$data['distritos'] = $this->model_distrito->getDistrito();
 		$data['clientes'] = $this->model_cliente->getCliente();
@@ -43,53 +76,6 @@ class Cliente extends CI_Controller {
 
 	/**
 		* Inserta un nuevo cliente.
-		* 
-		*  @author Juan Jose Paz Chalco
-		*
-		* @param nombre
-		* @param dni
-		* @param sexo
-		* @param direccion
-		* @param celular
-		* @param telefono
-		* @param correo
-		* @param contrasena	
-		* @param estado
-		* @param fecha_registro
-		* @param distrito
-		* @param referencia
-		* @param id_cliente
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 
-	*/
-	function insertar()
-	{
-		$datos = $this->input->post();
-		if (isset($datos))
-		{
-			$nombre 			= $datos["nombre"];
-			$dni				= $datos["dni"];
-			$sexo				= $datos["sexo"];
-			$direccion			= $datos["direccion"];
-			$celular			= $datos["celular"];
-			$telefono			= $datos["telefono"];
-			$correo				= $datos["correo"];
-			$contrasena			= $datos["contrasena"];
-			$estado				= 'A';
-			$fecha_registro		= date('Y-m-d');
-			$distrito			= $datos["distrito"];
-			$referencia			= $datos["referencia"];
-			$id_cliente 		= $this->model_cliente->insertCliente($nombre,$dni,$sexo,$direccion,$celular,$telefono,$estado,$fecha_registro,$distrito,$referencia);
-			$this->load->model('model_usuario');
-			$this->model_usuario->insertUsuario($correo,$contrasena,$id_cliente);
-			redirect(base_url('clientes'));
-		}
-	}
-
-	/**
-		* Inserta un nuevo cliente por el administrador
 		* 
 		* @author Ricardo Palacios Arce
 		*
@@ -106,16 +92,11 @@ class Cliente extends CI_Controller {
 		* @param distrito
 		* @param referencia
 		* @param id_cliente
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 
 	*/
-	function InsertarCliente()
-	{
+
+	function insertar(){
 		$datos = $this->input->post();
-		if (isset($datos)) 
-		{
+		if (isset($datos)) {
 			$nombre 			= $datos["nombre"];
 			$dni				= $datos["dni"];
 			$sexo				= $datos["sexo"];
@@ -123,7 +104,29 @@ class Cliente extends CI_Controller {
 			$celular			= $datos["celular"];
 			$telefono			= $datos["telefono"];
 			$correo				= $datos["correo"];
-			$contrasena			= $datos["contrasena"];
+			$contrasena			= encriptar($datos["contrasena"]);
+			$estado				= 'A';
+			$fecha_registro		= date('Y-m-d');
+			$distrito			= $datos["distrito"];
+			$referencia			= $datos["referencia"];
+			$id_cliente 		= $this->model_cliente->insertCliente($nombre,$dni,$sexo,$direccion,$celular,$telefono,$estado,$fecha_registro,$distrito,$referencia);
+			$this->load->model('model_usuario');
+			$this->model_usuario->insertUsuario($correo,$contrasena,$id_cliente);
+			redirect(base_url('clientes'));
+		}
+	}
+
+	function InsertarCliente(){
+		$datos = $this->input->post();
+		if (isset($datos)) {
+			$nombre 			= $datos["nombre"];
+			$dni				= $datos["dni"];
+			$sexo				= $datos["sexo"];
+			$direccion			= $datos["direccion"];
+			$celular			= $datos["celular"];
+			$telefono			= $datos["telefono"];
+			$correo				= $datos["correo"];
+			$contrasena			= encriptar($datos["contrasena"]);
 			$estado				= 'A';
 			$fecha_registro		= date('Y-m-d');
 			$distrito			= $datos["distrito"];
@@ -136,26 +139,40 @@ class Cliente extends CI_Controller {
 	}
 
 	/**
-		* Muesra la informacion del cliente por su id para ser editado 
+		* Edita un cliente existente por su id.
 		* 
 		* @author Ricardo Palacios Arce
+		* @author Juan Jose Paz Chalco
 		*
 		* @param id
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 
 	*/
-	function editar($id = NULL)
-	{
-		if ($id != NULL) 
-		{
+
+	function editar(){
+		$datos = $this->input->post();
+		if (isset($datos)) {
+
 			$this->load->model('model_usuario');
 			$this->load->model('model_distrito');
+
 			$edit_cli['distritos'] 		= $this->model_distrito->getDistrito();
-			$edit_cli['editar_usuario'] = $this->model_usuario->getUsuarioById($id);
-			$edit_cli['editar_cliente'] = $this->model_cliente->getClienteById($id);
-			$this->load->view('admin/editar_cliente', $edit_cli);
+			$edit_cli['editar_usuario'] = $this->model_usuario->getUsuarioById($this->session->userdata('id'));
+			/*$edit_cli['editar_cliente'] = $this->model_cliente->getClienteById($datos["idcliente"]);*/
+			$edit_cli['editar_cliente']	= $this->model_cliente->getClienteById($this->session->userdata('id'));
+			$this->load->view('cliente/editar_cliente', $edit_cli);
+		}
+	}
+	function ActualizarContrasena(){
+		$datos = $this->input->post();
+		if (isset($datos)) {
+
+			$this->load->model('model_usuario');
+			$this->load->model('model_distrito');
+
+			$edit_cli['distritos'] 		= $this->model_distrito->getDistrito();
+			$edit_cli['editar_usuario'] = $this->model_usuario->getUsuarioById($this->session->userdata('id'));
+			/*$edit_cli['editar_cliente'] = $this->model_cliente->getClienteById($datos["idcliente"]);*/
+			$edit_cli['editar_cliente']	= $this->model_cliente->getClienteById($this->session->userdata('id'));
+			$this->load->view('cliente/EditarContrasena', $edit_cli);
 		}
 	}
 
@@ -165,20 +182,22 @@ class Cliente extends CI_Controller {
 		* @author Ricardo Palacios Arce
 		*
 		* @param id
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 
+
 	*/
-	function eliminar($id = NULL)
-	{
-		if ($id != NULL) 
-		{
-			$this->load->model('model_usuario');
-			$this->model_usuario->deleteUsuario($id);
-			$this->model_cliente->deleteCliente($id);
-			redirect(base_url('clientes'));
+
+	function eliminar(){
+		if ($this->input->is_ajax_request()) {
+			$id = $this->input->post("idcliente");
+			$estado = "X";
+			$this->model_cliente->deleteCliente($id,$estado);
 		}
+		/*$datos = $this->input->post();
+		if (isset($datos)) {
+			$this->load->model('model_usuario');
+			$this->model_usuario->deleteUsuario($datos["idcliente"]);
+			$this->model_cliente->deleteCliente($datos["idcliente"]);
+		redirect(base_url('clientes'));
+		}*/
 	}
 
 	/**
@@ -200,32 +219,49 @@ class Cliente extends CI_Controller {
 		* @param distrito
 		* @param referencia
 		* @param id_cliente
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 
 	*/
-	function actualizar()
-	{
+
+	function actualizar(){
 		$datos = $this->input->post();
-		if (isset($datos)) 
-		{
+		if (isset($datos)) {
 			$id 				= $datos["id"];
 			$nombre				= $datos["nombre"];
 			$dni 				= $datos["dni"];
 			$sexo 				= $datos["sexo"];
 			$direccion 			= $datos["direccion"];
 			$correo 			= $datos["correo"];
-			$contrasena			= $datos["contrasena"];
-			$estado				= $datos["estado"];
+			$contrasena			= encriptar($datos["contrasena"]);
+			
 			$telefono			= $datos["telefono"];
 			$celular			= $datos["celular"];
 			$distrito			= $datos["distrito"];
 			$referencia			= $datos["referencia"];
-			$this->model_cliente->updateCliente($id,$nombre,$dni,$sexo,$direccion,$estado,$telefono,$celular,$distrito,$referencia);
+			$this->model_cliente->updateCliente($id,$nombre,$dni,$sexo,$direccion,$telefono,$celular,$distrito,$referencia);
 			$this->load->model('model_usuario');
 			$this->model_usuario->updateUsuario($id,$correo,$contrasena);
-			redirect(base_url('clientes'));
+			redirect(base_url('Carta'));
+		}
+	}
+		/**
+		* Actualiza la contraseña del usuario
+		* 
+		* @author Juan Jose Paz Chalco
+		*
+		* @param id
+		* @param correo
+		* @param contrasena	
+	*/
+	function actualizaringreso(){
+		$datos = $this->input->post();
+		if (isset($datos)) {
+			$id 				= $datos["id"];
+			$correo 			= $datos["correo"];
+			$contrasena			= encriptar($datos["contrasena"]);
+			$this->load->model('model_usuario');
+			$this->model_usuario->updateUsuario($id,$correo,$contrasena);
+			$this->session->sess_destroy();
+			$this->load->view('cliente/Login_Cliente');
+
 		}
 	}
 }

@@ -1,105 +1,224 @@
-<?php 
-include 'menu.php';
-foreach ($impri as $key) {
-  ?>
-                <div class="wrapper wrapper-content p-xl">
-                    <div class="ibox-content p-xl">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <h5>De:</h5>
-                                    <address>
-                                        <strong>Pepe Tiburon</strong><br>
-                                        Av. Sucre 672 La Tomilla<br>
-                                        Cayma<br>
-                                        <abbr title="Phone">Cel:</abbr> 921604860
-                                    </address>
-                                </div>
+<!DOCTYPE html>
+<html>
 
-                                <div class="col-sm-4 text-right">
-                                    <h4>No. Boleta</h4>
-                                    <h4 class="text-navy"><?php echo $key->idPedidos; ?></h4>
-                                    <span>Cliente:</span>
-                                    <address>
-                                        <strong><?php echo $key->Nombres; ?></strong><br>
-                                        <?php echo $key->Direccion; ?><br>
-                                        <abbr title="Phone">DNI:</abbr><?php echo $key->Dni; ?>
-                                    </address>
-                                    <p>
-                                        <span><strong>Fecha:</strong><?php echo $key->Fecha; ?></span><br/>
-                                        <!--<span><strong>Due Date:</strong> March 24, 2014</span>-->
-                                    </p>
-                                </div>
-                            </div>
+<head>
+   <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            font-size: 62.5%;
+        } 
+        /*div{
+            width: 100%;
+            margin: 0;
+        }*/
+        .principal {
+            overflow:hidden; 
+        }
+        .logo {
+            float: left;
+        }
+        img.pequeña {
+            width: 50px; height: 50px;
+        } 
+        .centro {
+            display:inline-block;
+            float: center;
+            text-align: center;
+        }
+        .numero {
+            float:right;    /*tambien puede poner float:right, para que se alineé a la derecha */
+            text-align: right;
+        }
+        #cuerpo1 {
+            float: left;
+            text-align: left;
+        }
+        #cuerpo2 {
+            float: right;
+            text-align: right;
+        }
+    </style>
+</head>
 
-                            <div class="table-responsive m-t">
-                                <table class="table invoice-table">
-                                    <thead>
-                                    <tr>
-                                        <th>Descripcion</th>
-                                        <th>Cantidad</th>
-                                        <th>Precio Unitario</th>
-                                        <!--<th>IGV</th>-->
-                                        <th>TotaL</th>
-                                    </tr>
-                                    </thead>
-                                    <?php
-                                        foreach ($deta as $detalle) {
-                                        if($key->idPedidos == $detalle->Pedidos_idPedidos) {
-                                    ?>
-                                    <tbody>
-                                    <tr>
-                                        <td><div><strong><?php echo $detalle->Nombres; ?></strong></div>
-                                        <td><?php echo $detalle->Cantidad; ?></td>
-                                        <td><?php echo $detalle->Precio; ?></td>
-                                        <!--<td>$5.98</td>-->
-                                        <td><?php echo $detalle->Precio; ?></td>
-                                    </tr>
-                                </tbody>
-                                <?php
-                                    }
-                                }
-                                ?> 
-                                </table>
-                            </div><!-- /table-responsive -->
-
-                            <table class="table invoice-total">
-                                <tbody>
-                                <tr>
-                                    <td><strong>Sub Total :</strong></td>
-                                    <td>S/.45.34</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>IGV :</strong></td>
-                                    <td>S/.8.16</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>TOTAL :</strong></td>
-                                    <td>S/.53.50</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <!--<div class="well m-t"><strong>Comments</strong>
-                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less
-                            </div>-->
-                        </div>
-
+<body>
+    <div class="table-responsive">
+        <table  class="" align="center">
+            <thead>
+                <tr>
+                    <th><img class="pequeña text-align:center" src="<?php echo base_url(); ?>assets/img/pp.png"></th>
+                    <br>
+                    <th>    <p align="center">PEPE TIBURÓN<br>
+                            Av. SUCRE 672 LA TOMILLA - CAYMA</p></th>
+                    <th> 
+                        <p align="center"><h7>RUC : 96325874122</h7>
+                         <br>
+                         <h7>BOLETA DE VENTA</h7>         
+                         <br>
+                         <h7><?php echo $boleta;?></h7></p>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <br>
+        <p align="right">FECHA:</label><label><?php echo $fecha_hora ?></p>
+        <table  class="">
+            <thead>
+                <tr>
+                    <td>
+                        <label>CLIENTE :  </label><label><?php echo $nombre; ?></label>
+                        <br>
+                        <label>DIRECCION :  </label><label><?php echo $direccion; ?></label>
+                        <br>
+                        <label>CAJERO :  </label><label><?php echo $cajero ?></label> 
+                    </td>
+                    <td>
+                        <label>DNI :  </label><label><?php echo $dni; ?></label> 
+                        <br>
+                        <label>COMANDA :  </label><label><?php echo $comanda; ?></label>
+                        <br>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+        <br>
+        <table  class="table table-stripped toggle-arrow-tiny">
+            <thead>
+                <tr>
+                    <th align="left">NRO.</th>
+                    <th align="left">DESCRIPCION</th>
+                    <th align="right">CANTIDAD</th>
+                    <th align="right">PRECIO UNIT.</th>
+                    <th align="right">TOTAL</th>
+                </tr>
+            </thead>
+            <?php
+                foreach ($detalle as $detalles) 
+            {
+            ?>
+            <tbody>
+                <tr>
+                    <td align="left"><?php echo $detalles->Nro; ?></td>
+                    <td align="left"><?php echo $detalles->Producto; ?></td>
+                    <td align="right"><?php echo $detalles->Cantidad; ?></td>
+                    <td align="right"><?php echo $detalles->Precio; ?></td>
+                    <td align="right"><?php echo $detalles->Cantidad*$detalles->Precio; ?></td>
+                </tr>
+            </tbody>
+            <?php
+            }
+            ?>     
+        </table>
+        <br>
+        <table class="" align="right">                            
+            <tbody>
+                <tr>
+                    <td><label>SUB TOTAL : </label></td>
+                    <td><label><?php echo $subtotal; ?><label></td>
+                </tr>
+                <tr>
+                    <td><label>IGV    :    </label></td>
+                    <td><label><?php echo $igv; ?><label></td>
+                    </tr>
+                    <tr>
+                        <td><label>TOTAL  :  </label></td>
+                        <td><label><?php echo $totaltotal; ?><label></td>
+                    </tr>
+                </tbody>
+            </table>
+        <p align="left"><?php echo $letras; ?></p>
     </div>
-<?php 
-}
- ?>
-    <!-- Mainly scripts -->
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
 
-    <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js"></script>
 
-    <script type="text/javascript">
-        window.print();
-    </script>
+
+
+
+    <!--<div class="wrapper wrapper-content animated fadeInRight">
+        <div class="principal">
+            <div class="logo">
+                <img class="pequeña text-align:center" src="<?php echo base_url(); ?>assets/img/pp.png">
+            </div>
+            <div class="centro">
+                PEPE TIBURÓN
+                <br>
+                Av. SUCRE 672 LA TOMILLA - CAYMA
+            </div> 
+            <div class="numero">
+                RUC : 96325874122
+                <br>
+                BOLETA DE VENTA         
+                <br>
+                <?php echo $boleta; ?>
+            </div>                  
+        </div>
+        <div id="principal2">
+            <div id="cuerpo1">
+                <label class="">Fecha:</label><label><?php echo $fecha_hora ?></label>
+                <br>
+                <label>Cliente :</label><label><?php echo $nombre; ?></label>
+                <br>
+                <label>Direccion :</label><label><?php echo $direccion; ?></label>
+                <br>
+                <label>DNI :</label><label><?php echo $dni; ?></label>  
+            </div>
+            <div id="cuerpo2">
+                <label>Comanda :</label><label><?php echo $comanda; ?></label>
+                <br>
+                <label>Cajero :</label><label><?php echo $cajero ?></label>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table  class="table table-stripped toggle-arrow-tiny">
+                <thead>
+                    <tr>
+                        <th>DESCRIPCION</th>
+                        <th>CANTIDAD</th>
+                        <th>PRECIO UNIT.</th>
+                        <th>TOTAL</th>
+                    </tr>
+                </thead>
+                <?php
+                foreach ($detalle as $detalles) 
+                {
+                ?>
+                <tbody>
+                    <tr>
+                        <td><label><?php echo $detalles->Producto; ?></label></td>
+                        <td><label><?php echo $detalles->Cantidad; ?></label></td>
+                        <td><label><?php echo $detalles->Precio; ?></label></td>
+                        <td><label><?php echo $detalles->Cantidad*$detalles->Precio; ?></label></td>
+                    </tr>
+                </tbody>
+                <?php
+                }
+                ?>     
+            </table>
+        </div>
+        <div class="table-responsive ">
+            <table class="table invoice-total">                            
+                <tbody>
+                    <tr>
+                        <td><label>Sub Total :</label></td>
+                        <td><label><?php echo $subtotal; ?><label></td>
+                    </tr>
+                    <tr>
+                        <td><label>IGV :</label></td>
+                        <td><label><?php echo $igv; ?><label></td>
+                    </tr>
+                    <tr>
+                        <td><label>TOTAL :</label></td>
+                        <td><label><?php echo $totaltotal; ?><label></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="letras">
+            <label><?php echo $letras; ?></label>
+        </div>
+    </div>-->
+
 
 </body>
-
 </html>
 

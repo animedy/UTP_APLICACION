@@ -5,8 +5,7 @@
                 <div class="col-lg-4">
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h3>Por Hacer</h3>
-                            <p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>
+                            <h3>Pedido de Cliente</h3>
                             <ul class="sortable-list connectList agile-list" id="todo">
                                 <?php
                                     foreach ($porhacer as $pedidoporhacer) {
@@ -14,19 +13,23 @@
                                  ?>
                                 <div class="panel panel-danger">
                                         <div class="panel-heading">
-                                            Comanda N° <?php echo $pedidoporhacer->Comanda; ?>
+                                            Comanda N°: <?php echo $pedidoporhacer->Comanda; ?><br>
+                                            Cliente: <?php echo $pedidoporhacer->Nombres; ?>
+                                            
                                         </div>
                                         <div class="panel-body">
                                             <div class="panel-group" id="accordion">
-                                            <?php
+                                            <?
                                             foreach ($vistaporhacer as $nuevo) {
                                                 if ($pedidoporhacer->idPedidos == $nuevo->idPedidos) {  
+                                                    
                                              ?>
+
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
                                                         <h5 class="panel-title">
                                                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $nuevo->idDetallePedido ?>">
-                                                            <?php
+                                                            <?
                                                             echo $nuevo->Cantidad . " " . $nuevo->Platos; 
                                                              ?>
                                                             </a>
@@ -38,14 +41,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            <?php
+                                            <?
                                                 }
                                             }
                                             ?>
                                             </div>
                                         </div>
                                         <div class="panel-footer">
-                                            <a  data-toggle="modal" data-target="#modal-form-porhacer"  class="pull-right btn btn-xs btn-danger" onClick='CambiarEstadoPorHacer("<?php echo $pedidoporhacer->idPedidos; ?>");'>Ver</a>
+                                            <a  data-toggle="modal" data-target="#modal-form-porhacer"  class="pull-right btn btn-xs btn-danger" onClick='CambiarEstadoPorHacer("<?php echo $pedidoporhacer->idPedidos; ?>");'>Enviar a Cocina</a>
                                             <i class="fa fa-clock-o"></i> <?php echo date('d.m.Y', strtotime($pedidoporhacer->Fecha)) . " " .$pedidoporhacer->Hora_Pedido; ?>Hrs.
                                         </div>
                                 </div>
@@ -61,10 +64,9 @@
                 <div class="col-lg-4">
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h3>En Progreso</h3>
-                            <p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>
+                            <h3>En Cocina</h3>
                             <ul class="sortable-list connectList agile-list" id="inprogress">
-                                <?php
+                                <?
                                     foreach ($progreso as $pedidoprogreso) {
                                         if ($pedidoprogreso->Estado_Administrador == 1 && $pedidoprogreso->Estado_Cocinero == 1 && $pedidoprogreso->Estado_Cajero==0) {
                                             
@@ -72,7 +74,9 @@
                                  ?>
                                 <div class="panel panel-warning">
                                     <div class="panel-heading">
-                                        Comanda N° <?php echo $pedidoprogreso->Comanda; ?>
+                                        Comanda N°: <?php echo $pedidoprogreso->Comanda; ?><br>
+                                            Cliente: <?php echo $pedidoporhacer->Nombres; ?>
+                                            
                                     </div>
                                     <div class="panel-body">
                                         <div class="panel-group" id="accordion">
@@ -84,7 +88,7 @@
                                                 <div class="panel-heading">
                                                     <h5 class="panel-title">
                                                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $nuevo->idDetallePedido ?>">
-                                                        <?php
+                                                        <?
                                                         echo $nuevo->Cantidad . " " . $nuevo->Platos; 
                                                          ?>
                                                         </a>
@@ -96,18 +100,22 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        <?php
+                                        <?
                                             }
                                         }
                                         ?>
                                         </div>
                                     </div>
                                     <div class="panel-footer">
-                                        <a data-toggle="modal" href="#modal-form-progreso" class="pull-right btn btn-xs btn-warning" onclick='CambiarEstadoProgreso("<?php echo $pedidoprogreso->idPedidos; ?>");'>Ver</a>
-                                        <i class="fa fa-clock-o"></i> <?php echo date('d.m.Y', strtotime($pedidoprogreso->Fecha)) . " " .$pedidoprogreso->Hora_Pedido; ?>Hrs.
+                                        <a data-toggle="modal" href="#modal-form-progreso" class="pull-right btn btn-xs btn-warning" onclick='CambiarEstadoProgreso("<?php echo $pedidoprogreso->idPedidos; ?>");'>Enviar a Caja</a>
+                                        <i class="fa fa-clock-o"></i> <?php echo date('d.m.Y', strtotime($pedidoprogreso->Fecha)) . " " .$pedidoprogreso->Hora_Pedido; ?>Hrs.<br>
+                                        <? if ($pedidoprogreso->ObservacionAdministrador!= null) { ?>
+                                            <b>Observación:</b> <?php echo $pedidoprogreso->ObservacionAdministrador; 
+                                        } ?>
+                                        
                                     </div>
                                 </div>
-                                <?php
+                                <?
                                         }
                                     } 
                                  ?>
@@ -118,22 +126,23 @@
                 <div class="col-lg-4">
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h3>Completado</h3>
-                            <p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>
+                            <h3>Emisión de Comprobante</h3>
                             <ul class="sortable-list connectList agile-list" id="completed">
-                                <?php
+                                <?
                                     foreach ($completado as $pedidocompletado) {
-                                        if ($pedidocompletado->Estado_Administrador == 1 && $pedidocompletado->Estado_Cocinero == 1  && $pedidocompletado->Estado_Cajero==1) {
+                                        if ($pedidocompletado->Estado_Administrador == 1 && $pedidocompletado->Estado_Cocinero == 1  && $pedidocompletado->Estado_Cajero==1 && $pedidocompletado->emitido =='emitido' ) {
                                             
                                         
                                  ?>
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
-                                        Comanda N° <?php echo $pedidocompletado->Comanda; ?>
+                                        Comanda N°: <? echo $pedidocompletado->Comanda; ?><br>
+                                            Cliente: <?php echo $pedidoporhacer->Nombres; ?>
+                                            
                                     </div>
                                     <div class="panel-body">
                                         <div class="panel-group" id="accordion">
-                                        <?php
+                                        <?
                                         foreach ($vistacompletado as $nuevo) {
                                             if ($pedidocompletado->idPedidos == $nuevo->idPedidos) {  
                                          ?>
@@ -141,7 +150,7 @@
                                                 <div class="panel-heading">
                                                     <h5 class="panel-title">
                                                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $nuevo->idDetallePedido ?>">
-                                                        <?php
+                                                        <?
                                                         echo $nuevo->Cantidad . " " . $nuevo->Platos; 
                                                          ?>
                                                         </a>
@@ -149,22 +158,42 @@
                                                 </div>
                                                 <div id="collapse<?php echo $nuevo->idDetallePedido ?>" class="panel-collapse collapse">
                                                     <div class="panel-body">
-                                                        <b>Observación: <i><?php echo $nuevo->Observacion;  ?></i></b>
+                                                        <b>Observación: <i><? echo $nuevo->Observacion;  ?></i></b>
                                                     </div>
                                                 </div>
                                             </div>
-                                        <?php
+                                        <?
                                             }
                                         }
                                         ?>
                                         </div>
                                     </div>
                                     <div class="panel-footer">
-                                        <i class="fa fa-clock-o"></i> <?php echo date('d.m.Y', strtotime($pedidocompletado->Fecha)) . " " .$pedidocompletado->Hora_Pedido; ?>Hrs.
-                                    </div>
-                                </div>
-                                <?php
+                                    <?  if ($asignacion_repartidor != null) {
+                                            foreach ($empleados as $empleado) {
+                                            
+                                                foreach ($asignacion_repartidor as $repartidorasignado) {
+                                                    if ($repartidorasignado->empleados_idEmpleados == $empleado->idEmpleados) {
+                                                            echo "<b>Asignado a: </b>" .$empleado->Nombres . " " .$empleado->Apellidos . "<br>";
+                                                    }
+                                                }
+                                            }
+
                                         }
+                                        else{
+                                        ?>           
+                                                <a data-toggle="modal" href="#modal-form-asignar" class="pull-right btn btn-xs btn-primary" onclick='AsignarRepartidor("<?php echo $pedidocompletado->idPedidos; ?>");'>Asignar</a>
+                                        <?php
+                                            }  
+                                         ?>
+                                       
+                                        <i class="fa fa-clock-o"></i> <? echo date('d.m.Y', strtotime($pedidocompletado->Fecha)) . " " .$pedidocompletado->Hora_Pedido; ?>Hrs.
+                                    </div>
+                                    
+                                </div>
+                                <?
+                                        }
+
                                     } 
                                  ?>
                             </ul>
@@ -177,26 +206,27 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">
                                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                <h4 class="modal-title">Cambiar de Estado el Pedido</h4>
+                                <h4 class="modal-t<itle">Cambiar de Estado el Pedido</h4>
                             </div>
                             <form class="form-horizontal" action="<?php echo base_url('pedido/actualizarestado'); ?>" method="POST">
                                 <div class="modal-body">
                                     <div class="ibox-content">
                                         <div class="form-group">
                                         <input type="hidden" id="idporhacer" name="id">
-                                            <label class="col-md-6 control-label">Pedido Por Hacer</label>
+                                            <!--<label class="col-md-6 control-label">Pedido Por Hacer</label>-->
                                             <div>
-                                                <input type="checkbox" name="porhacer" class="js-switch_0" checked />
+                                                <input type="hidden" name="porhacer" value="on" />
                                             </div>
                                         </div>                    
                                         <div class="form-group">
-                                            <label class="col-md-6 control-label">Pedido en Progreso</label>
+                                            <label class="col-md-6 control-label">Enviar a Cocina</label>
                                             <div>
                                                 <input type="checkbox" name="enprogreso" class="js-switch_1" />
                                             </div>
                                             <div>
                                                 <input type="hidden" name="completado" value="0" />
                                             </div>
+                                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -221,30 +251,73 @@
                                     <div class="ibox-content">
                                         <div class="form-group">
                                             <input type="hidden" id="idprogreso" name="id">
-                                            <label class="col-md-6 control-label">Pedido en Progreso</label>
                                             <div>
                                                 <input type="hidden" name="porhacer" value="on" />
                                             </div>
                                             <div>
                                                 <input type="hidden" name="enprogreso" value="on" />
                                             </div>
-                                            <div>
-                                                <input type="checkbox" class="js-switch_2" checked disabled="" />
-                                            </div>
+                                            
                                         </div>                    
                                         <div class="form-group">
-                                            <label class="col-md-6 control-label">Pedido Completado</label>
+                                            <label class="col-md-6 control-label">Enviar a Caja</label>
                                             <div>
                                                 <input type="checkbox" name="completado" class="js-switch_3" />
                                             </div>
                                         </div>
+                                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-white" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Cerrar</button>
                                     <button type="submit" class="btn btn-primary" id="add"><i class="fa fa-save"></i>&nbsp;Guardar</button>
                                 </div>
-                            </form>|
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="modal-form-asignar" class="modal inmodal fade" aria-hidden="true" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title">Asignación de Repartidor</h4>
+                            </div>
+                            <form class="form-horizontal" action="<?php echo base_url('repartidor/insertar'); ?>" method="POST">
+                                <div class="modal-body">
+                                    <div class="ibox-content">
+                                        <div class="form-group">
+                                            <div>
+                                                <input type="hidden" name="idrepartidor" id="idrepartidor" />
+                                            </div>                                            
+                                        </div>                    
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Asignar</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control" name="asignacion_repartidor"  required="required">
+                                                    <option>-- Seleccione Repartidor --</option>
+                                                    <?php 
+                                                        foreach ($empleados as $empleado) {
+                                                            foreach ($repartidores as $repartidor) {
+                                                                if ($repartidor->idTipoEmpleado == $empleado->TipoEmpleado_idTipoEmpleado ) {
+                                                        ?>
+                                                                    <option value="<?php echo  $empleado->idEmpleados; ?>"><?php echo ucwords(strtolower($empleado->Nombres . " " . $empleado->Apellidos));  ?></option>
+                                                        <?php  } 
+                                                            }
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-white" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Cerrar</button>
+                                    <button type="submit" class="btn btn-primary" id="add"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -267,6 +340,9 @@
         var elem_3 = document.querySelector('.js-switch_3');
         var switchery_3 = new Switchery(elem_3, { color: '#1AB394' });
 
+        var elem_4 = document.querySelector('.js-switch_4');
+        var switchery_4 = new Switchery(elem_4, { color: '#1AB394' });
+
         CambiarEstadoPorHacer = function(id)
         {
             $('#idporhacer').val(id);
@@ -274,6 +350,9 @@
 
         CambiarEstadoProgreso = function (id) {
             $('#idprogreso').val(id);
+        }
+        AsignarRepartidor = function (id) {
+            $('#idrepartidor').val(id);
         }
    </script>
    <script type="text/javascript">

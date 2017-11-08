@@ -11,13 +11,11 @@ class Moto extends CI_Controller {
 	/**
 		* Lista las motos, repartidores y empleados asignados.
 		*
-		* @author Carlos Sanchez Aquino
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 19/08/2017	
+		* @author Ricardo Palacios Arce
+		* 	
 	*/
-	function listar()
-	{
+
+	function listar(){
 		$this->load->model('model_tipo_empleado');
 		$this->load->model('model_empleado');
 		$data['repartidores']	= $this->model_tipo_empleado->getTipoEmpleadoRepartidor();
@@ -27,24 +25,22 @@ class Moto extends CI_Controller {
 	}
 
 	/**
-		* muestra los empleados asginados a una moto segun su id para ser actualizados.
+		* Edita los empleados asginados auna moto segun su id.
 		*
-		* @author Carlos Sanchez Aquino
-		*	
+		* @author Ricardo Palacios Arce
+		* 	
 		* @param id	
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 19/08/2017	
 	*/
-	function editar($id = NULL)
-	{
-		if ($id != NULL) 
-		{
+
+
+	function editar(){
+		$datos = $this->input->post();
+		if (isset($datos)) {
 			$this->load->model('model_tipo_empleado');
 			$this->load->model('model_empleado');
 			$data['repartidores']	= $this->model_tipo_empleado->getTipoEmpleadoRepartidor();
 			$data['empleados']	= $this->model_empleado->getEmpleado();
-			$data['a'] = $this->model_moto->getMotoById($id);
+			$data['a'] = $this->model_moto->getMotoById($datos["idmoto"]);
 			$this->load->view('admin/editar_moto', $data);
 		}
 	}
@@ -52,76 +48,65 @@ class Moto extends CI_Controller {
 	/**
 		* Elimina los empleados asginados auna moto segun su id.
 		*
-		* @author Carlos Sanchez Aquino
-		*	
+		* @author Ricardo Palacios Arce
+		* 	
 		* @param id	
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 19/08/2017	
 	*/
-	function eliminar($id = NULL)
-	{
-		if ($id != NULL) 
-		{
-			$this->model_moto->deleteMoto($id);
-			redirect(base_url('motos'));
+
+	function eliminar(){
+		$datos = $this->input->post();
+		if (isset($datos)) {
+		$this->model_moto->deleteMoto($datos["idmoto"]);
+		redirect(base_url('motos'));
 		}
 	}
 
+
+
 	/**
-		* Actualiza los empleados asginados a una moto.
+		* Actualiza los empleados asginados auna moto segun su id.
 		*
-		* @author Carlos Sanchez Aquino
-		*	
+		* @author Ricardo Palacios Arce
+		* 	
 		* @param id	
 		* @param placa
 		* @param marca
 		* @param soat
 		* @param estado
 		* @param empleado
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 19/08/2017	
 	*/
-	function actualizar()
-	{
+	function actualizar(){
 		$datos = $this->input->post();
-		if (isset($datos)) 
-		{
-			$id 				= $datos["id"];
+		if (isset($datos)) {
 			$placa				= $datos["placa"];
 			$marca				= $datos["marca"];
 			$soat				= $datos["soat"];
 			$estado				= $datos["estado"];
 			$empleado			= $datos["empleado"];
-			$this->model_moto->updateMoto($id,$placa,$marca,$soat,$estado,$empleado);
+			$this->model_moto->updateMoto($placa,$marca,$soat,$estado,$empleado);
 			redirect(base_url('motos'));
 		}
 	}
-
 	/**
-		* Inserta los empleados asginados auna moto.
+		* Actualiza los empleados asginados auna moto segun su id.
 		*
-		* @author Carlos Sanchez Aquino
+		* @author Ricardo Palacios Arce
 		* 	
 		* @param placa
 		* @param marca
 		* @param soat
 		* @param estado
 		* @param empleado
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 19/08/2017	
 	*/
-	function insertar()
-	{
+	function insertar(){
 		$datos = $this->input->post();
-		if (isset($datos)) 
-		{
+		if (isset($datos)) {
 			$placa				= $datos["placa"];
 			$marca				= $datos["marca"];
 			$soat				= $datos["soat"];
+			$estado				= "A";
 			$empleado			= $datos["empleado"];
-			$this->model_moto->insertMoto($placa,$marca,$soat,$empleado);
+			$this->model_moto->insertMoto($placa,$marca,$soat,$estado,$empleado);
 			redirect(base_url('motos'));
 		}
 	}

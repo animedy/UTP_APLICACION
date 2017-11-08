@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             
             <form id="FormLogin" class="m-t" role="form" data-toggle="validator" method="post" action="<?php echo base_url('Login_cliente/index'); ?>">
                 <div class="form-group">
-                    <input  type="email" name="login1" class="form-control" placeholder="Correo" >
+                    <input  type="text" name="login" class="form-control" placeholder="Correo" >
                 </div>
                 <div class="form-group">
                     <input type="password"  name="password" class="form-control" placeholder="Contraseña" >
@@ -43,8 +43,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <button type="submit" class="btn btn-success block full-width m-b">Login</button>
                
      
-                <a data-toggle="modal" class="btn btn-success block full-width m-b" href="cliente/Registrar"></i>&nbsp;Registrar</a>
-                 <? echo isset($error)?$error:''; ?>
+                <a data-toggle="modal" class="btn btn-success block full-width m-b" href="<?php echo base_url("cliente/Registrar"); ?>"></i>&nbsp;Registrar</a>  
+                   
+                  <? echo isset($error)?$error:''; ?>
+                  <td>
+                  <a data-toggle="modal" class="btn btn-light" href="<?php echo base_url("cliente/Contrasena"); ?>"></i>&nbsp;olvido su contraseña</a>
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
             </form>
             <p class="m-t"> <small> &copy; <?php echo date("Y"); ?></small> </p>
         </div>

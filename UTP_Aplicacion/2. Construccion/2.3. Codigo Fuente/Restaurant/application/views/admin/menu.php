@@ -28,7 +28,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet">
 
     <link href="<?php echo base_url(); ?>assets/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
-    <link href="<?php echo base_url(); ?>assets/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <!--<link href="<?php echo base_url(); ?>assets/css/plugins/datapicker/datepicker3.css" rel="stylesheet">-->
+    <link href="<?php echo base_url(); ?>assets/css/plugins/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/css/plugins/switchery/switchery.css" rel="stylesheet">
 
     <!-- Sweet Alert -->
@@ -42,6 +43,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 
 <body class="skin-1">
+    <?php if (!$this->session->userdata('id')) {
+            redirect('Login');
+        } ?>
     <div id="wrapper">
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
@@ -56,7 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a href="salir">Logout</a></li>
                             </ul>-->
-                            <img src="<?php echo base_url("assets/img/pepe-menu.png"); ?>">
+                            <img width="165px" src="<?php echo base_url("assets/img/pp.png"); ?>">
                         </div>
                         <div class="logo-element">
                             <img src="<?php echo base_url("assets/img/pepe-menu-m.png"); ?>">
@@ -76,7 +80,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <li>
                         <a href="index.html"><i class="fa fa-user"></i> <span class="nav-label">Empleados</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a href="<?php echo base_url("empleados"); ?>" id="registroempleado">Gestion de Empleado</a></li>
+                            <li>
+                                <a href="<?php echo base_url("empleados"); ?>" id="registroempleado">Gestion de Empleado</a></li>
                         </ul>
                     </li>
                     <li>
@@ -88,14 +93,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <li>
                         <a href="#"><i class="fa fa-taxi"></i> <span class="nav-label">Entregas</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="<?php echo base_url("motos"); ?>" id="proveedor">Gestion de Entregas</a></li>
+                            <li><a href="<?php echo base_url("motos"); ?>" >Asignación de Motos</a></li>
+                            <!--<li><a href="<?php echo base_url("Pedido/EntregaPedidos"); ?>" >Entrega de Pedidos</a></li>-->
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Pedidos </span><span class="label label-warning pull-right">16/24</span></a>
+                        <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Pedidos </span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="<?php echo base_url("pedidos"); ?>">Gestion de Pedidos</a></li>
-                            <li><a href="<?php echo base_url("catalogos"); ?>">Catalogo de Productos</a></li>
+                            <li><a href="<?php echo base_url("productos"); ?>">Catalogo de Productos</a></li>
+                            <li><a href="<?php echo base_url("categoria"); ?>">Gestion de Categoria de Productos</a></li>
                         </ul>
                     </li>
                     <li>
@@ -104,6 +111,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <li><a href="<?php echo base_url("pedidosatendidos");?>">Pedidos Atendidos</a></li>
                             <li><a href="<?php echo base_url("pedidosdevueltos");?>">Pedidos Devueltos</a></li>
                             <li><a href="<?php echo base_url("platosmasvendidos");?>">Platos más Pedidos</a></li>
+                            <li><a href="<?php echo base_url("ventasdeldia");?>">Ventas del Día</a></li>
                             <li><a href="<?php echo base_url("ventasdelmes");?>">Ventas del Mes</a></li>
                             <li><a href="<?php echo base_url("filtropedidos");?>">Filtro de Pedidos</a></li>
                         </ul>
@@ -148,7 +156,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             closeOnCancel: false },
                         function (isConfirm) {
                             if (isConfirm) {
-                                window.location='<?php echo base_url(); ?>index.php/login/salir';
+                                window.location='<?php echo base_url(); ?>salir';
                             } else {
                                 swal("Cancelado", "Usted no cerro sesion :)", "error");
                             }

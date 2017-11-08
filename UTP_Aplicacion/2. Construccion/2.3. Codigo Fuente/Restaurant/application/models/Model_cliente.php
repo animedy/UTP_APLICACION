@@ -1,4 +1,7 @@
 <?php
+/**
+* 
+*/
 class Model_cliente extends CI_Model
 {
 	
@@ -7,50 +10,35 @@ class Model_cliente extends CI_Model
 		parent::__construct();
 		$this->load->database();
 	}
-	
-	/**
-        * loguearse.
-        *
-        * @author Juan Jose Paz Chalco
-        *
-        * @param login             
-        * @param password      
- 		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 	
-	*/
+
 	function getclienteLogin($login,$password)
 	{
+		/*$query = $this->db->get('empleado');
+		$this->db->where('login',$login);
+		$this->db->where('password',$password);
+		return $query->result();*/
 		$sql = "SELECT c.idCliente,c.Nombres, e.CorreoElectronico,e.Contrasena  FROM usuario as e INNER JOIN clientes as c ON e.Cliente_idCliente  = c.idCliente WHERE CorreoElectronico = ? AND Contrasena = ?";
-		return $this->db->query($sql, array($login,$password));	 
+		return $this->db->query($sql, array($login,$password));
+		 
+	}
+	function getrestartLogin($login,$dni)
+	{
+		/*$query = $this->db->get('empleado');
+		$this->db->where('login',$login);
+		$this->db->where('password',$password);
+		return $query->result();*/
+		$sql = "SELECT c.idCliente,c.DNI, e.CorreoElectronico,e.Contrasena  FROM usuario as e INNER JOIN clientes as c ON e.Cliente_idCliente  = c.idCliente WHERE CorreoElectronico = ? AND Dni = ?";
+		return $this->db->query($sql, array($login,$dni));
+		 
 	}
 
-	/**
-        * lista los clientes 
-        *
-        * @author Juan Jose Paz Chalco
-        *
-        * fecha creacion: 18/08/2017
-        * fecha modificacion: 23/08/2017    
-    */
 	function getCliente()
 	{
+		 $this->db->where('Estado','A');
 		$query = $this->db->get('clientes');
         $this->db->order_by('idCliente');
         return $query->result();
 	}
-
-	/**
-        * lista los clientes por parametro id 
-        *
-        * @author Juan Jose Paz Chalco
-        *
-        * @param id
-        *
-        * fecha creacion: 18/08/2017
-        * fecha modificacion: 23/08/2017    
-    */
 	function getClienteById($id)
 	{
 		$this->db->limit(1);
@@ -59,26 +47,6 @@ class Model_cliente extends CI_Model
         return $query->result();
 	}
 
-	/**
-		* Inserta un nuevo cliente.
-		* 
-		* @author Ricardo Palacios Arce
-		*
-		* @param nombre
-		* @param dni
-		* @param sexo
-		* @param direccion
-		* @param celular
-		* @param telefono
-		* @param estado
-		* @param fecha_registro	
-		* @param distrito
-		* @param referencia
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 
-	*/
 	function insertCliente($nombre,$dni,$sexo,$direccion,$celular,$telefono,$estado,$fecha_registro,$distrito,$referencia)
 	{
 		$array = array(
@@ -97,50 +65,23 @@ class Model_cliente extends CI_Model
 		return $this->db->insert_id();
 	}
 
-	/**
-		* Elimina un cliente.
-		* 
-		* @author Ricardo Palacios Arce
-		*
-		* @param id
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 
-	*/
-	function deleteCliente($id){
+	function deleteCliente($id,$estado){
+		echo $estado;
+		$array = array(
+			'Estado'	=> $estado
+		);
 		$this->db->where('idCliente',$id);
-		$query = $this->db->delete('clientes');
+		$this->db->update('clientes',$array);
 	}
 
-	/**
-		* Actualiza un cliente.
-		* 
-		* @author Ricardo Palacios Arce
-		*
-		* @param id
-		* @param nombre
-		* @param dni
-		* @param sexo
-		* @param direccion
-		* @param estado
-		* @param telefono
-		* @param celular
-		* @param distrito	
-		* @param referencia
-		*
-		fecha creacion: 20/08/2017
-		fecha modificacion: 23/08/2017
-		* 
-	*/
-	function updateCliente($id,$nombre,$dni,$sexo,$direccion,$estado,$telefono,$celular,$distrito,$referencia)
+	function updateCliente($id,$nombre,$dni,$sexo,$direccion,$telefono,$celular,$distrito,$referencia)
 	{
 		$array = array(
 			'Nombres'					=> $nombre,
 			'Dni'						=> $dni,
 			'Sexo'						=> $sexo,
 			'Direccion'					=> $direccion,
-			'Estado'					=> $estado,
+			
 			'Telefono'					=> $telefono,
 			'Celular'					=> $celular,
 			'Distritos_idDistritos'		=> $distrito,

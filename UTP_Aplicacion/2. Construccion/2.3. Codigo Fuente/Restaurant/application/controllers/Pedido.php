@@ -12,59 +12,76 @@ class Pedido extends CI_Controller {
 		* Lista los pedidos por hacer, pedidos en progreso y pedidos completados.
 		*
 		* @author Ricardo Palacios Arce
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 23/08/2017	
+		* 	
 	*/
-	function listar()
-	{
-		$data['porhacer'] 	= $this->model_pedido->getPedidoPorHacer();
+
+	function listar(){
+		$this->load->model('model_tipo_empleado');
+		$data['repartidores']	= $this->model_tipo_empleado->getTipoEmpleadoRepartidor();
+
+		$this->load->model('model_empleado');
+		$data['empleados']	= $this->model_empleado->getEmpleado();
+
+		$this->load->model('model_repartidor');
+		$data['asignacion_repartidor']	= $this->model_repartidor->getRepartidor();
+		
+		//$data['porhacer'] 	= $this->model_pedido->getPedidoPorHacer();
+		$data['porhacer'] 	= $this->model_pedido->getPedidosDelDia();
 		$data['vistaporhacer'] 	= $this->model_pedido->getVistaPedidoPorHacer();
 
-		$data['progreso'] 	= $this->model_pedido->getPedidoEnProgreso();
+		//$data['progreso'] 	= $this->model_pedido->getPedidoEnProgreso();
+		$data['progreso'] 	= $this->model_pedido->getPedidosDelDia();
 		$data['vistaenprogreso'] = $this->model_pedido->getVistaPedidoEnProgreso();
-		
 
-		$data['completado'] 	= $this->model_pedido->getPedidoCompletado();
+		//$data['completado'] 	= $this->model_pedido->getPedidoCompletado();
+		$data['completado'] 	= $this->model_pedido->getPedidosDelDia();
 		$data['vistacompletado'] = $this->model_pedido->getVistaPedidoCompletado();
 		$this->load->view('admin/pedidos',$data);
 	}
 
-	/**
-		* Registra el pedido hecho por el cliente.
-		*
-		* @author Juan Jose Paz Chalco
-		*
-		* fecha creacion: 22/08/2017
-		* fecha modificacion: 25/08/2017	
-	*/
-	function Insertar()
-	{
-		date_default_timezone_set('America/Lima');
+
+	function Insertar(){
+		
 		$datos = $this->input->post();
-		if (isset($datos)) 
-		{
+		if (isset($datos)) {
 			$Fecha 						= date('Y-m-d');
 			$Hora_Pedido				= date('H:i:s');
-			echo $Hora_Pedido;
+			
 			$Clientes_idCliente			= $this->session->userdata('id');
+			
 			$Total						= $datos["Total"];
 			$Estado_Administrador		= 1;
 			$Estado_Cocinero			= 0;
 			$Estado_Cajero				= 0;
+			
+
 			$Comanda					= "0".$Clientes_idCliente.date('His').date('dmY');
-			$ObservacionAdministrador	= 'null';
+			$ObservacionAdministrador	= '';
+
 			$idPedidos 		= $this->model_pedido->insertPedido($Fecha,$Hora_Pedido,$Clientes_idCliente,$Total,$Estado_Administrador,$Estado_Cocinero,$Estado_Cajero,$Comanda,$ObservacionAdministrador);
+
 			$Observaciones				= $datos["Observacion"];
 			$Cantidades					= $datos["Cantidad"];
 			$idPlatos					= $datos["idPlatos"];
+			$Stock						= $datos["Stock"];
+
+			//print_r( $Stock);
+
 			$this->load->model('model_DetallePedido');
-			for ($i=0; $i <count($idPlatos) ; $i++) 
-			{ 
+			$this->load->model('Model_Producto');
+			
+			for ($i=0; $i <count($idPlatos) ; $i++) { 
 				echo $idPlatos[$i] . " Observacion " . $Observaciones[$i] . "Cantidad  " . $Cantidades[$i] . "<br> ";
 				$this->model_DetallePedido->insertDetallePedido($Cantidades[$i],$Observaciones[$i],$idPedidos,$idPlatos[$i]);
+				$this->Model_Producto->Set_cantidad($idPlatos[$i],$Stock[$i]);
+
 			}
-			redirect(base_url()."Catalogo/ListarCarta");
+				
+
+            $this->cart->destroy();
+			redirect(base_url()."Producto/MostrarSeguimiento");
+
+		
 		}
 	}
 
@@ -72,29 +89,24 @@ class Pedido extends CI_Controller {
 		* Lista todos los pedidos (Reporte).
 		*
 		* @author Ricardo Palacios Arce
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 23/08/2017	
+		* 	
 	*/
-	function listarPedidos()
-	{
-		try 
-		{
-			$data['pedidos'] 	= $this->model_pedido->getPedidos();
-			$this->load->view('admin/reporte_filtro_pedidos',$data);	
-		}
-		catch (ErrorException $e) 
-		{
-        	// este bloque no se ejecuta, no coincide el tipo de excepción
-        	echo 'ErrorException' . $e->getMessage();
+
+	function listarPedidos(){
+		try {
+			$data['pedidos'] 	= $this->model_pedido->getPedidosReporte();
+			$this->load->view('admin/reporte_filtro_pedidos',$data);
+			
+		}catch (ErrorException $e) {
+        // este bloque no se ejecuta, no coincide el tipo de excepción
+        echo 'ErrorException' . $e->getMessage();
         	show_404();
-    	}
-    	catch (Exception $e) 
-    	{
+    	}catch (Exception $e) {
 			echo $e->getMessage();
 			echo $e->getLine();
 			show_404();
-		}	
+		}
+		
 	}
 
 	/**
@@ -106,55 +118,45 @@ class Pedido extends CI_Controller {
 		* @param porhacer
 		* @param enprogreso
 		* @param completado
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 23/08/2017	
 	*/
+
 	function actualizarestado()
 	{
 		$datos = $this->input->post();
 		if (isset($datos)) {
 			$idprogreso 	= $datos["id"];
-			if ($datos["porhacer"] == "on") 
-			{
+			if ($datos["porhacer"] == "on") {
 				$porhacer 	= "1";
-			}
-			else
-			{
+			}else{
 			$porhacer 	= "0";
 			}
-			if ($datos["enprogreso"] == "on") 
-			{
+			if ($datos["enprogreso"] == "on") {
 				$enprogreso 	= "1";
-			}
-			else
-			{
+			}else{
 			$enprogreso 	= "0";
 			}
-			if ($datos["completado"] == "on") 
-			{
+			if ($datos["completado"] == "on") {
 				$completado 	= "1";
 			}
-			else
-			{
+			else{
 			$completado 	= "0";
 			}
 			$this->model_pedido->updateEstado($idprogreso,$porhacer,$enprogreso,$completado);
 			//echo "por hacer " . " " .$porhacer . "<br> en progreso " . " " .$enprogreso . "<br> Completado" . " " .$completado; 
 			redirect(base_url('pedidos'));
 		}
+		
 	}
+
 
 	/**
 		* Lista los pedidos completados (Reporte).
 		*
 		* @author Ricardo Palacios Arce
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 23/08/2017	
+		* 	
 	*/
-	function listarpedidosatendidos()
-	{
+
+	function listarpedidosatendidos(){
 		$data['reportecompletados'] = $this->model_pedido->getVistaReporteCompletado();
 		$this->load->view('admin/reporte_pedidos_atendidos',$data);
 	}
@@ -163,12 +165,10 @@ class Pedido extends CI_Controller {
 		* Lista los pedidos devueltos (Reporte).
 		*
 		* @author Ricardo Palacios Arce
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 23/08/2017	
+		* 	
 	*/
-	function listarpedidosdevueltos()
-	{
+
+	function listarpedidosdevueltos(){
 		$data['reportedevueltos'] = $this->model_pedido->getVistaReporteDevueltos();
 		$this->load->view('admin/reporte_pedidos_devueltos',$data);
 	}
@@ -180,15 +180,13 @@ class Pedido extends CI_Controller {
 		* 
 		* @param $fecha_inicial
 		* @param $fecha_final
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 23/08/2017	
+		* 	
 	*/
+
 	function ListarPedidosPorFecha()
 	{
 		$datos = $this->input->post();
-		if (isset($datos)) 
-		{
+		if (isset($datos)) {
 			$fecha_inicial 				= $datos["fecha_inicio"];
 			$fecha_final				= $datos["fecha_fin"];
 			$data['pedidos'] 			= $this->model_pedido->getPedidosPorFecha($fecha_inicial,$fecha_final);
@@ -196,18 +194,6 @@ class Pedido extends CI_Controller {
 		}
 	}
 
-
-	/**
-		* Lista los pedidos parametros(Reporte).
-		*
-		* @author Ricardo Palacios Arce
-		* 
-		* @param $comanda
-		* @param $estado
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 23/08/2017	
-	*/
 	function ListarPedidosPorParametros()
 	{
 		$datos = $this->input->post();
@@ -254,5 +240,26 @@ class Pedido extends CI_Controller {
 		}
 			
 	}
+
+
+	function ExportarPedidosAtendidos()
+	{
+		$datos = $this->input->post();
+		if (isset($datos)) {
+			$this->load->library('M_pdf');
+			$stylesheet = file_get_contents(base_url('assets/css/bootstrap.min.css'));
+			$nombre_pdf	= "Pedidos_Atendidos_". date("d_m_Y_H_m_s").".pdf";
+			$vista = $this->load->view('admin/reporte_pdf_pedidos',$datos,TRUE);
+			$this->m_pdf->pdf->setFooter('Página {PAGENO} de {nbpg}');
+			//$this->m_pdf->pdf->SetHeader('Fecha:'. date('d/m/Y') . ' Hora:' . date('H:m:s') );
+			$this->m_pdf->pdf->SetHeader('Fecha:'. date('d/m/Y').'|Pepe Tiburon - Cevicheria| Hora:' . date('H:m:s'));
+			$this->m_pdf->pdf->WriteHTML($stylesheet, 1);
+			$this->m_pdf->pdf->WriteHTML($vista);
+			$this->m_pdf->pdf->Output($nombre_pdf,"D");
+			//$this->load->view('admin/reporte_pdf_pedidos',$datos);
+		}
+	}
+
+
 
 }

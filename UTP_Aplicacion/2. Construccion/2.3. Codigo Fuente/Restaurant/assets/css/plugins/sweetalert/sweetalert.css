@@ -27,7 +27,7 @@ body.stop-scrolling {
   left: 50%;
   top: 50%;
   margin-left: -256px;
-  margin-top: -200px;
+  margin-top: -300px;
   overflow: hidden;
   display: none;
   z-index: 99999; }

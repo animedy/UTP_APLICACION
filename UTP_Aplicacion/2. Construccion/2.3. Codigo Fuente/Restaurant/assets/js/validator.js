@@ -17,51 +17,34 @@
                      login: {
                         validators: {
                            notEmpty: { 
-                              message: 'Por favor el nombre de usuario es requerido y no puede ser vacio'
+                              message: 'ingresa tu correo electronico registrado'
                            },
 
                            regexp: {
      
-                           regexp: /^[A-Za-z ]+$/,
+                          regexp: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
                  
-                           message: 'El usuario solo puede contener letras'
+                          message: 'no es un correo electronico valido'
                  
                            }
                         }
                         
                      },
-
-                       login1: {
-                        validators: {
-                           notEmpty: { 
-                              message: 'Por favor el correo es requerido y no puede ser vacio'
-                           }
-
-                         
-                        }
-                        
-                     },
-
                      password: {
                         validators: {
                            notEmpty: { 
-                              message: 'Por favor la contraseña es requerida y no puede ser vacio'
-                           }
+                              message: 'ingresa tu contraseña registrada'
+                            }
                         },
 
                         stringLength: {
      
                            min: 8,
                  
-                           message: 'El usuario debe contener al menos 8 caracteres'
+                           message: 'la contraseña es incorrecta '
                  
                          }
                      }
                  }
              });
-  
         });
-    
-          
-
-        

@@ -11,14 +11,6 @@ class Model_cocina extends CI_Model
 		$this->load->database();
 	}
 
-	/**
-		* Lista los platos listos para ser cocinados.
-		*
-		* @author Ricardo Palacios Arce
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 23/08/2017	
-	*/
 	function getPedido()
 	{
 		$query = $this->db->get('pedidos');
@@ -29,14 +21,7 @@ class Model_cocina extends CI_Model
         return $query->result();
 	}
 
-	/**
-		* Lista los platos listos para ser cocinados.
-		*
-		* @author Ricardo Palacios Arce
-		*
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 23/08/2017	
-	*/
+
 	function getVistaPedido()
 	{
 		$query = $this->db->get('vista_pedidos_en_progreso');
@@ -44,19 +29,6 @@ class Model_cocina extends CI_Model
         return $query->result();
 	}
 
-	/**
-		* Actualiza el estado de la comanda.
-		*
-		* @author Ricardo Palacios Arce
-		*
-		* @param idprogreso
-		* @param porhacer
-		* @param enprogreso
-		* @param completado
-		* 	
-		* fecha creacion: 18/08/2017
-		* fecha modificacion: 23/08/2017	
-	*/
 	function updateEstado($idprogreso,$porhacer,$enprogreso,$completado)
 	{
 		$array = array(

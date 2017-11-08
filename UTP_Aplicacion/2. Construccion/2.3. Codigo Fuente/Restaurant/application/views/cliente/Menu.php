@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 <!DOCTYPE html>
 <html>
@@ -63,20 +63,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </li>
                     <li class="active">
-                        <a href="Carta" id="inicio"><i class="fa fa-slack"></i> <span class="nav-label">Inicio</span></a>
-                    </li>
-                    <!--<li>
-                        <a href="#"><i class="fa fa-building"></i> <span class="nav-label">Sucursal</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a href="sucursal" id="sucursal">Sucursal</a></li>
-                            <li><a href="#" id="cajas">Cajas</a></li>
-                            <li><a href="#" id="mesas">Mesas</a></li>
-                        </ul>
-                    </li>-->
-                    <li>
-                        <a href="Carrito"><i class="fa fa-user"></i> <span class="nav-label">Carrito</span> <span class="fa arrow"></span></a>
                         
-                            
+                        <a href="<?php echo base_url("Carta"); ?>"><i class="fa fa-slack"></i> <span class="nav-label">Carta</span></a>                      
+                        <a href="<?php echo base_url("Carrito"); ?>"><i class="fa fa-shopping-cart"></i><span class="nav-label">Carrito</span></a>
+                        
+                        <a href="<?php echo base_url('EditarCliente'); ?>"><i class="fa fa-user"></i><span class="nav-label">Modificar Cuenta</span></a>
+                         
+                       
                         
                     </li>
                     
@@ -98,7 +91,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <span class="m-r-sm text-muted welcome-message"></span>
                     </li>
                     <li>
-                        <a onclick="Cerrar();">
+                        <a onclick="Cerrar1();">
                             <i class="fa fa-sign-out"></i> Cerrar Sesion
                         </a>
                     </li>
@@ -109,15 +102,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script src="<?php echo base_url(); ?>assets/js/plugins/sweetalert/sweetalert.min.js"></script>
 <script type="text/javascript">
-    Cerrar = function () {
+    Cerrar1 = function () {
+                 
                 swal({
-                            title: "¿Esta seguro que desea salir del sistema?",
-                            text: "Usted cerrará su sesión",
+                            title: "¿Esta seguro que desea salir ?",
+                            
                             type: "warning",
                             showCancelButton: true,
                             confirmButtonColor: "#DD6B55",
+                            cancelButtonColor: "#d33",
                             confirmButtonText: "Si, salir!",
                             cancelButtonText: "No, cancelar!",
+                       
                             closeOnConfirm: false,
                             closeOnCancel: false },
                         function (isConfirm) {
@@ -127,5 +123,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 swal("Cancelado", "Usted no cerro sesion :)", "error");
                             }
                         });
+                
             }
 </script>

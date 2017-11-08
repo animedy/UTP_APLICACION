@@ -132,7 +132,7 @@
                            min: 8,
                            max: 8,
                  
-                           message: 'El apellido debe contener al menos 8 caracteres'
+                           message: 'El DNI debe contener al menos 8 caracteres'
                  
                          }
                  
@@ -292,7 +292,7 @@
 
                          identical: {
                             field: 'confirm',
-                            message: 'La contraseña y la confirmación de co0ntraseña no son las mismas.'
+                            message: 'La contraseña y la confirmación de contraseña no son las mismas.'
                          }
                  
                        }
@@ -368,6 +368,12 @@
                  .selectpicker()
                    .change(function(e) {
                      $('#bootstrapSelectForm').bootstrapValidator('revalidateField', 'estado');
+                   })
+                   .end()
+               .find('[name="fec_nac"]')
+                 .selectpicker()
+                   .change(function(e) {
+                     $('#bootstrapSelectForm').bootstrapValidator('revalidateField', 'fec_nac');
                    })
                    .end()
                .bootstrapValidator({
@@ -644,7 +650,7 @@
 
                          identical: {
                             field: 'confirm',
-                            message: 'La contraseña y la confirmación de co0ntraseña no son las mismas.'
+                            message: 'La contraseña y la confirmación de contraseña no son las mismas.'
                          }
                  
                        }
@@ -701,283 +707,1263 @@
                      }
 
                   }
-
                 
              });
-             /*$("#formempleado").validate({
-                 rules: {
+
+             $("#formcliente")
+               .find('[name="distrito"]')
+                 .selectpicker()
+                   .change(function(e) {
+                     $('#bootstrapSelectForm').bootstrapValidator('revalidateField', 'account');
+                   })
+                   .end()
+                .find('[name="sexo"]')
+                 .selectpicker()
+                   .change(function(e) {
+                     $('#bootstrapSelectForm').bootstrapValidator('revalidateField', 'account');
+                   })
+                   .end()
+               .bootstrapValidator({
+                  message: 'Este valor no es valido',
+
+                   feedbackIcons: {
+   
+                     valid: 'glyphicon glyphicon-ok',
+                 
+                     invalid: 'glyphicon glyphicon-remove',
+                 
+                     validating: 'glyphicon glyphicon-refresh'
+                 
+                   },
+
+                   excluded: ':disabled',
+
+                  fields: {
+
                      nombre: {
-                        required: true,
-                        minlength: 3
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El nombre es requerido'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 3,
+                 
+                           message: 'El nombre debe contener al menos 3 caracteres'
+                 
+                         },
+                         regexp: {
+     
+                           regexp: /^[a-zA-ZáéíóúñÁÉÍÓÚÑ ]+$/,
+                 
+                           message: 'El nombre solo puede contener letras'
+                 
+                         }
+                 
+                       }
+                 
                      },
-                     apellido: {
-                        required: true,
-                        minlength: 3
-                     },
-                     fec_nac: {
-                        required: true
-                     },
+
                      dni: {
-                        required: true,
-                        number: true,
-                        minlength: 8,
-                        maxlength:8
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El DNI es requerido'
+                 
+                         },
+
+                         regexp: {
+     
+                           regexp: /^[0-9]+$/,
+                 
+                           message: 'El DNI solo puede contener números'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 8,
+                           max: 8,
+                 
+                           message: 'El dni debe contener al menos 8 números'
+                 
+                         }
+                 
+                       }
+                 
                      },
+
+                     sexo: {
+                        validators: {
+                           notEmpty: { 
+                              message: 'Por favor selecciona un sexo'
+                           }
+                        }
+                     },
+
                      direccion: {
-                        required: true,
-                        minlength: 3,
-                        maxlength: 150
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El dirección es requerido'
+                 
+                         },
+                          regexp: {
+     
+                           regexp: /^[a-zA-ZáéíóúñÁÉÍÓÚÑ ]+$/,
+                 
+                           message: 'La dirección solo puede contener letras'
+                 
+                         },
+                         stringLength: {
+     
+                           min: 3,
+                 
+                           message: 'La dirección debe contener al menos 3 caracteres'
+                 
+                         }
+                 
+                       }
+                 
                      },
-                     telefono: {
-                        required: true,
-                        minlength: 13,
-                        maxlength: 13
-                     },
+
                      celular: {
-                        required: true,
-                        minlength: 9,
-                        maxlength: 9
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El celular es requerido'
+                 
+                         },
+
+                          regexp: {
+     
+                           regexp: /^[0-9]+$/,
+                 
+                           message: 'El teléfono solo puede contener números'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 9,
+                           max: 9,
+                 
+                           message: 'El celular debe contener al menos 9 números'
+                 
+                         }
+                 
+                       }
+                 
                      },
-                     usuario: {
-                        required: true,
-                        minlength: 4,
-                        maxlength: 10
-                     },
-                     email: {
-                        required: true,
-                        email: true
-                     },
-                     password: {
-                        required: true,
-                        minlength: 3
-                     },
-                     confirm: {
-                         required: true,
-                         minlength: 3,
-                          equalTo: "#password"
-                     },
-                     fec_in: {
-                        required: true
-                     }
-                 },
-                 messages: {
-                  nombre: {
-                    required: "Ingrese un Nombre",
-                    minlength: "Ingrese 3 caracteres como minimo"
-                  },
-                  apellido: {
-                    required: "Ingrese un Apellido",
-                    minlength: "Ingrese 3 caracteres como minimo"
-                  },
-                  fec_nac: {
-                    required: "Ingrese Fecha de Nacimiento"
-                  },
-                  dni: {
-                    required: "Ingrese un DNI",
-                    number: "Ingrese numeros",
-                    minlength: "Ingrese 8 caracteres como minimo",
-                    maxlength: "Ingrese 8 caracteres como máximo"
-                  },
-                  direccion: {
-                    required: "Ingrese una Dirección",
-                    minlength: "Ingrese 3 caracteres como minimo",
-                    maxlength: "Ingrese 150 caracteres como máximo"
-                  },
-                  telefono: {
-                    required: "Ingrese un número de Teléfono fijo ",
-                    minlength: "Ingrese 13 caracteres como minimo",
-                    maxlength: "Ingrese 13 caracteres como máximo"
-                  },
-                  celular: {
-                    required: "Ingrese un número de celular",
-                    minlength: "Ingrese 9 caracteres como minimo",
-                    maxlength: "Ingrese 9 caracteres como máximo"
-                  },
-                  usuario: {
-                    required: "Ingrese un usuario",
-                    minlength: "Ingrese 4 caracteres como minimo",
-                    maxlength: "Ingrese 10 caracteres como máximo"
-                  },
-                  email: {
-                    required: "Ingrese un email",
-                    email: "Ingrese un email valido"
-                  },
-                  password: {
-                    required: "Ingrese una Contraseña",
-                    minlength: "Ingrese 3 caracteres como minimo"
-                  },
-                  confirm: {
-                    required: "Ingrese una Contraseña",
-                    minlength: "Ingrese 3 caracteres como minimo",
-                    equalTo: "Por favor ingrese la misma contraseña"
-                  },
-                  fec_in: {
-                    required: "Ingrese Fecha de Ingreso"
-                  }
-                 }
-             });
-             $("#formcliente").validate({
-                 rules: {
-                     nombre: {
-                        required: true,
-                        minlength: 3
-                     },
-                     dni: {
-                        required: true,
-                        minlength: 8,
-                        maxlength: 8
-                     },
-                     direccion: {
-                        required: true,
-                        minlength: 3,
-                        maxlength: 150
-                     },
+
                      telefono: {
-                        required: true,
-                        minlength: 13,
-                        maxlength: 13
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El teléfono es requerido'
+                 
+                         },
+
+                          regexp: {
+     
+                           regexp: /^[0-9]+$/,
+                 
+                           message: 'El teléfono solo puede contener números'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 6,
+                           max: 6,
+                 
+                           message: 'El teléfono debe contener al menos 6 números'
+                 
+                         }
+                 
+                       }
+                 
                      },
-                     email: {
-                        required: true,
-                        email: true
+
+                     correo: {
+     
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El correo es requerido y no puede ser vacio'
+                 
+                         },
+
+                          regexp: {
+     
+                           regexp: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+                 
+                           message: 'El correo electronico no es valido'
+                 
+                         },
+                 
+                         
+                 
+                       }
+                 
                      },
-                     password: {
-                        required: true,
-                        minlength: 3
-                     },
-                     confirm: {
-                         required: true,
-                         minlength: 3,
-                          equalTo: "#password"
-                     }
-                 },
-                 messages: {
-                  nombre: {
-                    required: "Ingrese un Nombre",
-                    minlength: "Ingrese 3 caracteres como minimo"
-                  },
-                  dni: {
-                    required: "Ingrese un DNI",
-                    minlength: "Ingrese 8 caracteres como minimo",
-                    maxlength: "Ingrese 8 caracteres como máximo"
-                  },
-                  direccion: {
-                    required: "Ingrese una Dirección",
-                    minlength: "Ingrese 3 caracteres como minimo",
-                    maxlength: "Ingrese 150 caracteres como máximo"
-                  },
-                  telefono: {
-                    required: "Ingrese un número de Teléfono fijo ",
-                    minlength: "Ingrese 13 caracteres como minimo",
-                    maxlength: "Ingrese 13 caracteres como máximo"
-                  },
-                  email: {
-                    required: "Ingrese un email",
-                    email: "Ingrese un email valido"
-                  },
-                  password: {
-                    required: "Ingrese una Contraseña",
-                    minlength: "Ingrese 3 caracteres como minimo"
-                  },
-                  confirm: {
-                    required: "Ingrese una Contraseña",
-                    minlength: "Ingrese 3 caracteres como minimo",
-                    equalTo: "Por favor ingrese la misma contraseña"
-                  }
-                 }
-             });
-             $("#formeditcliente").validate({
-                 rules: {
-                     nombre: {
-                        required: true,
-                        minlength: 3
-                     },
-                     dni: {
-                        required: true,
-                        minlength: 8,
-                        maxlength: 8
-                     },
-                     direccion: {
-                        required: true,
-                        minlength: 3,
-                        maxlength: 150
-                     },
-                     telefono: {
-                        required: true,
-                        minlength: 9,
-                        maxlength: 13
-                     },
+
                      contrasena: {
-                        required: true,
-                        minlength: 3
+     
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La contrasena es requerido y no puede ser vacio'
+                 
+                         },
+                 
+                         stringLength: {
+                 
+                           min: 8,
+                 
+                           message: 'La contrasena debe contener al menos 8 caracteres'
+                 
+                         },
+
+                         identical: {
+                            field: 'confirm',
+                            message: 'La contraseña y la confirmación de contraseña no son las mismas.'
+                         }
+                 
+                       }
+                 
                      },
+
                      confirm: {
-                         required: true,
-                         minlength: 3,
-                          equalTo: "#contrasena"
-                     }
-                 },
-                 messages: {
-                  nombre: {
-                    required: "Ingrese un Nombre",
-                    minlength: "Ingrese 3 caracteres como minimo"
-                  },
-                  dni: {
-                    required: "Ingrese un DNI",
-                    minlength: "Ingrese 8 caracteres como minimo",
-                    maxlength: "Ingrese 8 caracteres como máximo"
-                  },
-                  direccion: {
-                    required: "Ingrese una Dirección",
-                    minlength: "Ingrese 3 caracteres como minimo",
-                    maxlength: "Ingrese 150 caracteres como máximo"
-                  },
-                  telefono: {
-                    required: "Ingrese un número de Teléfono fijo ",
-                    minlength: "Ingrese 9 caracteres como minimo",
-                    maxlength: "Ingrese 13 caracteres como máximo"
-                  },
-                  contrasena: {
-                    required: "Ingrese una Contraseña",
-                    minlength: "Ingrese 3 caracteres como minimo"
-                  },
-                  confirm: {
-                    required: "Ingrese una Contraseña",
-                    minlength: "Ingrese 3 caracteres como minimo",
-                    equalTo: "Por favor ingrese la misma contraseña"
+     
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La confirmación de password es requerida y no puede ser vacio.'
+                 
+                         },
+                 
+                         stringLength: {
+                 
+                           min: 8,
+                 
+                           message: 'El password debe contener al menos 8 caracteres.'
+                 
+                         },
+
+                         identical: {
+                            field: 'password',
+                            message: 'La confirmación y la contraseña de contraseña no son las mismas.'
+                         }
+                 
+                       }
+                 
+                     },
+
+
+                     distrito: {
+                        validators: {
+                           notEmpty: { 
+                              message: 'Por favor selecciona un distrito'
+                           }
+                        }
+                     },
+
                   }
-                 }
+                
              });
-             $("#formmoto").validate({
-                 rules: {
-                     placa: {
-                        required: true,
-                        minlength: 7
+
+             $("#formeditcliente")
+               .find('[name="distrito"]')
+                 .selectpicker()
+                   .change(function(e) {
+                     $('#bootstrapSelectForm').bootstrapValidator('revalidateField', 'account');
+                   })
+                   .end()
+                .find('[name="sexo"]')
+                 .selectpicker()
+                   .change(function(e) {
+                     $('#bootstrapSelectForm').bootstrapValidator('revalidateField', 'account');
+                   })
+                   .end()
+               .bootstrapValidator({
+                  message: 'Este valor no es valido',
+
+                   feedbackIcons: {
+   
+                     valid: 'glyphicon glyphicon-ok',
+                 
+                     invalid: 'glyphicon glyphicon-remove',
+                 
+                     validating: 'glyphicon glyphicon-refresh'
+                 
+                   },
+
+                   excluded: ':disabled',
+
+                  fields: {
+
+                     nombre: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El nombre es requerido'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 3,
+                 
+                           message: 'El nombre debe contener al menos 3 caracteres'
+                 
+                         },
+                         regexp: {
+     
+                           regexp: /^[A-Za-z ]+$/,
+                 
+                           message: 'El nombre solo puede contener letras'
+                 
+                         }
+                 
+                       }
+                 
                      },
-                     marca: {
-                        required: true,
-                        minlength: 3
+
+                     dni: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El DNI es requerido'
+                 
+                         },
+
+                         regexp: {
+     
+                           regexp: /^[0-9]+$/,
+                 
+                           message: 'El DNI solo puede contener números'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 8,
+                           max: 8,
+                 
+                           message: 'El dni debe contener al menos 8 números'
+                 
+                         }
+                 
+                       }
+                 
                      },
-                     soat: {
-                        required: true,
-                        minlength: 11,
-                        maxlength: 11
-                     }
-                 },
-                 messages: {
-                  placa: {
-                    required: "Ingrese una Placa",
-                    minlength: "Ingrese 7 caracteres como minimo"
-                  },
-                  marca: {
-                    required: "Ingrese la Marca de la moto",
-                    minlength: "Ingrese 3 caracteres como minimo"
-                  },
-                  soat: {
-                    required: "Ingrese el número de SOAT",
-                    minlength: "Ingrese 11 caracteres como minimo",
-                    maxlength: "Ingrese 11 caracteres como máximo"
+
+                     sexo: {
+                        validators: {
+                           notEmpty: { 
+                              message: 'Por favor selecciona un sexo'
+                           }
+                        }
+                     },
+
+                     direccion: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El dirección es requerido'
+                 
+                         },
+                         regexp: {
+     
+                           regexp: /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/,
+                 
+                                            
+                         },
+                          
+                         stringLength: {
+     
+                           min: 3,
+                 
+                           message: 'La dirección debe contener al menos 3 caracteres'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     celular: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El celular es requerido'
+                 
+                         },
+
+                          regexp: {
+     
+                           regexp: /^[0-9]+$/,
+                 
+                           message: 'El teléfono solo puede contener números'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 9,
+                           max: 9,
+                 
+                           message: 'El celular debe contener al menos 9 números'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     telefono: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El teléfono es requerido'
+                 
+                         },
+
+                          regexp: {
+     
+                           regexp: /^[0-9]+$/,
+                 
+                           message: 'El teléfono solo puede contener números'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 6,
+                           max: 6,
+                 
+                           message: 'El teléfono debe contener 6 números'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     correo: {
+     
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El correo es requerido y no puede ser vacio'
+                 
+                         },
+
+                          regexp: {
+     
+                           regexp: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+                 
+                           message: 'El correo electronico no es valido'
+                 
+                         },
+                 
+                         
+                 
+                       }
+                 
+                     },
+
+                     contrasena: {
+     
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La contrasena es requerido y no puede ser vacio'
+                 
+                         },
+                 
+                         stringLength: {
+                 
+                           min: 8,
+                 
+                           message: 'La contrasena debe contener al menos 8 caracteres'
+                 
+                         },
+
+                         identical: {
+                            field: 'confirm',
+                            message: 'La contraseña y la confirmación de contraseña no son las mismas.'
+                         }
+                 
+                       }
+                 
+                     },
+
+                     confirm: {
+     
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La confirmación de password es requerida y no puede ser vacio.'
+                 
+                         },
+                 
+                         stringLength: {
+                 
+                           min: 8,
+                 
+                           message: 'El password debe contener al menos 8 caracteres.'
+                 
+                         },
+
+                         identical: {
+                            field: 'password',
+                            message: 'La confirmación y la contraseña de contraseña no son las mismas.'
+                         }
+                 
+                       }
+                 
+                     },
+
+
+                     distrito: {
+                        validators: {
+                           notEmpty: { 
+                              message: 'Por favor selecciona un distrito'
+                           }
+                        }
+                     },
+
                   }
-                 }
-             });*/
+                
+             });
+
+             $("#formmoto")
+               .find('[name="empleado"]')
+                 .selectpicker()
+                   .change(function(e) {
+                     $('#bootstrapSelectForm').bootstrapValidator('revalidateField', 'empleado');
+                   })
+                   .end()
+               .bootstrapValidator({
+                  message: 'Este valor no es valido',
+
+                   feedbackIcons: {
+   
+                     valid: 'glyphicon glyphicon-ok',
+                 
+                     invalid: 'glyphicon glyphicon-remove',
+                 
+                     validating: 'glyphicon glyphicon-refresh'
+                 
+                   },
+
+                   excluded: ':disabled',
+
+                  fields: {
+
+                     placa: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La placa es requerida'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 5,
+                 
+                           message: 'La placa debe contener 5 caracteres'
+                 
+                         },
+                         regexp: {
+     
+                           regexp: /^([A-Z]{2}-\d{4})$/,
+                 
+                           message: 'La placa no se ajusta al formato "AB-1234"'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     marca: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La Marca es requerida'
+                 
+                         },
+
+
+                         stringLength: {
+     
+                           min: 3,
+                 
+                           message: 'La Marca debe contener al menos 3 letras'
+                 
+                         },
+
+                         regexp: {
+     
+                           regexp: /^[A-Z]+$/,
+                 
+                           message: 'La Marca solo puede contener letras mayusculas'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     soat: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El SOAT es requerido'
+                 
+                         },
+
+
+                         stringLength: {
+     
+                           min: 13,
+                           max: 13,
+                 
+                           message: 'El SOAT debe contener 13 caracteres'
+                 
+                         },
+
+                         regexp: {
+     
+                           regexp: /^(\d{2}-\d{8}-\d{1})$/,
+                 
+                           message: 'El SOAT debe ajustarse al formato "01-01563361-8"'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     empleado: {
+                        validators: {
+                           notEmpty: { 
+                              message: 'Por favor selecciona un empleado'
+                           }
+                        }
+                     },
+
+                  }
+                
+             });
+
+             $("#formeditmoto")
+               .find('[name="estado"]')
+                 .selectpicker()
+                   .change(function(e) {
+                     $('#bootstrapSelectForm').bootstrapValidator('revalidateField', 'estado');
+                   })
+                   .end()
+               .find('[name="empleado"]')
+                 .selectpicker()
+                   .change(function(e) {
+                     $('#bootstrapSelectForm').bootstrapValidator('revalidateField', 'empleado');
+                   })
+                   .end()
+               .bootstrapValidator({
+                  message: 'Este valor no es valido',
+
+                   feedbackIcons: {
+   
+                     valid: 'glyphicon glyphicon-ok',
+                 
+                     invalid: 'glyphicon glyphicon-remove',
+                 
+                     validating: 'glyphicon glyphicon-refresh'
+                 
+                   },
+
+                   excluded: ':disabled',
+
+                  fields: {
+
+                     placa: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La placa es requerida'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 5,
+                 
+                           message: 'La placa debe contener 5 caracteres'
+                 
+                         },
+                         regexp: {
+     
+                           regexp: /^([A-Z]{2}-\d{4})$/,
+                 
+                           message: 'La placa no se ajusta al formato "AB-1234"'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     marca: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La Marca es requerida'
+                 
+                         },
+
+
+                         stringLength: {
+     
+                           min: 3,
+                 
+                           message: 'La Marca debe contener al menos 3 letras'
+                 
+                         },
+
+                         regexp: {
+     
+                           regexp: /^[A-Z]+$/,
+                 
+                           message: 'La Marca solo puede contener letras mayusculas'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     soat: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El SOAT es requerido'
+                 
+                         },
+
+
+                         stringLength: {
+     
+                           min: 13,
+                           max: 13,
+                 
+                           message: 'El SOAT debe contener 13 caracteres'
+                 
+                         },
+
+                         regexp: {
+     
+                           regexp: /^(\d{2}-\d{8}-\d{1})$/,
+                 
+                           message: 'El SOAT debe ajustarse al formato "01-01563361-8"'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     estado: {
+                        validators: {
+                           notEmpty: { 
+                              message: 'Por favor selecciona un estado'
+                           }
+                        }
+                     },
+
+                     empleado: {
+                        validators: {
+                           notEmpty: { 
+                              message: 'Por favor selecciona un empleado'
+                           }
+                        }
+                     },
+
+                  }
+                
+             });
+
+             $("#formnuevoplato")
+                .find('[name="categoria"]')
+                 .selectpicker()
+                   .change(function(e) {
+                     $('#bootstrapSelectForm').bootstrapValidator('revalidateField', 'categoria');
+                   })
+                   .end()
+                .find('[name="estado"]')
+                 .selectpicker()
+                   .change(function(e) {
+                     $('#bootstrapSelectForm').bootstrapValidator('revalidateField', 'estado');
+                   })
+                   .end()
+                .bootstrapValidator({
+                  message: 'Este valor no es valido',
+
+                   feedbackIcons: {
+   
+                     valid: 'glyphicon glyphicon-ok',
+                 
+                     invalid: 'glyphicon glyphicon-remove',
+                 
+                     validating: 'glyphicon glyphicon-refresh'
+                 
+                   },
+
+                   excluded: ':disabled',
+
+                  fields: {
+
+                     nombre: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El nombre es requerido'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 3,
+                 
+                           message: 'El nombre debe contener al menos 3 caracteres'
+                 
+                         },
+                         regexp: {
+     
+                           regexp: /^[A-Za-z ]+$/,
+                 
+                           message: 'El nombre solo puede contener letras'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     categoria: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La categoria es requerida'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     precio: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El precio es requerido'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 1,
+                 
+                           message: 'El precio debe contener al menos 1 caracteres'
+                 
+                         },
+                         regexp: {
+     
+                           regexp: /^[0-9]+(\.[0-9]{2})?$/,
+                 
+                           message: 'No es un precio valido'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                      estado: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El estado es requerido'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     imagen: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La imagen es requerida'
+                 
+                         },
+                         file: {
+                           extension: 'jpeg,png',
+                           type: 'image/jpeg,image/png',
+                           maxSize: 1024 * 1024, // 5 MB
+                           message: 'El archivo seleccionado no es valido, Este debe ser (png o jpg)'
+                 
+                        }
+                 
+                       }
+                 
+                     },
+                     cantidad: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La cantidad es requerida'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 1,
+                 
+                           message: 'La cantidad debe contener al menos 1 caracter'
+                 
+                         },
+                         regexp: {
+     
+                           regexp: /^[0-9]+$/,
+                 
+                           message: 'La cantidad solo puede contener letras'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     descripcion: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La descripcion es requerida'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 10,
+                 
+                           message: 'La descripcion debe contener al menos 10 caracteres'
+                 
+                         },
+                         regexp: {
+     
+                           regexp: /^[a-zA-Z ]+$/,
+                 
+                           message: 'La descripcion solo puede contener letras'
+                 
+                         }
+                 
+                       }
+                 
+                     }
+
+                  }
+                
+             });
+
+            $("#formeditplato")
+                .bootstrapValidator({
+                  message: 'Este valor no es valido',
+
+                   feedbackIcons: {
+   
+                     valid: 'glyphicon glyphicon-ok',
+                 
+                     invalid: 'glyphicon glyphicon-remove',
+                 
+                     validating: 'glyphicon glyphicon-refresh'
+                 
+                   },
+
+                   excluded: ':disabled',
+
+                  fields: {
+
+                     nombre: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El nombre es requerido'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 3,
+                 
+                           message: 'El nombre debe contener al menos 3 caracteres'
+                 
+                         },
+                         regexp: {
+     
+                           regexp: /^[A-Za-z ]+$/,
+                 
+                           message: 'El nombre solo puede contener letras'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     categoria: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La categoria es requerida'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     precio: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El precio es requerido'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 1,
+                 
+                           message: 'El precio debe contener al menos 1 caracteres'
+                 
+                         },
+                         regexp: {
+     
+                           regexp: /^[0-9]+(\.[0-9]{2})?$/,
+                 
+                           message: 'No es un precio valido'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                      estado: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El estado es requerido'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     imagen: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La imagen es requerida'
+                 
+                         },
+                         file: {
+                           extension: 'png,jepg',
+                           type: 'image/jpg,image/png',
+                           maxSize: 1024 * 1024, // 5 MB
+                           message: 'El archivo seleccionado no es valido, Este debe ser (png, jpg o jpeg)'
+                 
+                        }
+                 
+                       }
+                 
+                     },
+                     cantidad: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La cantidad es requerida'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 1,
+                 
+                           message: 'La cantidad debe contener al menos 1 caracter'
+                 
+                         },
+                         regexp: {
+     
+                           regexp: /^[0-9]+$/,
+                 
+                           message: 'La cantidad solo puede contener letras'
+                 
+                         }
+                 
+                       }
+                 
+                     },
+
+                     descripcion: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'La descripcion es requerida'
+                 
+                         },
+
+                         stringLength: {
+     
+                           min: 10,
+                 
+                           message: 'La descripcion debe contener al menos 10 caracteres'
+                 
+                         },
+                         regexp: {
+     
+                           regexp: /^[a-zA-ZáéíóúñÁÉÍÓÚÑ,.() ]+$/,
+                 
+                           message: 'La descripcion solo puede contener letras'
+                 
+                         }
+                 
+                       }
+                 
+                     }
+
+                  }
+                
+             });
+
+            $("#formasignacion")
+                .find('[name="repartidor"]')
+                 .selectpicker()
+                   .change(function(e) {
+                     $('#bootstrapSelectForm').bootstrapValidator('revalidateField', 'repartidor');
+                   })
+                   .end()
+                .bootstrapValidator({
+                  message: 'Este valor no es valido',
+
+                   feedbackIcons: {
+   
+                     valid: 'glyphicon glyphicon-ok',
+                 
+                     invalid: 'glyphicon glyphicon-remove',
+                 
+                     validating: 'glyphicon glyphicon-refresh'
+                 
+                   },
+
+                   excluded: ':disabled',
+
+                  fields: {
+
+                     repartidor: {
+                 
+                       validators: {
+                 
+                         notEmpty: {
+                 
+                           message: 'El repartidor es requerido'
+                 
+                         }
+                 
+                       }
+                 
+                     }
+
+                  }
+                
+             });
+        
+           
+
         });

@@ -7,23 +7,6 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Motos</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#">Config option 1</a>
-                                </li>
-                                <li><a href="#">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
                     </div>
                         <div class="ibox-content">
                         <a data-toggle="modal" class="btn btn-success" href="#modal-form"><i class="fa fa-plus"></i>&nbsp;Nuevo</a>
@@ -52,8 +35,16 @@
                                         <td><?php echo $moto->Nombres . " " . $moto->Apellidos;?></td>
                                         <td>
                                             <center>
-                                                <a href="<?php echo base_url('motos/eliminar')."/".$moto->Placa; ?>"><span class="fa fa-trash"></span></a>
-                                                <a href="<?php echo base_url('EditarMoto')."/".$moto->Placa; ?>"><span class="fa fa-pencil"></span></a>
+                                                <div class="col-md-1">
+                                                        <button type="submit" class="btn btn-success btn-xs" onclick='Eliminar("<? echo $moto->Placa?>");'><span class="fa fa-trash"></span></button>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <form  method="post" action="<?php echo base_url('EditarMoto'); ?>">
+                                                        <button type="submit" class="btn btn-success btn-xs"><span class="fa fa-pencil"></span></button>
+                                                        <input type="hidden" name="idmoto" value="<? echo $moto->Placa; ?>">
+                                                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+                                                    </form>
+                                                </div>
                                             </center>
                                         </td>
                                     </tr>
@@ -94,15 +85,15 @@
                             <div class="ibox-content">                    
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Placa</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="placa" id="placa" placeholder="Ingrese placa" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="placa" placeholder="AB-1234"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Marca</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="marca" id="marca" placeholder="Ingrese Marca" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="marca" id="marca" placeholder="Ingrese Marca" ></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">SOAT</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="soat" id="soat" placeholder="Ingrese SOAT" required></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="soat" id="soat" placeholder="Ingrese SOAT" ></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Empleado Asignado</label>
@@ -120,7 +111,8 @@
                                     ?>
                                     </select>
                                     </div>
-                                </div>                                 
+                                </div>
+                                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">                                   
                             </div>
 
                         </div>
@@ -139,9 +131,49 @@
         
         
 <?php include 'footer.php'; ?>
-        <!-- Jquery Validate -->
-        <script src="<?php echo base_url(); ?>assets/js/plugins/validate/jquery.validate.min.js"></script>
-        <!-- Script Validación -->
-        <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
-        <!-- Fin Script Validación -->
-        
+
+     <script type="text/javascript">
+            $(document).ready(function() {
+
+                            Eliminar = function (id) {
+                                
+                                var datos = 'idmoto='+ id;
+                                var url = "<?php echo base_url('moto/eliminar'); ?>";
+                                var csrf_token = '<?php echo $this->security->get_csrf_hash(); ?>';
+
+                                swal({
+                                    title: "¿Esta seguro que desea eliminar?",
+                                    text: "Usted no podra recuperar esta información una vez eliminada",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "Si, eliminar!",
+                                    cancelButtonText: "No, cancelar!",
+                                    closeOnConfirm: false,
+                                    closeOnCancel: false },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        swal("Eliminado!", "La asignación a sido eliminado.", "success");
+                                         $.ajax({
+                                            url: url,                        
+                                            type: "POST",                       
+                                            data:{'csrf_test_name': csrf_token,"idmoto":id},
+                                        success: function(data) {
+                                            
+                                        },
+                                        error: function(e) {
+                                            swal("No se Elimino", "Ocurrio un error", "error");
+                                        }
+                                       });
+                                        
+                                    } else {
+                                        swal("Cancelado", "El plato esta a salvo :)", "error");
+                                    }
+                                        
+                                });
+
+                            };
+                            
+             });  
+            
+        </script>
