@@ -61,3 +61,24 @@ INSERT INTO `restaurant`.`DISTRITOS` (`DISTRITO`) VALUES('Yura');
 INSERT INTO `restaurant`.`estadoboleta` (`Estado_Boleta`) VALUES('Por Cancelar');
 INSERT INTO `restaurant`.`estadoboleta` (`Estado_Boleta`) VALUES('Cancelado');
 INSERT INTO `restaurant`.`estadoboleta` (`Estado_Boleta`) VALUES('Anulado');
+
+-- --------------------------------------------
+-- CARGA DE TABLA CATEGORIA PLATO
+-- --------------------------------------------
+INSERT INTO `restaurant`.`categoriaplato` (`Categoria`) VALUES('Ceviches');
+INSERT INTO `restaurant`.`categoriaplato` (`Categoria`) VALUES('Combinados');
+INSERT INTO `restaurant`.`categoriaplato` (`Categoria`) VALUES('Platos Variados');
+
+-- --------------------------------------------
+-- CARGA DE TABLA EMPLEADOS
+-- --------------------------------------------
+INSERT INTO `empleados` (`idEmpleados`, `Nombres`, `Apellidos`, `Dni`, `Fecha_Nacimiento`, `Direccion`, `Celular`, `Sexo`, `Fecha_Registro`, `Estado`, `Correo_Electronico`, `Usuario`, `Contrasena`, `TipoEmpleado_idTipoEmpleado`) VALUES
+('Ricardo Alonso', 'Palacios Arce', 70000397, '1991-07-11', 'Los Portales de la Megariana A4', 982838046, 'M', '2017-09-29', 'A', 'rrapa10@hotmail.com', 'rpalacios', 'YGp8q/UoUtccgmdocvjPTyfoOr4oCvKUgxGgLEYG5Nk=', 1);
+INSERT INTO `empleados` (`idEmpleados`, `Nombres`, `Apellidos`, `Dni`, `Fecha_Nacimiento`, `Direccion`, `Celular`, `Sexo`, `Fecha_Registro`, `Estado`, `Correo_Electronico`, `Usuario`, `Contrasena`, `TipoEmpleado_idTipoEmpleado`) VALUES
+('Carlos', 'Sanchez Aquino', 78955678, '1969-12-31', '123123', 454545454, 'M', '2017-08-17', 'A', 'ff@dfdf.da', 'csanchez', 'ziLeH5PL6oiPvqpGsFeq/SosEl3if4C4ApEyQfeJlDV/cIragRI+HLM/8hV0y0MohrxiHfmLafw582XMtgS5fQ==', 4);
+INSERT INTO `empleados` (`idEmpleados`, `Nombres`, `Apellidos`, `Dni`, `Fecha_Nacimiento`, `Direccion`, `Celular`, `Sexo`, `Fecha_Registro`, `Estado`, `Correo_Electronico`, `Usuario`, `Contrasena`, `TipoEmpleado_idTipoEmpleado`) VALUES
+('carlos', 'sanchez', 12345678, '2017-09-20', 'los arces 1234', 987653210, 'M', '2017-09-29', 'A', 'carlos123@gmail.com', 'carlos', 'YHDHAwX4AcjluFCNFRxYFJbskPn4KoNbVTKukeAb3zo=', 2);
+INSERT INTO `empleados` (`idEmpleados`, `Nombres`, `Apellidos`, `Dni`, `Fecha_Nacimiento`, `Direccion`, `Celular`, `Sexo`, `Fecha_Registro`, `Estado`, `Correo_Electronico`, `Usuario`, `Contrasena`, `TipoEmpleado_idTipoEmpleado`) VALUES
+('Anibal ', 'Sardon', 12365489, '2017-09-17', 'los 123', 789654235, 'M', '2017-09-29', 'A', 'cocina123@gmail.com', 'cocina', 'BB55jcF8GnAbYIgvfNSMDTSye3sHjFFSdVgs6PW8gVI=', 3);
+INSERT INTO `empleados` (`idEmpleados`, `Nombres`, `Apellidos`, `Dni`, `Fecha_Nacimiento`, `Direccion`, `Celular`, `Sexo`, `Fecha_Registro`, `Estado`, `Correo_Electronico`, `Usuario`, `Contrasena`, `TipoEmpleado_idTipoEmpleado`) VALUES
+('JUAN', 'Perez Carpio', 12345678, '1990-09-24', 'SU CASA', 999999999, 'M', '2017-11-14', 'A', 'jperez@hotmail.com', 'jperez', 'BB55jcF8GnAbYIgvfNSMDTSye3sHjFFSdVgs6PW8gVI=', 4);

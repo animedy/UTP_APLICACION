@@ -1,13 +1,11 @@
 -- -----------------------------------------------------------------------------------
 -- Descripcion         : Creación de Procedimientos Almacenados restaurant	
--- Fecha Creación      : 01/08/2017												
+-- Fecha Creación      : 10/08/2017  											
 -- Parámetros          :															
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
---							: Ricardo Palacios									
--- 		  	Ricardo Palacios Arce								
--- 		  	Juan Paz Chalco								
--- Versión: Final (Beta|Final)													
+--							: Ricardo Palacios															
+-- Versión: Final 												
 -- Cambios Importantes:															
 --																				
 -- Propiedad de Pepe Tiburon 													
@@ -17,8 +15,8 @@ USE `restaurant`;
 
 -- EMPLEADO
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_INSERTAR_EMPLEADO $$
-CREATE PROCEDURE SP_INSERTAR_EMPLEADO
+DROP PROCEDURE IF EXISTS sp_insertar_empleado $$
+CREATE PROCEDURE sp_insertar_empleado
 (
 	IN Nombres varchar(60) 
 	,IN Apellidos varchar(60) 
@@ -34,11 +32,11 @@ CREATE PROCEDURE SP_INSERTAR_EMPLEADO
 	,IN Contrasena varchar(70) 
 	,IN TipoEmpleado_idTipoEmpleado int(11)
 )
--- /************************************************************************************
--- Descripcion         : Insertar los datos del empleado							*
--- Fecha Creación      : 10/08/2017													*
--- Fecha Mododificación:																*
--- Parámetros          :																*
+-- -----------------------------------------------------------------------------------
+-- Descripcion         : Insertar los datos del empleado							
+-- Fecha Creación      : 10/08/2017													
+-- Fecha Mododificación:																
+-- Parámetros          :																
 --  	Nombres 						:Nombre del empleado
 --  	Apellidos 						:Apellidos del empleado
 --  	Dni 							:DNI del empleado
@@ -55,14 +53,14 @@ CREATE PROCEDURE SP_INSERTAR_EMPLEADO
 -- 	Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- Versión				: Final (Beta|Final)										*
--- Cambios Importantes	:                                                         	*
---                                                                              		*
--- Propiedad                                          		*
---                                                                             		*
--- *************************************************************************************/
+-- Versión				: Final 										
+-- Cambios Importantes	:                                                         	
+--                                                                              		
+-- Propiedad                                          		
+--                                                                             		
+-- -----------------------------------------------------------------------------------
 BEGIN
-	INSERT INTO `restaurant`.`EMPLEADOS`
+	INSERT INTO `empleados`
 	(
 		`Nombres` 
 		,`Apellidos` 
@@ -98,8 +96,8 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_ACTUALIZAR_EMPLEADO $$
-CREATE PROCEDURE SP_ACTUALIZAR_EMPLEADO
+DROP PROCEDURE IF EXISTS sp_actualizar_empleado $$
+CREATE PROCEDURE sp_actualizar_empleado
 (
 	IN idEmpleados int(11)
 	,IN Nombres varchar(60) 
@@ -115,12 +113,12 @@ CREATE PROCEDURE SP_ACTUALIZAR_EMPLEADO
 	,IN Contrasena varchar(70) 
 	,IN TipoEmpleado_idTipoEmpleado int(11)
 )
--- /************************************************************************************
--- *Descripcion         : Actualizar los datos del empleado							*
--- *Fecha Creación      : 10/08/2017													*
--- *Fecha Mododificación:																*
--- *Parámetros          :	
---		idEmpleados						:Identificador del Empleado															*
+-- -----------------------------------------------------------------------------------
+-- Descripcion         : Actualizar los datos del empleado							
+-- Fecha Creación      : 10/08/2017													
+-- Fecha Mododificación:																
+-- Parámetros          :	
+--		idEmpleados						:Identificador del Empleado															
 --  	Nombres 						:Nombre del empleado
 --  	Apellidos 						:Apellidos del empleado
 --  	Dni 							:DNI del empleado
@@ -137,14 +135,14 @@ CREATE PROCEDURE SP_ACTUALIZAR_EMPLEADO
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
--- * Cambios Importantes	:                                                         	*
--- *                                                                             		*
--- * Propiedad                                          		*
--- *                                                                             		*
--- *************************************************************************************/
+-- Versión				: Final 										
+-- Cambios Importantes	:                                                         	
+--                                                                              		
+-- Propiedad                                          		
+--                                                                              		
+-- -----------------------------------------------------------------------------------
 BEGIN
-	UPDATE `restaurant`.`EMPLEADOS`
+	UPDATE `empleados`
 	SET 
 		`Nombres` =  Nombres
 		,`Apellidos` =  Apellidos
@@ -163,30 +161,30 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_ELIMINAR_EMPLEADO $$
-CREATE PROCEDURE SP_ELIMINAR_EMPLEADO
+DROP PROCEDURE IF EXISTS sp_eliminar_empleado $$
+CREATE PROCEDURE sp_eliminar_empleado
 (
 	IN idEmpleados int(11) 
 	,IN Estado char(1) 
 )
--- /************************************************************************************
--- *Descripcion         : Elimina los datos del empleado 						*
--- *Fecha Creación      : 10/08/2017													*
--- *Fecha Mododificación:																*
+-- -----------------------------------------------------------------------------------
+-- *Descripcion         : Elimina los datos del empleado 						
+-- *Fecha Creación      : 10/08/2017													
+-- *Fecha Mododificación:																
 -- *Parámetros          :	
---		idEmpleados						:Identificador del Empleado															*
+--		idEmpleados						:Identificador del Empleado															
 --  	Estado  						:el estado si esta activo o no del empleado				
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
--- * Cambios Importantes	:                                                         	*
--- *                                                                             		*
--- * Propiedad                                          		*
--- *                                                                             		*
--- *************************************************************************************/
+-- * Versión				: Final 										
+-- * Cambios Importantes	:                                                         	
+-- *                                                                             		
+-- * Propiedad                                          		
+-- *                                                                             		
+-- -----------------------------------------------------------------------------------
 BEGIN
-	UPDATE `restaurant`.`EMPLEADOS`
+	UPDATE `empleados`
 	SET 
 		`Estado` = Estado	 
 	WHERE `idEmpleados` = idEmpleados;
@@ -194,44 +192,44 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_LISTAR_EMPLEADO_POR_ID $$
-CREATE PROCEDURE SP_LISTAR_EMPLEADO_POR_ID(
+DROP PROCEDURE IF EXISTS sp_listar_empleado_por_id $$
+CREATE PROCEDURE sp_listar_empleado_por_id(
 	IN idEmpleados int(11) 
 )
 -- /************************************************************************************
--- *Descripcion         : Lista los datos del empleado							*
+-- *Descripcion         : Lista los datos del empleado									*
 -- *Fecha Creación      : 10/08/2017													*
--- *Fecha Mododificación:																*
+-- *Fecha Mododificación: 11/08/2017																*
 -- *Parámetros          :					
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
 	SELECT
-		`EMPLEADOS`.idEmpleados
-		,`EMPLEADOS`.Nombres
-		,`EMPLEADOS`.Apellidos 
-		,`EMPLEADOS`.Dni
-		,`EMPLEADOS`.Fecha_Registro
-		,`TIPOEMPLEADO`.Rol
-	FROM `EMPLEADOS` JOIN `TIPOEMPLEADO`
-	ON `EMPLEADOS`.TipoEmpleado_idTipoEmpleado = `TIPOEMPLEADO`.idTipoEmpleado
-		WHERE `EMPLEADOS`.idEmpleados = idEmpleados;
+		`empleados`.idEmpleados
+		,`empleados`.Nombres
+		,`empleados`.Apellidos 
+		,`empleados`.Dni
+		,`empleados`.Fecha_Registro
+		,`tipoempleado`.Rol
+	FROM `empleados` JOIN `tipoempleado`
+	ON `empleados`.TipoEmpleado_idTipoEmpleado = `tipoempleado`.idTipoEmpleado
+		WHERE `empleados`.idEmpleados = idEmpleados;
 END$$
 DELIMITER ;
 
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_LISTAR_EMPLEADOS $$
-CREATE PROCEDURE SP_LISTAR_EMPLEADOS()
+DROP PROCEDURE IF EXISTS sp_listar_empleados $$
+CREATE PROCEDURE sp_listar_empleados()
 -- /************************************************************************************
--- *Descripcion         : Lista los datos del empleado por ID						*
+-- *Descripcion         : Lista los datos del empleado por ID							*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :
@@ -239,32 +237,71 @@ CREATE PROCEDURE SP_LISTAR_EMPLEADOS()
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
 	SELECT
-		`EMPLEADOS`.idEmpleados
-		,`EMPLEADOS`.Nombres
-		,`EMPLEADOS`.Apellidos 
-		,`EMPLEADOS`.Dni
-		,`EMPLEADOS`.Fecha_Registro
-		,`TIPOEMPLEADO`.Rol
-	FROM `EMPLEADOS` JOIN `TIPOEMPLEADO`
-	ON `EMPLEADOS`.TipoEmpleado_idTipoEmpleado = `TIPOEMPLEADO`.idTipoEmpleado
-	ORDER BY(`EMPLEADOS`.idEmpleados);
+		`empleados`.idEmpleados
+		,`empleados`.Nombres
+		,`empleados`.Apellidos 
+		,`empleados`.Dni
+		,`empleados`.Fecha_Registro
+		,`tipoempleado`.Rol
+	FROM `empleados` JOIN `tipoempleado`
+	ON `empleados`.TipoEmpleado_idTipoEmpleado = `tipoempleado`.idTipoEmpleado
+	ORDER BY(`empleados`.idEmpleados);
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_loguearse_empleado $$
+CREATE PROCEDURE sp_loguearse_empleado(
+	IN usuario
+	,IN contrasena
+)
+-- /************************************************************************************
+-- *Descripcion         : Loguearse														*
+-- *Fecha Creación      : 10/08/2017													*
+-- *Fecha Mododificación:																*
+-- *Parámetros          :	
+--	IN usuario varchar(50)
+--	IN contrasena varchar(70) 			
+-- Autor					: Carlos Sanchez	
+--							: Juan Paz Chalco
+--							: Ricardo Palacios	
+-- * Versión				: Final 													*
+-- * Cambios Importantes	:                                                         	*
+-- *                                                                             		*
+-- * Propiedad                                          								*
+-- *                                                                             		*
+-- *************************************************************************************/
+BEGIN
+	SELECT 
+		`e`.idEmpleados
+		,`e`.dni
+		,`e`.Nombres
+		,`e`.Apellidos
+		,`t`.Rol
+		,`e`.Fecha_Registro
+		,`e`.Estado
+		,`e`.Sexo 
+	FROM empleados `e` INNER JOIN tipoempleado `t` 
+	ON `e`.TipoEmpleado_idTipoEmpleado = `t`.idTipoEmpleado 
+	WHERE usuario = usuario AND contrasena = contrasena
+
 END$$
 DELIMITER ;
 
 -- TIPO EMPLEADO
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_LISTAR_TIPO_EMPLEADO $$
-CREATE PROCEDURE SP_LISTAR_TIPO_EMPLEADO()
+DROP PROCEDURE IF EXISTS sp_listar_tipo_empleado $$
+CREATE PROCEDURE sp_listar_tipo_empleado()
 -- /************************************************************************************
--- *Descripcion         : Lista los datos del tipo empleado					*
+-- *Descripcion         : Lista los datos del tipo empleado								*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :
@@ -272,10 +309,10 @@ CREATE PROCEDURE SP_LISTAR_TIPO_EMPLEADO()
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
@@ -289,8 +326,8 @@ DELIMITER ;
 
 -- CLIENTE 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_INSERTAR_CLIENTE $$
-CREATE PROCEDURE SP_INSERTAR_CLIENTE(
+DROP PROCEDURE IF EXISTS sp_insertar_cliente $$
+CREATE PROCEDURE sp_insertar_cliente(
    IN Nombres 			VARCHAR(45)
   ,IN Dni			INT(11)
   ,IN Sexo 			VARCHAR(1)
@@ -329,13 +366,13 @@ CREATE PROCEDURE SP_INSERTAR_CLIENTE(
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- Versión: Final (Beta|Final)
--- Cambios Importantes:                    (dd/mm/aaaa)
+-- Versión: Final 
+-- Cambios Importantes:                    
 -- -----------------------------------------------------------------------------------
 
 BEGIN
 	DECLARE last_id_table1 INT;
-	INSERT INTO `restaurant`.`clientes` 
+	INSERT INTO `clientes` 
 	(
 		`Nombres` 			
 		,`Dni`			    
@@ -367,7 +404,7 @@ BEGIN
      	);
     
     SET last_id_table1 := (SELECT MAX(idCliente) FROM clientes);
-    INSERT INTO `restaurant`.`usuario`
+    INSERT INTO `usuario`
     	(
 		`CorreoElectronico`
 		,`Contrasena`
@@ -384,8 +421,8 @@ DELIMITER ;
 
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_ACTUALIZAR_CLIENTE $$
-CREATE PROCEDURE SP_ACTUALIZAR_CLIENTE(
+DROP PROCEDURE IF EXISTS sp_actualizar_cliente $$
+CREATE PROCEDURE sp_actualizar_cliente(
 	IN idCliente 			INT(11)
 	,IN Nombres 			VARCHAR(45)
 	,IN Dni			INT(11)
@@ -423,13 +460,13 @@ CREATE PROCEDURE SP_ACTUALIZAR_CLIENTE(
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- Versión: Final (Beta|Final)
--- Cambios Importantes:                    (dd/mm/aaaa)
+-- Versión: Final 
+-- Cambios Importantes:                    
 -- -----------------------------------------------------------------------------------
 
 BEGIN
-	UPDATE `restaurant`.`clientes`
-	JOIN `restaurant`.`usuario`
+	UPDATE `clientes`
+	JOIN `usuario`
 	ON `clientes`.`idCliente` = `usuario`.`Cliente_idCliente`
 	SET
 		`Nombres` = Nombres			
@@ -456,8 +493,8 @@ END $$
 DELIMITER ;
 	
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_ACTUALIZAR_CLIENTE_CONTRASENA $$
-CREATE PROCEDURE SP_ACTUALIZAR_CLIENTE_CONTRASENA(
+DROP PROCEDURE IF EXISTS sp_actualizar_cliente_contrasena $$
+CREATE PROCEDURE sp_actualizar_cliente_contrasena(
 	IN CorreoElectronico 	VARCHAR(100)
 	,IN Contrasena		VARCHAR(150)
 )
@@ -471,12 +508,12 @@ CREATE PROCEDURE SP_ACTUALIZAR_CLIENTE_CONTRASENA(
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- Versión: Final (Beta|Final)
--- Cambios Importantes:                    (dd/mm/aaaa)
+-- Versión: Final 
+-- Cambios Importantes:                    
 -- -----------------------------------------------------------------------------------
 
 BEGIN
-	UPDATE `restaurant`.`usuario`
+	UPDATE `usuario`
 	SET
 		`Contrasena` = Contrasena
 	WHERE `CorreoElectronico` = CorreoElectronico;	
@@ -484,14 +521,14 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_ELIMINAR_CLIENTE $$
-CREATE PROCEDURE SP_ELIMINAR_CLIENTE
+DROP PROCEDURE IF EXISTS sp_eliminar_cliente $$
+CREATE PROCEDURE sp_eliminar_cliente
 (
 	IN idCliente int(11) 
 	,IN Estado char(1) 
 )
 -- /************************************************************************************
--- *Descripcion         : Elimina los datos del Cliente							*
+-- *Descripcion         : Elimina los datos del Cliente									*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :	
@@ -500,14 +537,14 @@ CREATE PROCEDURE SP_ELIMINAR_CLIENTE
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
-	UPDATE `restaurant`.`clientes`
+	UPDATE `clientes`
 	SET 
 		`Estado` = Estado	 
 	WHERE `idEmpleados` = idEmpleados;
@@ -516,12 +553,12 @@ DELIMITER ;
 
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_LISTAR_CLIENTE_POR_ID $$
-CREATE PROCEDURE SP_LISTAR_CLIENTE_POR_ID(
+DROP PROCEDURE IF EXISTS sp_listar_cliente_por_id $$
+CREATE PROCEDURE sp_listar_cliente_por_id(
 	IN idCliente 			INT(11)
 )
 -- /************************************************************************************
--- *Descripcion         : Lista los datos del Cliente por ID								*
+-- *Descripcion         : Lista los datos del Cliente por ID							*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :	
@@ -529,10 +566,10 @@ CREATE PROCEDURE SP_LISTAR_CLIENTE_POR_ID(
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
@@ -552,20 +589,20 @@ DELIMITER ;
 
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_LISTAR_CLIENTES $$
-CREATE PROCEDURE SP_LISTAR_CLIENTES()
+DROP PROCEDURE IF EXISTS sp_listar_clientes $$
+CREATE PROCEDURE sp_listar_clientes()
 -- /************************************************************************************
--- *Descripcion         : Lista los datos del cliente					*
+-- *Descripcion         : Lista los datos del cliente									*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :				
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
@@ -586,8 +623,8 @@ DELIMITER ;
 
 -- PLATO
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_INSERTAR_PLATO $$
-CREATE PROCEDURE SP_INSERTAR_PLATO
+DROP PROCEDURE IF EXISTS sp_insertar_plato $$
+CREATE PROCEDURE sp_insertar_plato
 (
 	IN Nombres varchar(60) 
 	,IN Descripcion varchar(150) 
@@ -598,7 +635,7 @@ CREATE PROCEDURE SP_INSERTAR_PLATO
 	,IN CategoriaPlato_idCategoriaPlato int(11) 
 )
 -- /************************************************************************************
--- *Descripcion         : Insertar los datos del plato						*
+-- *Descripcion         : Insertar los datos del plato									*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :																*
@@ -612,14 +649,14 @@ CREATE PROCEDURE SP_INSERTAR_PLATO
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
-	INSERT INTO `restaurant`.`platos`
+	INSERT INTO `platos`
 	(
 		`Nombres` 
 		,`Descripcion` 
@@ -643,8 +680,8 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_ACTUALIZAR_PLATO $$
-CREATE PROCEDURE SP_ACTUALIZAR_PLATO
+DROP PROCEDURE IF EXISTS sp_actualizar_plato $$
+CREATE PROCEDURE sp_actualizar_plato
 (
 	IN idPlatos int(11)
 	,IN Nombres varchar(60) 
@@ -656,7 +693,7 @@ CREATE PROCEDURE SP_ACTUALIZAR_PLATO
 	,IN CategoriaPlato_idCategoriaPlato varchar(45) 
 )
 -- /************************************************************************************
--- *Descripcion         : Actualizar los datos del plato					*
+-- *Descripcion         : Actualizar los datos del plato								*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :	
@@ -671,14 +708,14 @@ CREATE PROCEDURE SP_ACTUALIZAR_PLATO
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
-	UPDATE `restaurant`.`platos`
+	UPDATE `platos`
 	SET 
 		`Nombres` =  Nombres
 		,`Descripcion` =  Descripcion
@@ -692,14 +729,14 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_ELIMINAR_PLATO $$
-CREATE PROCEDURE SP_ELIMINAR_PLATO
+DROP PROCEDURE IF EXISTS sp_eliminar_plato $$
+CREATE PROCEDURE sp_eliminar_plato
 (
 	IN idPlatos int(11) 
 	,IN Estado char(1) 
 )
 -- /************************************************************************************
--- *Descripcion         : Elimina los datos del plato 						*
+-- *Descripcion         : Elimina los datos del plato 									*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :	
@@ -708,14 +745,14 @@ CREATE PROCEDURE SP_ELIMINAR_PLATO
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
-	UPDATE `restaurant`.`platos`
+	UPDATE `platos`
 	SET 
 		`Estado` = Estado	 
 	WHERE `idPlatos` = idPlatos;
@@ -723,12 +760,12 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_LISTAR_PLATO_POR_ID $$
-CREATE PROCEDURE SP_LISTAR_PLATO_POR_ID(
+DROP PROCEDURE IF EXISTS sp_listar_plato_por_id $$
+CREATE PROCEDURE sp_listar_plato_por_id(
 	IN idPlatos int(11)  
 )
 -- /************************************************************************************
--- *Descripcion         : Lista los datos del plato por id						*
+-- *Descripcion         : Lista los datos del plato por id								*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :	
@@ -736,10 +773,10 @@ CREATE PROCEDURE SP_LISTAR_PLATO_POR_ID(
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
@@ -759,20 +796,20 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_LISTAR_PLATO $$
-CREATE PROCEDURE SP_LISTAR_PLATO()
+DROP PROCEDURE IF EXISTS sp_listar_plato $$
+CREATE PROCEDURE sp_listar_plato()
 -- /************************************************************************************
--- *Descripcion         : Lista los datos del plato				*
+-- *Descripcion         : Lista los datos del plato										*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :			
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
@@ -793,13 +830,13 @@ DELIMITER ;
 
 -- CATEGORIA PLATO
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_INSERTAR_CATEGORIA_PLATO $$
-CREATE PROCEDURE SP_INSERTAR_CATEGORIA_PLATO
+DROP PROCEDURE IF EXISTS sp_insertar_categoria_plato $$
+CREATE PROCEDURE sp_insertar_categoria_plato
 (
 	IN Categoria varchar(50) 
 )
 -- /************************************************************************************
--- *Descripcion         : Insertar los datos de una categoria de plato						*
+-- *Descripcion         : Insertar los datos de una categoria de plato					*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :																*
@@ -807,14 +844,14 @@ CREATE PROCEDURE SP_INSERTAR_CATEGORIA_PLATO
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
-	INSERT INTO `restaurant`.`categoriaplato`
+	INSERT INTO `categoriaplato`
 	(
 		`Categoria` 		 
     )
@@ -826,8 +863,8 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_LISTAR_CATEGORIA_PLATO $$
-CREATE PROCEDURE SP_LISTAR_CATEGORIA_PLATO()
+DROP PROCEDURE IF EXISTS sp_listar_categoria_plato $$
+CREATE PROCEDURE sp_listar_categoria_plato()
 -- /************************************************************************************
 -- *Descripcion         : Lista los datos de la categoria del plato						*
 -- *Fecha Creación      : 10/08/2017													*
@@ -837,10 +874,10 @@ CREATE PROCEDURE SP_LISTAR_CATEGORIA_PLATO()
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
@@ -854,10 +891,10 @@ DELIMITER ;
 
 -- DISTRITO
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_LISTAR_DISTRITO $$
-CREATE PROCEDURE SP_LISTAR_DISTRITO()
+DROP PROCEDURE IF EXISTS sp_listar_distrito $$
+CREATE PROCEDURE sp_listar_distrito()
 -- /************************************************************************************
--- *Descripcion         : Lista los datos del distrito						*
+-- *Descripcion         : Lista los datos del distrito									*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :
@@ -865,10 +902,10 @@ CREATE PROCEDURE SP_LISTAR_DISTRITO()
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
--- *                                                                             		*
--- * Propiedad                                          		*
+-- *                                                          	                   		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
@@ -882,8 +919,8 @@ DELIMITER ;
 
 -- MOTO
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_INSERTAR_MOTO $$
-CREATE PROCEDURE SP_INSERTAR_MOTO
+DROP PROCEDURE IF EXISTS sp_insertar_moto $$
+CREATE PROCEDURE sp_insertar_moto
 (
 	IN Marca_Moto varchar(50) 
 	,IN Soat varchar(40) 
@@ -891,7 +928,7 @@ CREATE PROCEDURE SP_INSERTAR_MOTO
 	,IN empleados_idEmpleados int(11)   
 )
 -- /************************************************************************************
--- *Descripcion         : Insertar los datos de la moto							*
+-- *Descripcion         : Insertar los datos de la moto									*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :																*
@@ -902,14 +939,14 @@ CREATE PROCEDURE SP_INSERTAR_MOTO
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
-	INSERT INTO `restaurant`.`moto`
+	INSERT INTO `moto`
 	(
 		`Marca_Moto` 
 		,`Soat` 
@@ -927,8 +964,8 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_ACTUALIZAR_MOTO $$
-CREATE PROCEDURE SP_ACTUALIZAR_MOTO
+DROP PROCEDURE IF EXISTS sp_actualizar_moto $$
+CREATE PROCEDURE sp_actualizar_moto
 (
 	IN idPlaca varchar(11)
 	,IN Marca_Moto varchar(50) 
@@ -937,7 +974,7 @@ CREATE PROCEDURE SP_ACTUALIZAR_MOTO
 	,IN empleados_idEmpleados int(11)  
 )
 -- /************************************************************************************
--- *Descripcion         : Actualizar los datos de la moto						*
+-- *Descripcion         : Actualizar los datos de la moto								*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :	
@@ -949,14 +986,14 @@ CREATE PROCEDURE SP_ACTUALIZAR_MOTO
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
-	UPDATE `restaurant`.`moto`
+	UPDATE `moto`
 	SET 
 		`Marca_Moto` =  Marca_Moto
 		,`Soat` =  Soat
@@ -967,14 +1004,14 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_ELIMINAR_MOTO $$
-CREATE PROCEDURE SP_ELIMINAR_MOTO
+DROP PROCEDURE IF EXISTS sp_eliminar_moto $$
+CREATE PROCEDURE sp_eliminar_moto
 (
 	IN idPlaca int(11) 
 	,IN Estado char(1) 
 )
 -- /************************************************************************************
--- *Descripcion         : Elimina los datos de la moto						*
+-- *Descripcion         : Elimina los datos de la moto									*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :	
@@ -983,14 +1020,14 @@ CREATE PROCEDURE SP_ELIMINAR_MOTO
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 										*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
-	UPDATE `restaurant`.`moto`
+	UPDATE `moto`
 	SET 
 		`Estado` = Estado	 
 	WHERE `idPlaca` = idPlaca;
@@ -998,12 +1035,12 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_LISTAR_MOTO_POR_ID $$
-CREATE PROCEDURE SP_LISTAR_MOTO_POR_ID(
+DROP PROCEDURE IF EXISTS sp_listar_moto_por_id $$
+CREATE PROCEDURE sp_listar_moto_por_id(
 	IN idPlaca int(11)  
 )
 -- /************************************************************************************
--- *Descripcion         : Lista los datos de la moto							*
+-- *Descripcion         : Lista los datos de la moto									*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :	
@@ -1011,10 +1048,10 @@ CREATE PROCEDURE SP_LISTAR_MOTO_POR_ID(
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
@@ -1022,30 +1059,30 @@ BEGIN
 		`moto`.idPlaca
 		,`moto`.Marca_Moto
 		,`moto`.Soat
-		,`EMPLEADOS`.Nombres
-		,`EMPLEADOS`.Apellidos 
-	FROM moto JOIN EMPLEADOS 
-	ON `moto`.empleados_idEmpleados = `EMPLEADOS`.idEmpleados
+		,`empleados`.Nombres
+		,`empleados`.Apellidos 
+	FROM moto JOIN empleados 
+	ON `moto`.empleados_idEmpleados = `empleados`.idEmpleados
 	WHERE `moto`.idPlaca = idPlaca;
 END$$
 DELIMITER ;
 
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_LISTAR_MOTO $$
-CREATE PROCEDURE SP_LISTAR_MOTO()
+DROP PROCEDURE IF EXISTS sp_listar_moto $$
+CREATE PROCEDURE sp_listar_moto()
 -- /************************************************************************************
--- *Descripcion         : Lista los datos de la moto 						*
+-- *Descripcion         : Lista los datos de la moto 									*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :			
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
@@ -1053,18 +1090,18 @@ BEGIN
 		`moto`.idPlaca
 		,`moto`.Marca_Moto
 		,`moto`.Soat
-		,`EMPLEADOS`.Nombres
-		,`EMPLEADOS`.Apellidos 
-	FROM moto JOIN EMPLEADOS 
-	ON `moto`.empleados_idEmpleados = `EMPLEADOS`.idEmpleados
+		,`empleados`.Nombres
+		,`empleados`.Apellidos 
+	FROM moto JOIN empleados 
+	ON `moto`.empleados_idEmpleados = `empleados`.idEmpleados
 	ORDER BY (`moto`.idPlaca);
 END$$
 DELIMITER ;
 
 -- PEDIDOS
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_INSERTAR_PEDIDO $$
-CREATE PROCEDURE SP_INSERTAR_PEDIDO
+DROP PROCEDURE IF EXISTS sp_insertar_pedido $$
+CREATE PROCEDURE sp_insertar_pedido
 (
 	IN Fecha date 
 	,IN Hora_Pedido time 
@@ -1077,7 +1114,7 @@ CREATE PROCEDURE SP_INSERTAR_PEDIDO
 	,IN ObservacionAdministrador varchar(200) 
 )
 -- /************************************************************************************
--- *Descripcion         : Insertar los datos del pedido							*
+-- *Descripcion         : Insertar los datos del pedido									*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :																*
@@ -1093,14 +1130,14 @@ CREATE PROCEDURE SP_INSERTAR_PEDIDO
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
-	INSERT INTO `restaurant`.`pedidos`
+	INSERT INTO `pedidos`
 	(
 		`Fecha` 
 		,`Hora_Pedido` 
@@ -1130,8 +1167,8 @@ DELIMITER ;
 
 -- DETALLE PEDIDOS
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_INSERTAR_DETALLE_PEDIDO $$
-CREATE PROCEDURE SP_INSERTAR_DETALLE_PEDIDO
+DROP PROCEDURE IF EXISTS sp_insertar_detalle_pedido $$
+CREATE PROCEDURE sp_insertar_detalle_pedido
 (
 	IN Cantidad date 
 	,IN Observacion time 
@@ -1150,14 +1187,14 @@ CREATE PROCEDURE SP_INSERTAR_DETALLE_PEDIDO
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
 -- * Propiedad                                          		*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
-	INSERT INTO `restaurant`.`detallepedido`
+	INSERT INTO `detallepedido`
 	(
 		`Cantidad` 
 		,`Observacion` 
@@ -1176,8 +1213,8 @@ DELIMITER ;
 
 -- ASIGNACION
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_INSERTAR_ASIGNACION $$
-CREATE PROCEDURE SP_INSERTAR_ASIGNACION
+DROP PROCEDURE IF EXISTS sp_insertar_asignacion $$
+CREATE PROCEDURE sp_insertar_asignacion
 (
 	IN empleados_idEmpleados int(11) 
 	,IN pedidos_idPedidos int(11)  
@@ -1192,14 +1229,14 @@ CREATE PROCEDURE SP_INSERTAR_ASIGNACION
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
-	INSERT INTO `restaurant`.`asignacion`
+	INSERT INTO `asignacion`
 	(
 		`empleados_idEmpleados` 
 		,`pedidos_idPedidos`   		 
@@ -1214,8 +1251,8 @@ DELIMITER ;
 
 -- DOCUMENTO BOLETA
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_INSERTAR_DOCUMENTO_BOLETA $$
-CREATE PROCEDURE SP_INSERTAR_DOCUMENTO_BOLETA
+DROP PROCEDURE IF EXISTS sp_insertar_documento_boleta $$
+CREATE PROCEDURE sp_insertar_documento_boleta
 (
 	IN Nombre varchar(50) 
 	,IN Dni int(11) 
@@ -1227,7 +1264,7 @@ CREATE PROCEDURE SP_INSERTAR_DOCUMENTO_BOLETA
 	,IN Empleados_idEmpleados int(11) 
 )
 -- /************************************************************************************
--- *Descripcion         : Insertar los datos del documento boleta							*
+-- *Descripcion         : Insertar los datos del documento boleta						*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :																*
@@ -1242,14 +1279,14 @@ CREATE PROCEDURE SP_INSERTAR_DOCUMENTO_BOLETA
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
-	INSERT INTO `restaurant`.`documentoboleta`
+	INSERT INTO `documentoboleta`
 	(
 		`Nombre` 
 		,`Dni` 
@@ -1276,10 +1313,11 @@ DELIMITER ;
 
 -- DETALLE DOCUMENTO BOLETA 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_INSERTAR_DETALLE_DOCUMENTO_BOLETA $$
-CREATE PROCEDURE SP_INSERTAR_DETALLE_DOCUMENTO_BOLETA
+DROP PROCEDURE IF EXISTS sp_insertar_detalle_documento_boleta $$
+CREATE PROCEDURE sp_insertar_detalle_documento_boleta
 (
-	IN Producto varchar(50) 
+	IN Nro int(11)
+	,IN Producto varchar(50) 
 	,IN Cantidad int(11) 
 	,IN Precio decimal(7,2)
 	,IN DocumentoBoleta_idDocumentoBoleta int(11) 
@@ -1288,7 +1326,8 @@ CREATE PROCEDURE SP_INSERTAR_DETALLE_DOCUMENTO_BOLETA
 -- *Descripcion         : Insertar los datos del detalle documento boleta							*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
--- *Parámetros          :																*
+-- *Parámetros          :	
+--		Nro									:numero de items que tiene el detalle															*
 --  	Producto 							:nombre del producto  
 --  	Cantidad 							:cantidad del producto
 --  	Precio 								:precio del producto
@@ -1296,23 +1335,25 @@ CREATE PROCEDURE SP_INSERTAR_DETALLE_DOCUMENTO_BOLETA
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN
-	INSERT INTO `restaurant`.`detalledocumentoboleta`
+	INSERT INTO `detalledocumentoboleta`
 	(
-		`Producto` 
+		`Nro`
+		,`Producto` 
 		,`Cantidad` 
 		,`Precio`
 		,`DocumentoBoleta_idDocumentoBoleta`  		 
     )
     VALUES
     (
-		Producto
+		Nro
+		,Producto
 		,Cantidad 
 		,Precio
 		,DocumentoBoleta_idDocumentoBoleta 
@@ -1323,10 +1364,10 @@ DELIMITER ;
 
 -- ESTADO BOLETA 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS SP_LISTAR_ESTADO_BOLETA $$
-CREATE PROCEDURE SP_LISTAR_ESTADO_BOLETA()
+DROP PROCEDURE IF EXISTS sp_listar_estado_boleta $$
+CREATE PROCEDURE sp_listar_estado_boleta()
 -- /************************************************************************************
--- *Descripcion         : Lista los datos del estado boleta					*
+-- *Descripcion         : Lista los datos del estado boleta								*
 -- *Fecha Creación      : 10/08/2017													*
 -- *Fecha Mododificación:																*
 -- *Parámetros          :
@@ -1334,10 +1375,10 @@ CREATE PROCEDURE SP_LISTAR_ESTADO_BOLETA()
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
 --							: Ricardo Palacios	
--- * Versión				: Final (Beta|Final)										*
+-- * Versión				: Final 													*
 -- * Cambios Importantes	:                                                         	*
 -- *                                                                             		*
--- * Propiedad                                          		*
+-- * Propiedad                                          								*
 -- *                                                                             		*
 -- *************************************************************************************/
 BEGIN

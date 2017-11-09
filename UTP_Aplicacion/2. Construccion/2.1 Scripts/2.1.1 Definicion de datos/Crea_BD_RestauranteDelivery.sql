@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Descripcion			: Script para creación de la base de datos de Restaurant	
--- Fecha Creación		: 01/08/2017                                         		
+-- Fecha Creación		: 10/08/2017                                         		
 -- Fecha Modificación	: 															
 -- Autor					: Carlos Sanchez	
 --							: Juan Paz Chalco
