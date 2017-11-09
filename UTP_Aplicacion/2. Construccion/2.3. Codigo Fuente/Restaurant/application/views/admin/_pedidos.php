@@ -169,32 +169,18 @@
                                         </div>
                                     </div>
                                     <div class="panel-footer">
-                                    <?  if ($asignacion_repartidor != null) 
-                                    {
-                                        foreach ($asignacion_repartidor as $repartidorasignado) 
-                                        {
-                                            if ($pedidocompletado->idPedidos == $repartidorasignado->pedidos_idPedidos) {
-                                                foreach ($empleados as $empleado) {
-                                                    if ( $repartidorasignado->empleados_idEmpleados == $empleado->idEmpleados) {
-
-                                                        echo "<b>Asignado a: </b>" .$empleado->Nombres . " " .$empleado->Apellidos . "<br>" ; 
-                                                              
+                                    <?  if ($asignacion_repartidor != null) {
+                                            foreach ($empleados as $empleado) {
+                                            
+                                                foreach ($asignacion_repartidor as $repartidorasignado) {
+                                                    if ($repartidorasignado->empleados_idEmpleados == $empleado->idEmpleados) {
+                                                            echo "<b>Asignado a: </b>" .$empleado->Nombres . " " .$empleado->Apellidos . "<br>";
                                                     }
-
-                                                    
-
-                                               }
+                                                }
                                             }
-                                            else{ ?>
-                                                        <a data-toggle="modal" href="#modal-form-asignar" class="pull-right btn btn-xs btn-primary" onclick='AsignarRepartidor("<?php echo $pedidocompletado->idPedidos; ?>");'>Asignar</a>
 
-                                                    <? 
-                                                    }  
-                                             
                                         }
-
-                                    }
-                                    else{
+                                        else{
                                         ?>           
                                                 <a data-toggle="modal" href="#modal-form-asignar" class="pull-right btn btn-xs btn-primary" onclick='AsignarRepartidor("<?php echo $pedidocompletado->idPedidos; ?>");'>Asignar</a>
                                         <?php

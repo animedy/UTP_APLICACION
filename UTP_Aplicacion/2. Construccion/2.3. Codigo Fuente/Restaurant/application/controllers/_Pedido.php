@@ -16,8 +16,8 @@ class Pedido extends CI_Controller {
 	*/
 
 	function listar(){
-		$this->load->model('model_repartidor');
-		$data['repartidores']	= $this->model_repartidor->getTipoEmpleadoRepartidor();
+		$this->load->model('model_tipo_empleado');
+		$data['repartidores']	= $this->model_tipo_empleado->getTipoEmpleadoRepartidor();
 
 		$this->load->model('model_empleado');
 		$data['empleados']	= $this->model_empleado->getEmpleado();

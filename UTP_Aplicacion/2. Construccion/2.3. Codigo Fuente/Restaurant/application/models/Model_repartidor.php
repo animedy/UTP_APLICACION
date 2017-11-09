@@ -20,5 +20,12 @@ class Model_repartidor extends CI_Model {
         );
         $this->db->insert('asignacion',$array);
     }
+	
+	function getTipoEmpleadoRepartidor()
+	{
+		$this->db->where('Rol','REPARTIDOR');
+		$query = $this->db->get('tipoempleado');
+        return $query->result();
+	}
 }
 ?>

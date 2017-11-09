@@ -1,4 +1,4 @@
-        <!-- Mainly ts -->
+ <!-- Mainly ts -->
     <script src="<?php echo base_url(); ?>assets/js/jquery-2.1.1.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -113,7 +113,7 @@
             $(document).ready(function() {
 
                             EliminarEmpleado = function (id) {
-                                var url = "<?php echo base_url('login/eliminar'); ?>";
+                                var url = "<?php echo base_url('Empleado/eliminar'); ?>";
                                 debugger;
                                 var csrf_token = '<?php echo $this->security->get_csrf_hash(); ?>';
                                 swal({

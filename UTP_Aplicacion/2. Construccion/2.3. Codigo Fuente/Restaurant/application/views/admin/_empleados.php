@@ -1,4 +1,4 @@
-<!-- Contenido -->
+		<!-- Contenido -->
 	<div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
       <div class="col-lg-12">
@@ -78,7 +78,7 @@
                                               <h2>
                                                   Registre los datos del nuevo empleado.
                                               </h2>
-                                              <form id="formempleado" action="<?php echo base_url('Empleado/insertar'); ?>" method="post">
+                                              <form id="formempleado" action="<?php echo base_url('login/insertar'); ?>" method="post">
                                               <div>
                                                 <button type="submit" class="btn btn-success" ><i class="fa fa-save"></i>&nbsp;Guardar</button>
                                               </div>

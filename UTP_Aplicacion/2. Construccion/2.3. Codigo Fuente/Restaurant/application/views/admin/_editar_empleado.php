@@ -11,7 +11,7 @@ foreach ($a as $key) {
 			                                Edite los datos del nuevo empleado.
 			                            </h2>
 			                           
-			                            <form id="formeditempleado" action="<?php echo base_url('Empleado/actualizar'); ?>" method="post">
+			                            <form id="formeditempleado" action="<?php echo base_url('login/actualizar'); ?>" method="post">
 			                             <div class="right">
 			                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Actualizar Empleado</button>
 			                                <a href="<?php echo base_url('empleados'); ?>" class="btn btn-success" ><i class="fa fa-ban"></i>&nbsp;Cancelar</a>

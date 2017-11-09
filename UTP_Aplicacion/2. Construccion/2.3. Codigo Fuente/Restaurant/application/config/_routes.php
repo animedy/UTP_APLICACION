@@ -63,10 +63,10 @@ $route['sucursal']= 'sucursal/listar';
 /*
 | ---------- URL Empleados -----------
 */
-$route['empleados']= 'empleado/listar';
+$route['empleados']= 'login/listar';
 $route['salir']= 'login/salir';
 //$route['EditarEmpleado/(:any)']= 'login/editar/$1';
-$route['EditarEmpleado']= 'empleado/editar';
+$route['EditarEmpleado']= 'login/editar';
 /*
 | --------- FIN URL Empleados ---------
 */
